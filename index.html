@@ -195,9 +195,6 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <div class="nav-label">Calçado</div>
     <button class="nav-item nav-liga" data-liga="Sapatilhas"><i class="fa-solid fa-shoe-prints"></i> Sapatilhas</button>
     <button class="nav-item nav-liga" data-liga="Chuteiras"><i class="fa-solid fa-shoe-prints"></i> Chuteiras</button>
-    <div class="nav-label">Serviços</div>
-    <button class="nav-item nav-tipo" data-tipo="Personalização (Nome + Número)"><i class="fa-solid fa-pen-nib"></i> Personalização</button>
-    <button class="nav-item nav-tipo" data-tipo="Patch / Patrocinador"><i class="fa-solid fa-tag"></i> Patch / Patrocinador</button>
   </nav>
   <div class="sidebar-footer"><i class="fa-solid fa-circle-dot" style="color:var(--acc)"></i> Sistema Online</div>
 </aside>
@@ -282,11 +279,11 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
   <div class="modal">
     <div class="mh"><h2 id="mProdTit">Novo Produto</h2><button class="mc" data-close="ovProd"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="mf">
-      <div class="fg">
-        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Seleções</option><option>Retro</option><option>NBA</option><option>Sapatilhas</option><option>Chuteiras</option><option>Outros</option></select></div>
-        <div class="fg-item"><label>Clube *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
-        <div class="fg-item"><label>Época</label><input type="text" id="pEpoca" placeholder="ex: 2024/25"/></div>
-        <div class="fg-item"><label>Tipo / Categoria *</label><select id="pTipo">
+
+      <!-- Tipo sempre visível primeiro -->
+      <div class="fg" style="margin-bottom:13px">
+        <div class="fg-item ff"><label>Tipo / Categoria *</label><select id="pTipo">
+          <option value="">Selecionar tipo</option>
           <optgroup label="Camisolas">
             <option value="Camisa Modelo Fã">Camisa Modelo Fã</option>
             <option value="Camisa Modelo Jogador">Camisa Modelo Jogador</option>
@@ -309,11 +306,14 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
           <optgroup label="NBA">
             <option value="NBA">NBA</option>
           </optgroup>
-          <optgroup label="Serviços">
-            <option value="Personalização (Nome + Número)">Personalização (Nome + Número)</option>
-            <option value="Patch / Patrocinador">Patch / Patrocinador</option>
-          </optgroup>
         </select></div>
+      </div>
+
+      <!-- CAMPOS PRODUTO NORMAL -->
+      <div id="camposProduto" class="fg" style="display:none">
+        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Seleções</option><option>Retro</option><option>NBA</option><option>Sapatilhas</option><option>Chuteiras</option><option>Outros</option></select></div>
+        <div class="fg-item"><label>Clube / Nome *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
+        <div class="fg-item"><label>Época</label><input type="text" id="pEpoca" placeholder="ex: 2024/25"/></div>
         <div class="fg-item"><label>Tamanho</label><select id="pTam"><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Kit Infantil (Criança)"><option>14 (2-3 anos)</option><option>16 (3-4 anos)</option><option>18 (4-5 anos)</option><option>20 (5-6 anos)</option><option>22 (6-7 anos)</option><option>24 (8-9 anos)</option><option>26 (10-11 anos)</option><option>28 (12-13 anos)</option></optgroup></select></div>
         <div class="fg-item"><label>Quantidade *</label><input type="number" id="pQtd" min="0" value="1"/></div>
         <div class="fg-item"><label>Preço de Compra (€) *</label><input type="number" id="pPreco" step="0.01" min="0" placeholder="0.00"/></div>
@@ -322,7 +322,49 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
         <div class="fg-item"><label>Preço de Venda (€) *</label><input type="number" id="pVenda" step="0.01" min="0" placeholder="0.00"/></div>
         <div class="fg-item"><label>Lucro (€)</label><input type="number" id="pLucro" class="ro lucro-f" readonly/></div>
         <div class="fg-item"><label>Estado</label><select id="pEst"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
+
+        <!-- SERVIÇOS ADICIONAIS (só para camisolas/kits) -->
+        <div class="ff" id="blocoServicos" style="display:none;border-top:1px solid var(--border);padding-top:13px;margin-top:4px">
+          <div style="font-size:.7rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px"><i class="fa-solid fa-screwdriver-wrench" style="margin-right:5px;color:var(--acc2)"></i>Serviços Adicionais</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.85rem;color:var(--t2)">
+              <input type="checkbox" id="chkPerso" style="accent-color:var(--acc);width:15px;height:15px;cursor:pointer"/>
+              Personalização (Nome + Número)
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.85rem;color:var(--t2)">
+              <input type="checkbox" id="chkPatch" style="accent-color:var(--acc);width:15px;height:15px;cursor:pointer"/>
+              Patch / Patrocinador
+            </label>
+          </div>
+        </div>
       </div>
+
+      <!-- CAMPOS PERSONALIZAÇÃO -->
+      <div id="camposPersonalizacao" class="fg" style="display:none;border:1px solid rgba(99,102,241,.2);border-radius:var(--rs);padding:14px;margin-top:8px;background:rgba(99,102,241,.04)">
+        <div class="ff" style="font-size:.7rem;font-weight:600;color:var(--acc2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px"><i class="fa-solid fa-pen-nib" style="margin-right:5px"></i>Personalização</div>
+        <div class="fg-item"><label>Nome do Jogador *</label><input type="text" id="sNome" placeholder="ex: RONALDO"/></div>
+        <div class="fg-item"><label>Número *</label><input type="number" id="sNumero" placeholder="ex: 7" min="0" max="99"/></div>
+        <div class="fg-item"><label>Fonte / Estilo</label><input type="text" id="sFonte" placeholder="ex: Premier League, La Liga..."/></div>
+        <div class="fg-item"><label>Preço do Serviço (€) *</label><input type="number" id="sPrecoP" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Preço Cobrado ao Cliente (€) *</label><input type="number" id="sVendaP" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Lucro (€)</label><input type="number" id="sLucroP" class="ro lucro-f" readonly/></div>
+        <div class="fg-item"><label>Estado</label><select id="sEstP"><option>Por fazer</option><option>Em curso</option><option>Concluído</option></select></div>
+        <div class="fg-item"><label>Observações</label><input type="text" id="sObs" placeholder="ex: frente + costas..."/></div>
+      </div>
+
+      <!-- CAMPOS PATCH / PATROCINADOR -->
+      <div id="camposPatch" class="fg" style="display:none;border:1px solid rgba(251,146,60,.2);border-radius:var(--rs);padding:14px;margin-top:8px;background:rgba(251,146,60,.04)">
+        <div class="ff" style="font-size:.7rem;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px"><i class="fa-solid fa-tag" style="margin-right:5px"></i>Patch / Patrocinador</div>
+        <div class="fg-item"><label>Nome do Patch / Patrocinador *</label><input type="text" id="ptNome" placeholder="ex: Champions League, Nike..."/></div>
+        <div class="fg-item"><label>Posição</label><input type="text" id="ptPosicao" placeholder="ex: Manga esquerda, peito..."/></div>
+        <div class="fg-item"><label>Tipo de Aplicação</label><select id="ptAplicacao"><option value="Termocolante">Termocolante</option><option value="Bordado">Bordado</option><option value="Impressão">Impressão</option><option value="Outro">Outro</option></select></div>
+        <div class="fg-item"><label>Preço do Patch (€) *</label><input type="number" id="ptPreco" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Preço Cobrado ao Cliente (€) *</label><input type="number" id="ptVenda" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Lucro (€)</label><input type="number" id="ptLucro" class="ro lucro-f" readonly/></div>
+        <div class="fg-item"><label>Estado</label><select id="ptEst"><option>Por fazer</option><option>Em curso</option><option>Concluído</option></select></div>
+        <div class="fg-item"><label>Observações</label><input type="text" id="ptObs" placeholder="ex: conjunto de 3 patches..."/></div>
+      </div>
+
       <div class="ma">
         <button class="btn btn-ghost" data-close="ovProd">Cancelar</button>
         <button class="btn btn-primary" id="saveProd">Guardar</button>
@@ -367,6 +409,24 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
   </div>
 </div>
 
+<!-- MODAL RETOMA SESSÃO -->
+<div class="ov" id="ovRetoma" style="z-index:400">
+  <div class="modal modal-sm" style="max-width:420px">
+    <div class="mh" style="border-bottom:1px solid var(--border)">
+      <h2 style="display:flex;align-items:center;gap:8px"><i class="fa-solid fa-rotate-left" style="color:var(--acc2);font-size:1rem"></i> Sessão Anterior</h2>
+    </div>
+    <div style="padding:18px 22px">
+      <p style="color:var(--t2);font-size:.875rem;line-height:1.6;margin-bottom:6px">Foi encontrada uma sessão anterior com dados guardados:</p>
+      <div id="retomaInfo" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:12px 16px;margin:12px 0;display:flex;gap:18px"></div>
+      <p style="color:var(--t3);font-size:.78rem;line-height:1.5">Queres retomar de onde ficaste ou começar do zero?</p>
+    </div>
+    <div class="ma" style="padding:0 22px 18px;gap:8px">
+      <button class="btn btn-danger" id="retomaLimpar" style="font-size:.8rem"><i class="fa-solid fa-trash"></i> Começar do Zero</button>
+      <button class="btn btn-primary" id="retomaOk" style="font-size:.8rem"><i class="fa-solid fa-rotate-left"></i> Retomar Sessão</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -374,8 +434,9 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 // Limpar chaves antigas (versão anterior)
 try { localStorage.removeItem('ns_prod'); localStorage.removeItem('ns_cli'); } catch(e){}
 let produtos = [], clientes = [];
-try { produtos = JSON.parse(localStorage.getItem('ns2_prod')) || []; } catch(e){}
-try { clientes = JSON.parse(localStorage.getItem('ns2_cli'))  || []; } catch(e){}
+let _savedProd = [], _savedCli = [];
+try { _savedProd = JSON.parse(localStorage.getItem('ns2_prod')) || []; } catch(e){}
+try { _savedCli  = JSON.parse(localStorage.getItem('ns2_cli'))  || []; } catch(e){}
 function save(){ try{localStorage.setItem('ns2_prod',JSON.stringify(produtos));localStorage.setItem('ns2_cli',JSON.stringify(clientes));}catch(e){} }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
 
@@ -457,12 +518,44 @@ function calcProd(){
   lf.value=(pc||vd)?luc.toFixed(2):'';
   lf.style.color=luc>=0?'var(--green)':'var(--red)';
 }
+function calcServ(precoId, vendaId, lucroId){
+  const pc=parseFloat(document.getElementById(precoId).value)||0;
+  const vd=parseFloat(document.getElementById(vendaId).value)||0;
+  const luc=vd-pc;
+  const lf=document.getElementById(lucroId);
+  lf.value=(pc||vd)?luc.toFixed(2):'';
+  lf.style.color=luc>=0?'var(--green)':'var(--red)';
+}
 ['pPreco','pFrete','pVenda'].forEach(id=>document.getElementById(id).addEventListener('input',calcProd));
+['sPrecoP','sVendaP'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('sPrecoP','sVendaP','sLucroP')));
+['ptPreco','ptVenda'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('ptPreco','ptVenda','ptLucro')));
+
+// ── TIPO SWITCHER ─────────────────────────────────────────────
+function switchTipo(tipo){
+  const isProd = tipo !== '';
+  const comServicos = ['Camisa Modelo Fã','Camisa Modelo Jogador','Camisola Manga Longa','Retrô','Kit Infantil','Kit Adulto'].includes(tipo);
+  document.getElementById('camposProduto').style.display    = isProd ? 'grid' : 'none';
+  document.getElementById('blocoServicos').style.display    = comServicos ? 'block' : 'none';
+  if(!comServicos){
+    document.getElementById('chkPerso').checked = false;
+    document.getElementById('chkPatch').checked  = false;
+    document.getElementById('camposPersonalizacao').style.display = 'none';
+    document.getElementById('camposPatch').style.display          = 'none';
+  }
+}
+document.getElementById('pTipo').addEventListener('change',function(){ switchTipo(this.value); });
+document.getElementById('chkPerso').addEventListener('change',function(){
+  document.getElementById('camposPersonalizacao').style.display = this.checked ? 'grid' : 'none';
+});
+document.getElementById('chkPatch').addEventListener('change',function(){
+  document.getElementById('camposPatch').style.display = this.checked ? 'grid' : 'none';
+});
 
 // ── PRODUTO MODAL ────────────────────────────────────────────
 let _eProd=null;
 function openProdModal(id){
   _eProd=id;
+  // reset produto
   ['pLiga','pClube','pEpoca','pPreco','pFrete','pVenda','pQtd'].forEach(i=>{
     const el=document.getElementById(i);
     if(el.tagName==='SELECT') el.selectedIndex=0; else el.value=i==='pQtd'?'1':'';
@@ -473,21 +566,56 @@ function openProdModal(id){
   document.getElementById('pCusto').value='';
   document.getElementById('pLucro').value='';
   document.getElementById('pLucro').style.color='var(--green)';
+  // reset checkboxes e serviços
+  document.getElementById('chkPerso').checked=false;
+  document.getElementById('chkPatch').checked=false;
+  ['sNome','sNumero','sFonte','sPrecoP','sVendaP','sObs'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('sLucroP').value=''; document.getElementById('sEstP').selectedIndex=0;
+  ['ptNome','ptPosicao','ptPreco','ptVenda','ptObs'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('ptLucro').value=''; document.getElementById('ptAplicacao').selectedIndex=0; document.getElementById('ptEst').selectedIndex=0;
+
+  switchTipo('');
   document.getElementById('mProdTit').textContent=id?'Editar Produto':'Novo Produto';
+
   if(id){
     const p=produtos.find(x=>x.id===id);
     if(p){
-      document.getElementById('pLiga').value=p.liga;
-      document.getElementById('pClube').value=p.clube;
-      document.getElementById('pEpoca').value=p.epoca||'';
       document.getElementById('pTipo').value=p.tipo;
-      document.getElementById('pTam').value=p.tam;
-      document.getElementById('pQtd').value=p.qtd;
-      document.getElementById('pPreco').value=p.preco;
-      document.getElementById('pFrete').value=p.frete;
-      document.getElementById('pVenda').value=p.venda;
-      document.getElementById('pEst').value=p.estado;
+      switchTipo(p.tipo);
+      document.getElementById('pLiga').value=p.liga||'';
+      document.getElementById('pClube').value=p.clube||'';
+      document.getElementById('pEpoca').value=p.epoca||'';
+      document.getElementById('pTam').value=p.tam||'';
+      document.getElementById('pQtd').value=p.qtd||1;
+      document.getElementById('pPreco').value=p.preco||'';
+      document.getElementById('pFrete').value=p.frete||'';
+      document.getElementById('pVenda').value=p.venda||'';
+      document.getElementById('pEst').value=p.estado||'Disponível';
       calcProd();
+      if(p.sNome||p.sNumero){
+        document.getElementById('chkPerso').checked=true;
+        document.getElementById('camposPersonalizacao').style.display='grid';
+        document.getElementById('sNome').value=p.sNome||'';
+        document.getElementById('sNumero').value=p.sNumero||'';
+        document.getElementById('sFonte').value=p.sFonte||'';
+        document.getElementById('sPrecoP').value=p.sPreco||'';
+        document.getElementById('sVendaP').value=p.sVenda||'';
+        document.getElementById('sObs').value=p.sObs||'';
+        document.getElementById('sEstP').value=p.sEst||'Por fazer';
+        calcServ('sPrecoP','sVendaP','sLucroP');
+      }
+      if(p.ptNome){
+        document.getElementById('chkPatch').checked=true;
+        document.getElementById('camposPatch').style.display='grid';
+        document.getElementById('ptNome').value=p.ptNome||'';
+        document.getElementById('ptPosicao').value=p.ptPosicao||'';
+        document.getElementById('ptAplicacao').value=p.ptAplicacao||'Termocolante';
+        document.getElementById('ptPreco').value=p.ptPreco||'';
+        document.getElementById('ptVenda').value=p.ptVenda||'';
+        document.getElementById('ptObs').value=p.ptObs||'';
+        document.getElementById('ptEst').value=p.ptEst||'Por fazer';
+        calcServ('ptPreco','ptVenda','ptLucro');
+      }
     }
   }
   openM('ovProd');
@@ -496,6 +624,9 @@ function openProdModal(id){
 document.getElementById('addProdBtn').addEventListener('click',()=>openProdModal(null));
 
 document.getElementById('saveProd').addEventListener('click',()=>{
+  const tipo=document.getElementById('pTipo').value;
+  if(!tipo){ toast('Seleciona o Tipo / Categoria','err'); return; }
+
   const liga=document.getElementById('pLiga').value;
   const clube=document.getElementById('pClube').value.trim();
   const preco=parseFloat(document.getElementById('pPreco').value)||0;
@@ -504,22 +635,50 @@ document.getElementById('saveProd').addEventListener('click',()=>{
   if(preco<=0){ toast('Introduz o preço de compra (€)','err'); return; }
   if(venda<=0){ toast('Introduz o preço de venda (€)','err'); return; }
   const frete=parseFloat(document.getElementById('pFrete').value)||0;
+
   const entry={
     id:_eProd||uid(), liga, clube,
     epoca:document.getElementById('pEpoca').value.trim(),
-    tipo:document.getElementById('pTipo').value,
+    tipo,
     tam:document.getElementById('pTam').value,
     qtd:parseInt(document.getElementById('pQtd').value)||0,
     preco, frete, custoTotal:preco+frete, venda, lucro:venda-(preco+frete),
     estado:document.getElementById('pEst').value
   };
+
+  // Serviços adicionais
+  if(document.getElementById('chkPerso').checked){
+    const sNome=document.getElementById('sNome').value.trim();
+    const sNumero=document.getElementById('sNumero').value.trim();
+    if(!sNome||!sNumero){ toast('Preenche nome e número da personalização','err'); return; }
+    entry.sNome=sNome; entry.sNumero=sNumero;
+    entry.sFonte=document.getElementById('sFonte').value.trim();
+    entry.sPreco=parseFloat(document.getElementById('sPrecoP').value)||0;
+    entry.sVenda=parseFloat(document.getElementById('sVendaP').value)||0;
+    entry.sObs=document.getElementById('sObs').value.trim();
+    entry.sEst=document.getElementById('sEstP').value;
+    entry.lucro+=entry.sVenda-entry.sPreco;
+  }
+  if(document.getElementById('chkPatch').checked){
+    const ptNome=document.getElementById('ptNome').value.trim();
+    if(!ptNome){ toast('Preenche o nome do patch / patrocinador','err'); return; }
+    entry.ptNome=ptNome;
+    entry.ptPosicao=document.getElementById('ptPosicao').value.trim();
+    entry.ptAplicacao=document.getElementById('ptAplicacao').value;
+    entry.ptPreco=parseFloat(document.getElementById('ptPreco').value)||0;
+    entry.ptVenda=parseFloat(document.getElementById('ptVenda').value)||0;
+    entry.ptObs=document.getElementById('ptObs').value.trim();
+    entry.ptEst=document.getElementById('ptEst').value;
+    entry.lucro+=entry.ptVenda-entry.ptPreco;
+  }
+
   if(_eProd){ const i=produtos.findIndex(x=>x.id===_eProd); produtos[i]=entry; toast('Produto atualizado!'); }
   else { produtos.push(entry); toast('Produto adicionado!'); }
   save(); closeM('ovProd'); renderStock(); refreshDash();
 });
 
 // ── STOCK RENDER ─────────────────────────────────────────────
-function estClass(e){ return e==='Disponível'?'sd':e==='Reservado'?'sr':e==='Vendido'?'sv':''; }
+function estClass(e){ return e==='Disponível'?'sd':e==='Reservado'?'sr':e==='Vendido'?'sv':e==='Por fazer'?'sp':e==='Em curso'?'se':e==='Concluído'?'sent':''; }
 
 function renderStock(){
   const liga=document.getElementById('fLiga').value;
@@ -695,8 +854,50 @@ function refreshDash(){
 
 
 // ── INIT ─────────────────────────────────────────────────────
-refreshDash();
-fillFilters();
+(function initSession(){
+  const temDados = _savedProd.length > 0 || _savedCli.length > 0;
+  if(temDados){
+    // Mostrar modal de retoma com resumo
+    const info = document.getElementById('retomaInfo');
+    const totalProd = _savedProd.length;
+    const dispProd  = _savedProd.filter(p=>p.estado==='Disponível').length;
+    const totalCli  = _savedCli.length;
+    info.innerHTML = `
+      <div style="text-align:center;flex:1">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--acc2)">${totalProd}</div>
+        <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px">Produtos</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div style="text-align:center;flex:1">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green)">${dispProd}</div>
+        <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px">Disponíveis</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div style="text-align:center;flex:1">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--orange)">${totalCli}</div>
+        <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px">Clientes</div>
+      </div>`;
+    document.getElementById('ovRetoma').classList.add('open');
+
+    document.getElementById('retomaOk').onclick = function(){
+      produtos = _savedProd;
+      clientes = _savedCli;
+      document.getElementById('ovRetoma').classList.remove('open');
+      refreshDash(); fillFilters();
+      toast('Sessão retomada com sucesso!');
+    };
+    document.getElementById('retomaLimpar').onclick = function(){
+      produtos = []; clientes = [];
+      save();
+      document.getElementById('ovRetoma').classList.remove('open');
+      refreshDash(); fillFilters();
+      toast('Dados apagados. A começar do zero.','err');
+    };
+  } else {
+    refreshDash();
+    fillFilters();
+  }
+})();
 </script>
 </body>
 </html>
