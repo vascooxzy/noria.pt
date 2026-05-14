@@ -159,6 +159,11 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 .toast.ok{border-color:rgba(34,197,94,.4);color:var(--green)}
 .toast.err{border-color:rgba(244,63,94,.4);color:var(--red)}
 
+/* ── LIGA LOGOS ── */
+.liga-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 2px rgba(0,0,0,.5))}
+.liga-logo-md{width:26px;height:26px;object-fit:contain;flex-shrink:0}
+.liga-badge{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+
 /* ── RESPONSIVE ── */
 @media(max-width:1050px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:860px){
@@ -183,12 +188,14 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <button class="nav-item active" data-page="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
     <button class="nav-item" data-page="stock"><i class="fa-solid fa-boxes-stacked"></i> Gestão de Stock</button>
     <button class="nav-item" data-page="clientes"><i class="fa-solid fa-truck-fast"></i> Clientes / Envios</button>
-    <div class="nav-label">Categorias</div>
-    <button class="nav-item nav-liga" data-liga="Primeira Liga"><i class="fa-solid fa-futbol"></i> Primeira Liga</button>
-    <button class="nav-item nav-liga" data-liga="Premier League"><i class="fa-solid fa-futbol"></i> Premier League</button>
-    <button class="nav-item nav-liga" data-liga="La Liga"><i class="fa-solid fa-futbol"></i> La Liga</button>
-    <button class="nav-item nav-liga" data-liga="Serie A"><i class="fa-solid fa-futbol"></i> Serie A</button>
-    <button class="nav-item nav-liga" data-liga="Bundesliga"><i class="fa-solid fa-futbol"></i> Bundesliga</button>
+    <div class="nav-label">Ligas</div>
+    <button class="nav-item nav-liga" data-liga="Primeira Liga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/pt/thumb/0/0b/Liga_Portugal_logo.svg/200px-Liga_Portugal_logo.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Primeira Liga</button>
+    <button class="nav-item nav-liga" data-liga="Premier League"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/200px-Premier_League_Logo.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Premier League</button>
+    <button class="nav-item nav-liga" data-liga="La Liga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga_logo_2023.svg/200px-LaLiga_logo_2023.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> La Liga</button>
+    <button class="nav-item nav-liga" data-liga="Serie A"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Serie_A_logo_%282019%29.svg/200px-Serie_A_logo_%282019%29.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Serie A</button>
+    <button class="nav-item nav-liga" data-liga="Bundesliga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/200px-Bundesliga_logo_%282017%29.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Bundesliga</button>
+    <button class="nav-item nav-liga" data-liga="Ligue 1"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Ligue1_2024.svg/200px-Ligue1_2024.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Ligue 1</button>
+    <button class="nav-item nav-liga" data-liga="Champions League"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/200px-UEFA_Champions_League_logo_2.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Champions League</button>
     <button class="nav-item nav-liga" data-liga="Seleções"><i class="fa-solid fa-earth-europe"></i> Seleções</button>
     <button class="nav-item nav-liga" data-liga="Retro"><i class="fa-solid fa-clock-rotate-left"></i> Retro</button>
     <button class="nav-item nav-liga" data-liga="NBA"><i class="fa-solid fa-basketball"></i> NBA</button>
@@ -311,7 +318,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 
       <!-- CAMPOS PRODUTO NORMAL -->
       <div id="camposProduto" class="fg" style="display:none">
-        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Seleções</option><option>Retro</option><option>NBA</option><option>Sapatilhas</option><option>Chuteiras</option><option>Outros</option></select></div>
+        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><optgroup label="Europa"><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Eredivisie</option><option>Scottish Premiership</option></optgroup><optgroup label="Competições UEFA"><option>Champions League</option></optgroup><optgroup label="América"><option>Liga MX</option><option>Brasileirão</option></optgroup><optgroup label="Ásia"><option>J1 League</option></optgroup><optgroup label="Outras"><option>Seleções</option><option>Retro</option><option>NBA</option><option>Sapatilhas</option><option>Chuteiras</option><option>Outros</option></optgroup></select></div>
         <div class="fg-item"><label>Clube / Nome *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
         <div class="fg-item"><label>Época</label><input type="text" id="pEpoca" placeholder="ex: 2024/25"/></div>
         <div class="fg-item"><label>Tamanho</label><select id="pTam"><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Kit Infantil (Criança)"><option>14 (2-3 anos)</option><option>16 (3-4 anos)</option><option>18 (4-5 anos)</option><option>20 (5-6 anos)</option><option>22 (6-7 anos)</option><option>24 (8-9 anos)</option><option>26 (10-11 anos)</option><option>28 (12-13 anos)</option></optgroup></select></div>
@@ -677,6 +684,32 @@ document.getElementById('saveProd').addEventListener('click',()=>{
   save(); closeM('ovProd'); renderStock(); refreshDash();
 });
 
+// ── LIGA LOGOS MAP ────────────────────────────────────────────
+const LIGA_LOGOS = {
+  'Premier League':    'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/200px-Premier_League_Logo.svg.png',
+  'La Liga':           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga_logo_2023.svg/200px-LaLiga_logo_2023.svg.png',
+  'Primeira Liga':     'https://upload.wikimedia.org/wikipedia/pt/thumb/0/0b/Liga_Portugal_logo.svg/200px-Liga_Portugal_logo.svg.png',
+  'Serie A':           'https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Serie_A_logo_%282019%29.svg/200px-Serie_A_logo_%282019%29.svg.png',
+  'Bundesliga':        'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/200px-Bundesliga_logo_%282017%29.svg.png',
+  'Ligue 1':           'https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Ligue1_2024.svg/200px-Ligue1_2024.svg.png',
+  'Eredivisie':        'https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Eredivisie_nieuw_logo_2017-.svg/200px-Eredivisie_nieuw_logo_2017-.svg.png',
+  'Liga MX':           'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Liga_MX_logo.svg/200px-Liga_MX_logo.svg.png',
+  'Brasileirão':       'https://upload.wikimedia.org/wikipedia/en/thumb/6/6a/Campeonato_Brasileiro_S%C3%A9rie_A.svg/200px-Campeonato_Brasileiro_S%C3%A9rie_A.svg.png',
+  'Scottish Premiership': 'https://upload.wikimedia.org/wikipedia/en/thumb/3/31/Scottish_Premiership_logo.svg/200px-Scottish_Premiership_logo.svg.png',
+  'J1 League':         'https://upload.wikimedia.org/wikipedia/en/thumb/7/78/J1_League_logo.svg/200px-J1_League_logo.svg.png',
+  'Champions League':  'https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/200px-UEFA_Champions_League_logo_2.svg.png',
+  'Seleções':          null,
+  'NBA':               'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/National_Basketball_Association_logo.svg/200px-National_Basketball_Association_logo.svg.png',
+  'Retro':             null,
+};
+
+function ligaLogo(liga, size='md'){
+  const src = LIGA_LOGOS[liga];
+  const cls = size === 'sm' ? 'liga-logo' : 'liga-logo-md';
+  if(!src) return `<i class="fa-solid fa-futbol" style="color:var(--acc2);font-size:.85rem"></i>`;
+  return `<img class="${cls}" src="${src}" alt="${liga}" title="${liga}" onerror="this.style.display='none'"/>`;
+}
+
 // ── STOCK RENDER ─────────────────────────────────────────────
 function estClass(e){ return e==='Disponível'?'sd':e==='Reservado'?'sr':e==='Vendido'?'sv':e==='Por fazer'?'sp':e==='Em curso'?'se':e==='Concluído'?'sent':''; }
 
@@ -703,7 +736,7 @@ function renderStock(){
   data.forEach(p=>{
     const lc=p.lucro>=0?'lp':'ln';
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td>${p.liga}</td><td class="cb">${p.clube}</td><td>${p.epoca||'-'}</td><td>${p.tipo}</td><td>${p.tam}</td><td>${p.qtd}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(p.estado)}">${p.estado}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${p.id}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${p.id}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    tr.innerHTML=`<td><span class="liga-badge">${ligaLogo(p.liga,'sm')}<span>${p.liga}</span></span></td><td class="cb">${p.clube}</td><td>${p.epoca||'-'}</td><td>${p.tipo}</td><td>${p.tam}</td><td>${p.qtd}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(p.estado)}">${p.estado}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${p.id}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${p.id}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
     tb.appendChild(tr);
   });
   fillFilters();
@@ -847,7 +880,7 @@ function refreshDash(){
   produtos.forEach(p=>{ lm[p.liga]=(lm[p.liga]||0)+p.qtd; });
   const lEntries=Object.entries(lm).sort((a,b)=>b[1]-a[1]);
   const mx=lEntries.length?lEntries[0][1]:1;
-  document.getElementById('leagueBars').innerHTML=lEntries.length?lEntries.map(([l,q])=>`<div class="lbar-row"><span class="lbar-lbl">${l}</span><div class="lbar-track"><div class="lbar-fill" style="width:${(q/mx*100).toFixed(1)}%"></div></div><span class="lbar-val">${q} un.</span></div>`).join(''):'<p class="empty-msg">Sem dados</p>';
+  document.getElementById('leagueBars').innerHTML=lEntries.length?lEntries.map(([l,q])=>`<div class="lbar-row"><span class="lbar-lbl" style="display:flex;align-items:center;gap:6px;justify-content:flex-end">${ligaLogo(l,'sm')}<span style="overflow:hidden;text-overflow:ellipsis">${l}</span></span><div class="lbar-track"><div class="lbar-fill" style="width:${(q/mx*100).toFixed(1)}%"></div></div><span class="lbar-val">${q} un.</span></div>`).join(''):'<p class="empty-msg">Sem dados</p>';
 }
 
 // ── SEED ─────────────────────────────────────────────────────
