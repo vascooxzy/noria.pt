@@ -255,7 +255,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
       </div>
       <div class="tw">
         <table>
-          <thead><tr><th>Liga</th><th>Clube</th><th>Época</th><th>Tipo</th><th>Tam.</th><th>Qtd.</th><th>Custo</th><th>Frete</th><th>Total</th><th>Venda</th><th>Lucro</th><th>Estado</th><th>Ações</th></tr></thead>
+          <thead><tr><th>Liga / Tipo</th><th>Clube / Modelo</th><th>Época / Cor</th><th>Tipo</th><th>Tam.</th><th>Qtd.</th><th>Custo</th><th>Frete</th><th>Total</th><th>Venda</th><th>Lucro</th><th>Estado</th><th>Ações</th></tr></thead>
           <tbody id="stockBody"></tbody>
         </table>
         <p class="et" id="stockEt">Nenhum produto encontrado.</p>
@@ -322,9 +322,9 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
         </select></div>
       </div>
 
-      <!-- CAMPOS PRODUTO NORMAL -->
+      <!-- CAMPOS PRODUTO NORMAL (camisolas, kits, etc.) -->
       <div id="camposProduto" class="fg" style="display:none">
-        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><optgroup label="Europa"><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Eredivisie</option><option>Scottish Premiership</option></optgroup><optgroup label="Competições UEFA"><option>Champions League</option></optgroup><optgroup label="América"><option>Liga MX</option><option>Brasileirão</option></optgroup><optgroup label="Ásia"><option>J1 League</option></optgroup><optgroup label="Outras"><option>Seleções</option><option>Retro</option><option>NBA</option><option>Sapatilhas</option><option>Chuteiras</option><option>Outros</option></optgroup></select></div>
+        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><optgroup label="Europa"><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Eredivisie</option><option>Scottish Premiership</option></optgroup><optgroup label="Competições UEFA"><option>Champions League</option></optgroup><optgroup label="América"><option>Liga MX</option><option>Brasileirão</option></optgroup><optgroup label="Ásia"><option>J1 League</option></optgroup><optgroup label="Outras"><option>Seleções</option><option>Retro</option><option>NBA</option><option>Outros</option></optgroup></select></div>
         <div class="fg-item"><label>Clube / Nome *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
         <div class="fg-item"><label>Época</label><input type="text" id="pEpoca" placeholder="ex: 2024/25"/></div>
         <div class="fg-item"><label>Tamanho</label><select id="pTam"><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Kit Infantil (Criança)"><option>14 (2-3 anos)</option><option>16 (3-4 anos)</option><option>18 (4-5 anos)</option><option>20 (5-6 anos)</option><option>22 (6-7 anos)</option><option>24 (8-9 anos)</option><option>26 (10-11 anos)</option><option>28 (12-13 anos)</option></optgroup></select></div>
@@ -350,6 +350,31 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
             </label>
           </div>
         </div>
+      </div>
+
+      <!-- CAMPOS CALÇADO (Sapatilhas / Chuteiras) -->
+      <div id="camposCalcado" class="fg" style="display:none">
+        <div class="fg-item ff"><label>Nome do Modelo *</label><input type="text" id="caNome" placeholder="ex: Nike Air Max 90, Adidas Predator..."/></div>
+        <div class="fg-item"><label>Cor *</label><input type="text" id="caCor" placeholder="ex: Branco/Preto, Azul Royal..."/></div>
+        <div class="fg-item"><label>Tamanho (nº) *</label><select id="caTam">
+          <option value="">Selecionar</option>
+          <optgroup label="Adulto (EU)">
+            <option>36</option><option>37</option><option>38</option><option>39</option>
+            <option>40</option><option>41</option><option>42</option><option>43</option>
+            <option>44</option><option>45</option><option>46</option><option>47</option><option>48</option>
+          </optgroup>
+          <optgroup label="Infantil (EU)">
+            <option>28</option><option>29</option><option>30</option><option>31</option>
+            <option>32</option><option>33</option><option>34</option><option>35</option>
+          </optgroup>
+        </select></div>
+        <div class="fg-item"><label>Quantidade *</label><input type="number" id="caQtd" min="0" value="1"/></div>
+        <div class="fg-item"><label>Preço de Compra (€) *</label><input type="number" id="caPreco" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Frete (€)</label><input type="number" id="caFrete" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Custo Total (€)</label><input type="number" id="caCusto" class="ro" readonly placeholder="0.00"/></div>
+        <div class="fg-item"><label>Preço de Venda (€) *</label><input type="number" id="caVenda" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Lucro (€)</label><input type="number" id="caLucro" class="ro lucro-f" readonly/></div>
+        <div class="fg-item"><label>Estado</label><select id="caEst"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
       </div>
 
       <!-- CAMPOS PERSONALIZAÇÃO -->
@@ -633,11 +658,25 @@ function calcServ(precoId, vendaId, lucroId){
 ['sPrecoP','sVendaP'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('sPrecoP','sVendaP','sLucroP')));
 ['ptPreco','ptVenda'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('ptPreco','ptVenda','ptLucro')));
 
+function calcCalcado(){
+  const pc=parseFloat(document.getElementById('caPreco').value)||0;
+  const fr=parseFloat(document.getElementById('caFrete').value)||0;
+  const vd=parseFloat(document.getElementById('caVenda').value)||0;
+  const tot=pc+fr, luc=vd-tot;
+  document.getElementById('caCusto').value=(pc||fr)?tot.toFixed(2):'';
+  const lf=document.getElementById('caLucro');
+  lf.value=(pc||vd)?luc.toFixed(2):'';
+  lf.style.color=luc>=0?'var(--green)':'var(--red)';
+}
+['caPreco','caFrete','caVenda'].forEach(id=>document.getElementById(id).addEventListener('input',calcCalcado));
+
 // ── TIPO SWITCHER ─────────────────────────────────────────────
 function switchTipo(tipo){
-  const isProd = tipo !== '';
+  const isCalcado = ['Sapatilhas','Chuteiras'].includes(tipo);
+  const isProd = tipo !== '' && !isCalcado;
   const comServicos = ['Camisa Modelo Fã','Camisa Modelo Jogador','Camisola Manga Longa','Retrô','Kit Infantil','Kit Adulto'].includes(tipo);
   document.getElementById('camposProduto').style.display    = isProd ? 'grid' : 'none';
+  document.getElementById('camposCalcado').style.display    = isCalcado ? 'grid' : 'none';
   document.getElementById('blocoServicos').style.display    = comServicos ? 'block' : 'none';
   if(!comServicos){
     document.getElementById('chkPerso').checked = false;
@@ -680,6 +719,14 @@ function openProdModal(id){
   switchTipo('');
   document.getElementById('mProdTit').textContent=id?'Editar Produto':'Novo Produto';
 
+  // reset calçado
+  ['caNome','caCor','caPreco','caFrete','caVenda'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('caTam').selectedIndex=0;
+  document.getElementById('caQtd').value='1';
+  document.getElementById('caCusto').value='';
+  document.getElementById('caLucro').value='';
+  document.getElementById('caEst').selectedIndex=0;
+
   if(id){
     const p=produtos.find(x=>x.id===id);
     if(p){
@@ -695,6 +742,18 @@ function openProdModal(id){
       document.getElementById('pVenda').value=p.venda||'';
       document.getElementById('pEst').value=p.estado||'Disponível';
       calcProd();
+      // calçado
+      if(['Sapatilhas','Chuteiras'].includes(p.tipo)){
+        document.getElementById('caNome').value=p.caNome||'';
+        document.getElementById('caCor').value=p.caCor||'';
+        document.getElementById('caTam').value=p.caTam||'';
+        document.getElementById('caQtd').value=p.qtd||1;
+        document.getElementById('caPreco').value=p.preco||'';
+        document.getElementById('caFrete').value=p.frete||'';
+        document.getElementById('caVenda').value=p.venda||'';
+        document.getElementById('caEst').value=p.estado||'Disponível';
+        calcCalcado();
+      }
       if(p.sNome||p.sNumero){
         document.getElementById('chkPerso').checked=true;
         document.getElementById('camposPersonalizacao').style.display='grid';
@@ -729,6 +788,36 @@ document.getElementById('addProdBtn').addEventListener('click',()=>openProdModal
 document.getElementById('saveProd').addEventListener('click',()=>{
   const tipo=document.getElementById('pTipo').value;
   if(!tipo){ toast('Seleciona o Tipo / Categoria','err'); return; }
+
+  const isCalcado = ['Sapatilhas','Chuteiras'].includes(tipo);
+
+  if(isCalcado){
+    const caNome=document.getElementById('caNome').value.trim();
+    const caCor=document.getElementById('caCor').value.trim();
+    const caTam=document.getElementById('caTam').value;
+    const caPreco=parseFloat(document.getElementById('caPreco').value)||0;
+    const caVenda=parseFloat(document.getElementById('caVenda').value)||0;
+    if(!caNome||!caTam){ toast('Preenche Modelo e Tamanho','err'); return; }
+    if(caPreco<=0){ toast('Introduz o preço de compra (€)','err'); return; }
+    if(caVenda<=0){ toast('Introduz o preço de venda (€)','err'); return; }
+    const caFrete=parseFloat(document.getElementById('caFrete').value)||0;
+    const entry={
+      id:_eProd||uid(), tipo,
+      liga: tipo, // usar o tipo como categoria (Sapatilhas/Chuteiras)
+      clube: caNome, // nome do modelo como "clube" para compatibilidade
+      caNome, caCor, caTam,
+      epoca:'',
+      tam: caTam,
+      qtd:parseInt(document.getElementById('caQtd').value)||0,
+      preco: caPreco, frete: caFrete, custoTotal: caPreco+caFrete,
+      venda: caVenda, lucro: caVenda-(caPreco+caFrete),
+      estado: document.getElementById('caEst').value
+    };
+    if(_eProd){ const i=produtos.findIndex(x=>x.id===_eProd); produtos[i]=entry; toast('Calçado atualizado!'); }
+    else { produtos.push(entry); toast('Calçado adicionado!'); }
+    save(); closeM('ovProd'); renderStock(); refreshDash();
+    return;
+  }
 
   const liga=document.getElementById('pLiga').value;
   const clube=document.getElementById('pClube').value.trim();
@@ -823,7 +912,7 @@ function renderStock(){
     if(tam&&p.tam!==tam) return false;
     if(est&&p.estado!==est) return false;
     if(q){
-      const fields=[p.clube,p.liga,p.tipo,p.epoca,p.tam,p.sNome,p.ptNome].map(f=>(f||'').toLowerCase());
+      const fields=[p.clube,p.liga,p.tipo,p.epoca,p.tam,p.sNome,p.ptNome,p.caNome,p.caCor,p.caTam].map(f=>(f||'').toLowerCase());
       if(!fields.some(f=>f.includes(q))) return false;
     }
     return true;
@@ -843,7 +932,12 @@ function renderStock(){
   data.forEach(p=>{
     const lc=p.lucro>=0?'lp':'ln';
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td><span class="liga-badge">${ligaLogo(p.liga,'sm')}<span>${esc(p.liga)}</span></span></td><td class="cb">${esc(p.clube)}</td><td>${esc(p.epoca||'-')}</td><td>${esc(p.tipo)}</td><td>${esc(p.tam)}</td><td>${esc(p.qtd)}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${esc(p.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    const isCalcado = ['Sapatilhas','Chuteiras'].includes(p.tipo);
+    if(isCalcado){
+      tr.innerHTML=`<td><span class="st sp" style="font-size:.68rem">${esc(p.tipo)}</span></td><td class="cb">${esc(p.caNome||p.clube)}</td><td>${esc(p.caCor||'—')}</td><td>${esc(p.tipo)}</td><td>${esc(p.caTam||p.tam)}</td><td>${esc(p.qtd)}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${esc(p.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    } else {
+      tr.innerHTML=`<td><span class="liga-badge">${ligaLogo(p.liga,'sm')}<span>${esc(p.liga)}</span></span></td><td class="cb">${esc(p.clube)}</td><td>${esc(p.epoca||'-')}</td><td>${esc(p.tipo)}</td><td>${esc(p.tam)}</td><td>${esc(p.qtd)}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${esc(p.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    }
     tb.appendChild(tr);
   });
   fillFilters();
@@ -991,10 +1085,19 @@ function refreshDash(){
 
   const alertas=produtos.filter(p=>p.qtd<=2&&p.estado!=='Vendido');
   const al=document.getElementById('alertList');
-  al.innerHTML=alertas.length?alertas.map(p=>`<div class="alert-item"><span><i class="fa-solid fa-shirt" style="color:var(--orange);margin-right:6px"></i>${esc(p.clube)} · ${esc(p.tam)}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem alertas de stock</p>';
+  al.innerHTML=alertas.length?alertas.map(p=>{
+    const isCalcado=['Sapatilhas','Chuteiras'].includes(p.tipo);
+    const nome = isCalcado ? `${p.caNome||p.clube} · ${p.caTam||p.tam}` : `${p.clube} · ${p.tam}`;
+    const icon = isCalcado ? 'fa-shoe-prints' : 'fa-shirt';
+    return `<div class="alert-item"><span><i class="fa-solid ${icon}" style="color:var(--orange);margin-right:6px"></i>${esc(nome)}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`;
+  }).join(''):'<p class="empty-msg">Sem alertas de stock</p>';
 
   const vm={};
-  produtos.filter(p=>p.estado==='Vendido').forEach(p=>{ const k=`${p.clube} (${p.liga})`; vm[k]=(vm[k]||0)+1; });
+  produtos.filter(p=>p.estado==='Vendido').forEach(p=>{
+    const isCalcado=['Sapatilhas','Chuteiras'].includes(p.tipo);
+    const k = isCalcado ? `${p.caNome||p.clube} (${p.tipo})` : `${p.clube} (${p.liga})`;
+    vm[k]=(vm[k]||0)+1;
+  });
   const top=Object.entries(vm).sort((a,b)=>b[1]-a[1]).slice(0,5);
   document.getElementById('topList').innerHTML=top.length?top.map(([n,c],i)=>`<div class="top-item"><span class="top-rank">${i+1}</span><span class="top-name">${esc(n)}</span><span class="top-sold">${c} vendida${c!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem vendas registadas</p>';
 
