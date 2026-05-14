@@ -183,7 +183,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <button class="nav-item active" data-page="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
     <button class="nav-item" data-page="stock"><i class="fa-solid fa-boxes-stacked"></i> Gestão de Stock</button>
     <button class="nav-item" data-page="clientes"><i class="fa-solid fa-truck-fast"></i> Clientes / Envios</button>
-    <div class="nav-label">Ligas</div>
+    <div class="nav-label">Categorias</div>
     <button class="nav-item nav-liga" data-liga="Primeira Liga"><i class="fa-solid fa-futbol"></i> Primeira Liga</button>
     <button class="nav-item nav-liga" data-liga="Premier League"><i class="fa-solid fa-futbol"></i> Premier League</button>
     <button class="nav-item nav-liga" data-liga="La Liga"><i class="fa-solid fa-futbol"></i> La Liga</button>
@@ -191,6 +191,13 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <button class="nav-item nav-liga" data-liga="Bundesliga"><i class="fa-solid fa-futbol"></i> Bundesliga</button>
     <button class="nav-item nav-liga" data-liga="Seleções"><i class="fa-solid fa-earth-europe"></i> Seleções</button>
     <button class="nav-item nav-liga" data-liga="Retro"><i class="fa-solid fa-clock-rotate-left"></i> Retro</button>
+    <button class="nav-item nav-liga" data-liga="NBA"><i class="fa-solid fa-basketball"></i> NBA</button>
+    <div class="nav-label">Calçado</div>
+    <button class="nav-item nav-liga" data-liga="Sapatilhas"><i class="fa-solid fa-shoe-prints"></i> Sapatilhas</button>
+    <button class="nav-item nav-liga" data-liga="Chuteiras"><i class="fa-solid fa-shoe-prints"></i> Chuteiras</button>
+    <div class="nav-label">Serviços</div>
+    <button class="nav-item nav-tipo" data-tipo="Personalização (Nome + Número)"><i class="fa-solid fa-pen-nib"></i> Personalização</button>
+    <button class="nav-item nav-tipo" data-tipo="Patch / Patrocinador"><i class="fa-solid fa-tag"></i> Patch / Patrocinador</button>
   </nav>
   <div class="sidebar-footer"><i class="fa-solid fa-circle-dot" style="color:var(--acc)"></i> Sistema Online</div>
 </aside>
@@ -201,7 +208,6 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <button class="tog-btn" id="togBtn"><i class="fa-solid fa-bars"></i></button>
     <div class="srch"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="gSearch" placeholder="Pesquisar cliente, clube, rastreio..."/></div>
     <div class="tb-actions">
-      <button class="btn-icon" id="alertBtn"><i class="fa-solid fa-bell"></i><span class="badge" id="alertBadge" style="display:none">0</span></button>
       <button class="btn btn-primary" id="topAdd"><i class="fa-solid fa-plus"></i> Adicionar</button>
     </div>
   </header>
@@ -235,6 +241,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
       <div class="filters">
         <select class="fsel" id="fLiga"><option value="">Todas as Ligas</option></select>
         <select class="fsel" id="fClube"><option value="">Todos os Clubes</option></select>
+        <select class="fsel" id="fTipo"><option value="">Todos os Tipos</option><optgroup label="Camisolas"><option>Camisa Modelo Fã</option><option>Camisa Modelo Jogador</option><option>Camisola Manga Longa</option><option>Retrô</option></optgroup><optgroup label="Kits"><option>Kit Infantil</option><option>Kit Adulto</option></optgroup><optgroup label="Vestuário"><option>Corta Vento</option><option>Fato de Treino</option><option>Calções</option></optgroup><optgroup label="Calçado"><option>Sapatilhas</option><option>Chuteiras</option></optgroup><optgroup label="NBA"><option>NBA</option></optgroup><optgroup label="Serviços"><option>Personalização (Nome + Número)</option><option>Patch / Patrocinador</option></optgroup></select>
         <select class="fsel" id="fTam"><option value="">Tamanho</option><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Infantil"><option>14 (2-3a)</option><option>16 (3-4a)</option><option>18 (4-5a)</option><option>20 (5-6a)</option><option>22 (6-7a)</option><option>24 (8-9a)</option><option>26 (10-11a)</option><option>28 (12-13a)</option></optgroup></select>
         <select class="fsel" id="fEst"><option value="">Estado</option><option>Disponível</option><option>Reservado</option><option>Vendido</option></select>
         <button class="btn btn-ghost" id="clrStock"><i class="fa-solid fa-xmark"></i> Limpar</button>
@@ -276,16 +283,43 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <div class="mh"><h2 id="mProdTit">Novo Produto</h2><button class="mc" data-close="ovProd"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="mf">
       <div class="fg">
-        <div class="fg-item"><label>Liga *</label><select id="pLiga"><option value="">Selecionar</option><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Seleções</option><option>Retro</option></select></div>
+        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Seleções</option><option>Retro</option><option>NBA</option><option>Sapatilhas</option><option>Chuteiras</option><option>Outros</option></select></div>
         <div class="fg-item"><label>Clube *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
         <div class="fg-item"><label>Época</label><input type="text" id="pEpoca" placeholder="ex: 2024/25"/></div>
-        <div class="fg-item"><label>Tipo</label><select id="pTipo"><option>Fan Version</option><option>Player Version</option></select></div>
+        <div class="fg-item"><label>Tipo / Categoria *</label><select id="pTipo">
+          <optgroup label="Camisolas">
+            <option value="Camisa Modelo Fã">Camisa Modelo Fã</option>
+            <option value="Camisa Modelo Jogador">Camisa Modelo Jogador</option>
+            <option value="Camisola Manga Longa">Camisola Manga Longa</option>
+            <option value="Retrô">Retrô</option>
+          </optgroup>
+          <optgroup label="Kits">
+            <option value="Kit Infantil">Kit Infantil</option>
+            <option value="Kit Adulto">Kit Adulto</option>
+          </optgroup>
+          <optgroup label="Vestuário">
+            <option value="Corta Vento">Corta Vento</option>
+            <option value="Fato de Treino">Fato de Treino</option>
+            <option value="Calções">Calções</option>
+          </optgroup>
+          <optgroup label="Calçado">
+            <option value="Sapatilhas">Sapatilhas</option>
+            <option value="Chuteiras">Chuteiras</option>
+          </optgroup>
+          <optgroup label="NBA">
+            <option value="NBA">NBA</option>
+          </optgroup>
+          <optgroup label="Serviços">
+            <option value="Personalização (Nome + Número)">Personalização (Nome + Número)</option>
+            <option value="Patch / Patrocinador">Patch / Patrocinador</option>
+          </optgroup>
+        </select></div>
         <div class="fg-item"><label>Tamanho</label><select id="pTam"><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Kit Infantil (Criança)"><option>14 (2-3 anos)</option><option>16 (3-4 anos)</option><option>18 (4-5 anos)</option><option>20 (5-6 anos)</option><option>22 (6-7 anos)</option><option>24 (8-9 anos)</option><option>26 (10-11 anos)</option><option>28 (12-13 anos)</option></optgroup></select></div>
         <div class="fg-item"><label>Quantidade *</label><input type="number" id="pQtd" min="0" value="1"/></div>
-        <div class="fg-item"><label>Preço Camisola (€)</label><input type="number" id="pPreco" step="0.01" min="0" value="0" id="pPreco"/></div>
-        <div class="fg-item"><label>Frete (€)</label><input type="number" id="pFrete" step="0.01" min="0" value="0"/></div>
-        <div class="fg-item"><label>Custo Total (€)</label><input type="number" id="pCusto" class="ro" readonly/></div>
-        <div class="fg-item"><label>Preço de Venda (€)</label><input type="number" id="pVenda" step="0.01" min="0" value="0"/></div>
+        <div class="fg-item"><label>Preço de Compra (€) *</label><input type="number" id="pPreco" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Frete (€)</label><input type="number" id="pFrete" step="0.01" min="0" placeholder="0.00"/></div>
+        <div class="fg-item"><label>Custo Total (€)</label><input type="number" id="pCusto" class="ro" readonly placeholder="0.00"/></div>
+        <div class="fg-item"><label>Preço de Venda (€) *</label><input type="number" id="pVenda" step="0.01" min="0" placeholder="0.00"/></div>
         <div class="fg-item"><label>Lucro (€)</label><input type="number" id="pLucro" class="ro lucro-f" readonly/></div>
         <div class="fg-item"><label>Estado</label><select id="pEst"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
       </div>
@@ -337,10 +371,12 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 
 <script>
 // ── DATA ──────────────────────────────────────────────────────
+// Limpar chaves antigas (versão anterior)
+try { localStorage.removeItem('ns_prod'); localStorage.removeItem('ns_cli'); } catch(e){}
 let produtos = [], clientes = [];
-try { produtos = JSON.parse(localStorage.getItem('ns_prod')) || []; } catch(e){}
-try { clientes = JSON.parse(localStorage.getItem('ns_cli'))  || []; } catch(e){}
-function save(){ try{localStorage.setItem('ns_prod',JSON.stringify(produtos));localStorage.setItem('ns_cli',JSON.stringify(clientes));}catch(e){} }
+try { produtos = JSON.parse(localStorage.getItem('ns2_prod')) || []; } catch(e){}
+try { clientes = JSON.parse(localStorage.getItem('ns2_cli'))  || []; } catch(e){}
+function save(){ try{localStorage.setItem('ns2_prod',JSON.stringify(produtos));localStorage.setItem('ns2_cli',JSON.stringify(clientes));}catch(e){} }
 function uid(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
 
 // ── TOAST ────────────────────────────────────────────────────
@@ -381,6 +417,12 @@ navBtns.forEach(btn=>{
     if(btn.classList.contains('nav-liga')){
       showPage('stock');
       document.getElementById('fLiga').value=btn.dataset.liga;
+      document.getElementById('fTipo').value='';
+      renderStock();
+    } else if(btn.classList.contains('nav-tipo')){
+      showPage('stock');
+      document.getElementById('fLiga').value='';
+      document.getElementById('fTipo').value=btn.dataset.tipo;
       renderStock();
     } else {
       showPage(btn.dataset.page);
@@ -410,9 +452,9 @@ function calcProd(){
   const fr=parseFloat(document.getElementById('pFrete').value)||0;
   const vd=parseFloat(document.getElementById('pVenda').value)||0;
   const tot=pc+fr, luc=vd-tot;
-  document.getElementById('pCusto').value=tot.toFixed(2);
+  document.getElementById('pCusto').value=(pc||fr)?tot.toFixed(2):'';
   const lf=document.getElementById('pLucro');
-  lf.value=luc.toFixed(2);
+  lf.value=(pc||vd)?luc.toFixed(2):'';
   lf.style.color=luc>=0?'var(--green)':'var(--red)';
 }
 ['pPreco','pFrete','pVenda'].forEach(id=>document.getElementById(id).addEventListener('input',calcProd));
@@ -423,13 +465,13 @@ function openProdModal(id){
   _eProd=id;
   ['pLiga','pClube','pEpoca','pPreco','pFrete','pVenda','pQtd'].forEach(i=>{
     const el=document.getElementById(i);
-    if(el.tagName==='SELECT') el.selectedIndex=0; else el.value=i==='pQtd'?'1':'0';
+    if(el.tagName==='SELECT') el.selectedIndex=0; else el.value=i==='pQtd'?'1':'';
   });
   document.getElementById('pTipo').selectedIndex=0;
   document.getElementById('pTam').selectedIndex=0;
   document.getElementById('pEst').selectedIndex=0;
-  document.getElementById('pCusto').value='0.00';
-  document.getElementById('pLucro').value='0.00';
+  document.getElementById('pCusto').value='';
+  document.getElementById('pLucro').value='';
   document.getElementById('pLucro').style.color='var(--green)';
   document.getElementById('mProdTit').textContent=id?'Editar Produto':'Novo Produto';
   if(id){
@@ -456,10 +498,12 @@ document.getElementById('addProdBtn').addEventListener('click',()=>openProdModal
 document.getElementById('saveProd').addEventListener('click',()=>{
   const liga=document.getElementById('pLiga').value;
   const clube=document.getElementById('pClube').value.trim();
-  if(!liga||!clube){ toast('Preenche os campos obrigatórios','err'); return; }
   const preco=parseFloat(document.getElementById('pPreco').value)||0;
-  const frete=parseFloat(document.getElementById('pFrete').value)||0;
   const venda=parseFloat(document.getElementById('pVenda').value)||0;
+  if(!liga||!clube){ toast('Preenche os campos obrigatórios','err'); return; }
+  if(preco<=0){ toast('Introduz o preço de compra (€)','err'); return; }
+  if(venda<=0){ toast('Introduz o preço de venda (€)','err'); return; }
+  const frete=parseFloat(document.getElementById('pFrete').value)||0;
   const entry={
     id:_eProd||uid(), liga, clube,
     epoca:document.getElementById('pEpoca').value.trim(),
@@ -480,15 +524,17 @@ function estClass(e){ return e==='Disponível'?'sd':e==='Reservado'?'sr':e==='Ve
 function renderStock(){
   const liga=document.getElementById('fLiga').value;
   const clube=document.getElementById('fClube').value;
+  const tipo=document.getElementById('fTipo').value;
   const tam=document.getElementById('fTam').value;
   const est=document.getElementById('fEst').value;
   const q=document.getElementById('gSearch').value.toLowerCase();
   const data=produtos.filter(p=>{
     if(liga&&p.liga!==liga) return false;
     if(clube&&p.clube!==clube) return false;
+    if(tipo&&p.tipo!==tipo) return false;
     if(tam&&p.tam!==tam) return false;
     if(est&&p.estado!==est) return false;
-    if(q&&!p.clube.toLowerCase().includes(q)&&!p.liga.toLowerCase().includes(q)) return false;
+    if(q&&!p.clube.toLowerCase().includes(q)&&!p.liga.toLowerCase().includes(q)&&!(p.tipo||'').toLowerCase().includes(q)) return false;
     return true;
   });
   const tb=document.getElementById('stockBody');
@@ -519,9 +565,9 @@ function fillFilters(){
   fc.innerHTML='<option value="">Todos os Clubes</option>'+clubes.map(c=>`<option${c===cv2?' selected':''}>${c}</option>`).join('');
 }
 
-['fLiga','fClube','fTam','fEst'].forEach(id=>document.getElementById(id).addEventListener('change',renderStock));
+['fLiga','fClube','fTipo','fTam','fEst'].forEach(id=>document.getElementById(id).addEventListener('change',renderStock));
 document.getElementById('clrStock').addEventListener('click',()=>{
-  ['fLiga','fClube','fTam','fEst'].forEach(id=>document.getElementById(id).value='');
+  ['fLiga','fClube','fTipo','fTam','fEst'].forEach(id=>document.getElementById(id).value='');
   renderStock();
 });
 
@@ -630,9 +676,6 @@ function refreshDash(){
   document.getElementById('k4').textContent='€'+lucroT.toFixed(2);
 
   const alertas=produtos.filter(p=>p.qtd<=2&&p.estado!=='Vendido');
-  const badge=document.getElementById('alertBadge');
-  badge.textContent=alertas.length;
-  badge.style.display=alertas.length?'flex':'none';
   const al=document.getElementById('alertList');
   al.innerHTML=alertas.length?alertas.map(p=>`<div class="alert-item"><span><i class="fa-solid fa-shirt" style="color:var(--orange);margin-right:6px"></i>${p.clube} · ${p.tam}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem alertas de stock</p>';
 
@@ -649,26 +692,7 @@ function refreshDash(){
 }
 
 // ── SEED ─────────────────────────────────────────────────────
-if(!produtos.length){
-  const s=[
-    {id:uid(),liga:'Primeira Liga',clube:'Benfica',epoca:'2024/25',tipo:'Fan Version',tam:'M',qtd:5,preco:18,frete:4,custoTotal:22,venda:35,lucro:13,estado:'Disponível'},
-    {id:uid(),liga:'Primeira Liga',clube:'Porto',epoca:'2024/25',tipo:'Player Version',tam:'L',qtd:2,preco:28,frete:4,custoTotal:32,venda:50,lucro:18,estado:'Disponível'},
-    {id:uid(),liga:'Premier League',clube:'Manchester City',epoca:'2024/25',tipo:'Fan Version',tam:'XL',qtd:1,preco:20,frete:5,custoTotal:25,venda:40,lucro:15,estado:'Reservado'},
-    {id:uid(),liga:'La Liga',clube:'Real Madrid',epoca:'2023/24',tipo:'Fan Version',tam:'S',qtd:3,preco:18,frete:4,custoTotal:22,venda:38,lucro:16,estado:'Disponível'},
-    {id:uid(),liga:'La Liga',clube:'Barcelona',epoca:'2024/25',tipo:'Player Version',tam:'M',qtd:0,preco:30,frete:5,custoTotal:35,venda:55,lucro:20,estado:'Vendido'},
-    {id:uid(),liga:'Seleções',clube:'Portugal',epoca:'2024',tipo:'Fan Version',tam:'L',qtd:4,preco:22,frete:4,custoTotal:26,venda:42,lucro:16,estado:'Disponível'},
-    {id:uid(),liga:'Serie A',clube:'Inter',epoca:'2024/25',tipo:'Fan Version',tam:'M',qtd:2,preco:19,frete:4,custoTotal:23,venda:37,lucro:14,estado:'Disponível'},
-    {id:uid(),liga:'Retro',clube:'AC Milan',epoca:'2006/07',tipo:'Fan Version',tam:'L',qtd:1,preco:15,frete:4,custoTotal:19,venda:32,lucro:13,estado:'Disponível'},
-    {id:uid(),liga:'Bundesliga',clube:'Bayern Munich',epoca:'2024/25',tipo:'Fan Version',tam:'XL',qtd:3,preco:21,frete:5,custoTotal:26,venda:42,lucro:16,estado:'Disponível'},
-  ];
-  const pid=s[4].id;
-  produtos=s; save();
-  clientes=[
-    {id:uid(),nome:'João Ferreira',tel:'912345678',pais:'Portugal',morada:'Rua da Paz 12',cp:'1000-001',cidade:'Lisboa',prodId:pid,rastreio:'PT123456789PT',estado:'Entregue'},
-    {id:uid(),nome:'Maria Carvalho',tel:'934567890',pais:'Portugal',morada:'Av. Central 5',cp:'4000-010',cidade:'Porto',prodId:s[2].id,rastreio:'PT987654321PT',estado:'Em preparação'},
-  ];
-  save();
-}
+
 
 // ── INIT ─────────────────────────────────────────────────────
 refreshDash();
