@@ -210,7 +210,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 <div class="main">
   <header class="topbar">
     <button class="tog-btn" id="togBtn"><i class="fa-solid fa-bars"></i></button>
-    <div class="srch"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="gSearch" placeholder="Pesquisar cliente, clube, rastreio..."/></div>
+    <div class="srch" id="srchBox"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="gSearch" placeholder="Pesquisar nome, clube, liga, rastreio, cidade, telefone..."/><button id="srchClear" style="background:none;border:none;color:var(--t3);cursor:pointer;padding:0 4px;font-size:.75rem;display:none" title="Limpar pesquisa"><i class="fa-solid fa-xmark"></i></button></div>
     <div class="tb-actions">
       <button class="btn btn-primary" id="topAdd"><i class="fa-solid fa-plus"></i> Adicionar</button>
     </div>
@@ -239,7 +239,10 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <!-- STOCK -->
     <section class="page" id="page-stock">
       <div class="ph">
-        <div class="pt">Gestão de Stock</div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div class="pt">Gestão de Stock</div>
+          <span id="stockCount" style="font-size:.72rem;color:var(--t3);font-weight:600;padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:99px"></span>
+        </div>
         <button class="btn btn-primary" id="addProdBtn"><i class="fa-solid fa-plus"></i> Novo Produto</button>
       </div>
       <div class="filters">
@@ -262,7 +265,10 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <!-- CLIENTES -->
     <section class="page" id="page-clientes">
       <div class="ph">
-        <div class="pt">Clientes &amp; Envios</div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div class="pt">Clientes &amp; Envios</div>
+          <span id="clienteCount" style="font-size:.72rem;color:var(--t3);font-weight:600;padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:99px"></span>
+        </div>
         <button class="btn btn-primary" id="addClienteBtn"><i class="fa-solid fa-plus"></i> Novo Cliente</button>
       </div>
       <div class="filters">
@@ -437,15 +443,95 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 <div class="toast" id="toast"></div>
 
 <script>
+// ── SECURITY ──────────────────────────────────────────────────
+// Escapa HTML para prevenir XSS em qualquer dado inserido no DOM
+function esc(str){
+  if(str===null||str===undefined) return '';
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#x27;');
+}
+
+// UID criptograficamente seguro
+function uid(){
+  const arr = new Uint32Array(3);
+  crypto.getRandomValues(arr);
+  return Array.from(arr, n => n.toString(36)).join('') + Date.now().toString(36);
+}
+
+// Validar estrutura dos dados do localStorage antes de usar
+function validarProduto(p){
+  return p && typeof p === 'object' &&
+    typeof p.id === 'string' && /^[a-z0-9]+$/.test(p.id) &&
+    typeof p.clube === 'string' &&
+    typeof p.liga === 'string' &&
+    typeof p.preco === 'number' &&
+    typeof p.venda === 'number' &&
+    typeof p.qtd === 'number';
+}
+function validarCliente(c){
+  return c && typeof c === 'object' &&
+    typeof c.id === 'string' && /^[a-z0-9]+$/.test(c.id) &&
+    typeof c.nome === 'string';
+}
+
+// ── COOKIES ───────────────────────────────────────────────────
+// Cookies têm limite de ~4KB por cookie, por isso dividimos em chunks
+const COOKIE_DAYS = 365;
+const CHUNK_SIZE  = 3000; // chars por cookie (seguro abaixo dos 4096B)
+
+function setCookieChunks(key, value){
+  // Apagar chunks anteriores (até 20)
+  for(let i=0;i<20;i++) document.cookie=`${key}_${i}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
+  const expires = new Date(Date.now()+COOKIE_DAYS*864e5).toUTCString();
+  const chunks = [];
+  for(let i=0;i<value.length;i+=CHUNK_SIZE) chunks.push(value.slice(i,i+CHUNK_SIZE));
+  // Guardar número de chunks
+  document.cookie=`${key}_n=${chunks.length};expires=${expires};path=/;SameSite=Strict`;
+  chunks.forEach((c,i)=>{
+    document.cookie=`${key}_${i}=${encodeURIComponent(c)};expires=${expires};path=/;SameSite=Strict`;
+  });
+}
+
+function getCookieChunks(key){
+  const all={};
+  document.cookie.split(';').forEach(c=>{
+    const [k,v]=c.trim().split('=');
+    if(k) all[k.trim()]=v||'';
+  });
+  const n=parseInt(all[`${key}_n`]||'0');
+  if(!n) return null;
+  let result='';
+  for(let i=0;i<n;i++) result+=decodeURIComponent(all[`${key}_${i}`]||'');
+  return result||null;
+}
+
 // ── DATA ──────────────────────────────────────────────────────
-// Limpar chaves antigas (versão anterior)
-try { localStorage.removeItem('ns_prod'); localStorage.removeItem('ns_cli'); } catch(e){}
+// Migrar localStorage antigo para cookies se existir
+(function migrateFromLocalStorage(){
+  try {
+    const op=localStorage.getItem('ns2_prod'), oc=localStorage.getItem('ns2_cli');
+    if(op){ setCookieChunks('ns3_prod',op); localStorage.removeItem('ns2_prod'); }
+    if(oc){ setCookieChunks('ns3_cli',oc);  localStorage.removeItem('ns2_cli');  }
+    // limpar chaves mais antigas
+    localStorage.removeItem('ns_prod'); localStorage.removeItem('ns_cli');
+  } catch(e){}
+})();
+
 let produtos = [], clientes = [];
 let _savedProd = [], _savedCli = [];
-try { _savedProd = JSON.parse(localStorage.getItem('ns2_prod')) || []; } catch(e){}
-try { _savedCli  = JSON.parse(localStorage.getItem('ns2_cli'))  || []; } catch(e){}
-function save(){ try{localStorage.setItem('ns2_prod',JSON.stringify(produtos));localStorage.setItem('ns2_cli',JSON.stringify(clientes));}catch(e){} }
-function uid(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
+try { const raw=JSON.parse(getCookieChunks('ns3_prod')||'[]'); _savedProd=Array.isArray(raw)?raw.filter(validarProduto):[]; } catch(e){ _savedProd=[]; }
+try { const raw=JSON.parse(getCookieChunks('ns3_cli') ||'[]'); _savedCli =Array.isArray(raw)?raw.filter(validarCliente) :[]; } catch(e){ _savedCli=[]; }
+
+function save(){
+  try {
+    setCookieChunks('ns3_prod', JSON.stringify(produtos));
+    setCookieChunks('ns3_cli',  JSON.stringify(clientes));
+  } catch(e){ console.warn('Erro ao guardar cookies:', e); }
+}
 
 // ── TOAST ────────────────────────────────────────────────────
 let _tt;
@@ -509,6 +595,16 @@ document.getElementById('topAdd').addEventListener('click',()=>{
 });
 
 document.getElementById('gSearch').addEventListener('input',()=>{
+  const val = document.getElementById('gSearch').value;
+  document.getElementById('srchClear').style.display = val ? 'block' : 'none';
+  const ap=document.querySelector('.page.active');
+  if(ap.id==='page-stock') renderStock();
+  if(ap.id==='page-clientes') renderClientes();
+});
+
+document.getElementById('srchClear').addEventListener('click',()=>{
+  document.getElementById('gSearch').value='';
+  document.getElementById('srchClear').style.display='none';
   const ap=document.querySelector('.page.active');
   if(ap.id==='page-stock') renderStock();
   if(ap.id==='page-clientes') renderClientes();
@@ -719,24 +815,35 @@ function renderStock(){
   const tipo=document.getElementById('fTipo').value;
   const tam=document.getElementById('fTam').value;
   const est=document.getElementById('fEst').value;
-  const q=document.getElementById('gSearch').value.toLowerCase();
+  const q=document.getElementById('gSearch').value.toLowerCase().trim();
   const data=produtos.filter(p=>{
     if(liga&&p.liga!==liga) return false;
     if(clube&&p.clube!==clube) return false;
     if(tipo&&p.tipo!==tipo) return false;
     if(tam&&p.tam!==tam) return false;
     if(est&&p.estado!==est) return false;
-    if(q&&!p.clube.toLowerCase().includes(q)&&!p.liga.toLowerCase().includes(q)&&!(p.tipo||'').toLowerCase().includes(q)) return false;
+    if(q){
+      const fields=[p.clube,p.liga,p.tipo,p.epoca,p.tam,p.sNome,p.ptNome].map(f=>(f||'').toLowerCase());
+      if(!fields.some(f=>f.includes(q))) return false;
+    }
     return true;
   });
   const tb=document.getElementById('stockBody');
   const et=document.getElementById('stockEt');
   tb.innerHTML='';
+  // Contador de resultados quando há filtro ativo
+  const hasFilter = liga||clube||tipo||tam||est||q;
   et.style.display=data.length?'none':'block';
+  if(!data.length) et.textContent = q ? `Nenhum resultado para "${q}"` : 'Nenhum produto encontrado.';
+  // Badge de contagem no header da tabela
+  const countBadge = document.getElementById('stockCount');
+  if(countBadge){
+    countBadge.textContent = hasFilter ? `${data.length} resultado${data.length!==1?'s':''}` : `${data.length} produto${data.length!==1?'s':''}`;
+  }
   data.forEach(p=>{
     const lc=p.lucro>=0?'lp':'ln';
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td><span class="liga-badge">${ligaLogo(p.liga,'sm')}<span>${p.liga}</span></span></td><td class="cb">${p.clube}</td><td>${p.epoca||'-'}</td><td>${p.tipo}</td><td>${p.tam}</td><td>${p.qtd}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(p.estado)}">${p.estado}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${p.id}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${p.id}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    tr.innerHTML=`<td><span class="liga-badge">${ligaLogo(p.liga,'sm')}<span>${esc(p.liga)}</span></span></td><td class="cb">${esc(p.clube)}</td><td>${esc(p.epoca||'-')}</td><td>${esc(p.tipo)}</td><td>${esc(p.tam)}</td><td>${esc(p.qtd)}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${esc(p.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
     tb.appendChild(tr);
   });
   fillFilters();
@@ -826,21 +933,36 @@ function cliEstClass(e){ return e==='Em preparação'?'sp':e==='Enviado'?'se':e=
 
 function renderClientes(){
   const est=document.getElementById('fcEst').value;
-  const q=document.getElementById('gSearch').value.toLowerCase();
+  const q=document.getElementById('gSearch').value.toLowerCase().trim();
   const data=clientes.filter(c=>{
     if(est&&c.estado!==est) return false;
-    if(q&&!c.nome.toLowerCase().includes(q)&&!(c.rastreio||'').toLowerCase().includes(q)) return false;
+    if(q){
+      const prod=produtos.find(p=>p.id===c.prodId);
+      const clubeMatch = prod ? prod.clube.toLowerCase().includes(q) : false;
+      const ligaMatch  = prod ? prod.liga.toLowerCase().includes(q)  : false;
+      const nomeMatch  = c.nome.toLowerCase().includes(q);
+      const rastreioMatch = (c.rastreio||'').toLowerCase().includes(q);
+      const cidadeMatch   = (c.cidade||'').toLowerCase().includes(q);
+      const telMatch      = (c.tel||'').toLowerCase().includes(q);
+      if(!nomeMatch && !rastreioMatch && !clubeMatch && !ligaMatch && !cidadeMatch && !telMatch) return false;
+    }
     return true;
   });
   const tb=document.getElementById('clienteBody');
   const et=document.getElementById('clienteEt');
   tb.innerHTML='';
   et.style.display=data.length?'none':'block';
+  if(!data.length) et.textContent = q ? `Nenhum resultado para "${q}"` : 'Nenhum cliente encontrado.';
+  const countBadge2 = document.getElementById('clienteCount');
+  if(countBadge2){
+    const hasFilter2 = est||q;
+    countBadge2.textContent = hasFilter2 ? `${data.length} resultado${data.length!==1?'s':''}` : `${data.length} cliente${data.length!==1?'s':''}`;
+  }
   data.forEach(c=>{
     const prod=produtos.find(p=>p.id===c.prodId);
     const pn=prod?`${prod.clube} (${prod.tam})`:'—';
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td class="cb">${c.nome}</td><td>${c.tel||'—'}</td><td>${c.cidade||'—'}</td><td>${c.pais||'—'}</td><td>${pn}</td><td>${c.rastreio?`<code style="font-size:.72rem;color:var(--acc2)">${c.rastreio}</code>`:'—'}</td><td><span class="st ${cliEstClass(c.estado)}">${c.estado}</span></td><td><div class="ta"><button class="tb" onclick="openClienteModal('${c.id}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delCliente('${c.id}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    tr.innerHTML=`<td class="cb">${esc(c.nome)}</td><td>${esc(c.tel||'—')}</td><td>${esc(c.cidade||'—')}</td><td>${esc(c.pais||'—')}</td><td>${esc(pn)}</td><td>${c.rastreio?`<code style="font-size:.72rem;color:var(--acc2)">${esc(c.rastreio)}</code>`:'—'}</td><td><span class="st ${cliEstClass(c.estado)}">${esc(c.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openClienteModal('${esc(c.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delCliente('${esc(c.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
     tb.appendChild(tr);
   });
 }
@@ -869,12 +991,12 @@ function refreshDash(){
 
   const alertas=produtos.filter(p=>p.qtd<=2&&p.estado!=='Vendido');
   const al=document.getElementById('alertList');
-  al.innerHTML=alertas.length?alertas.map(p=>`<div class="alert-item"><span><i class="fa-solid fa-shirt" style="color:var(--orange);margin-right:6px"></i>${p.clube} · ${p.tam}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem alertas de stock</p>';
+  al.innerHTML=alertas.length?alertas.map(p=>`<div class="alert-item"><span><i class="fa-solid fa-shirt" style="color:var(--orange);margin-right:6px"></i>${esc(p.clube)} · ${esc(p.tam)}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem alertas de stock</p>';
 
   const vm={};
   produtos.filter(p=>p.estado==='Vendido').forEach(p=>{ const k=`${p.clube} (${p.liga})`; vm[k]=(vm[k]||0)+1; });
   const top=Object.entries(vm).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  document.getElementById('topList').innerHTML=top.length?top.map(([n,c],i)=>`<div class="top-item"><span class="top-rank">${i+1}</span><span class="top-name">${n}</span><span class="top-sold">${c} vendida${c!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem vendas registadas</p>';
+  document.getElementById('topList').innerHTML=top.length?top.map(([n,c],i)=>`<div class="top-item"><span class="top-rank">${i+1}</span><span class="top-name">${esc(n)}</span><span class="top-sold">${c} vendida${c!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem vendas registadas</p>';
 
   const lm={};
   produtos.forEach(p=>{ lm[p.liga]=(lm[p.liga]||0)+p.qtd; });
