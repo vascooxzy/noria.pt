@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Noria Supply</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root{
+  --bg:#0b0d14;--bg2:#111520;--bg3:#181c2e;--bg4:#1f243a;
+  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.11);
+  --acc:#6366f1;--acc2:#818cf8;--glow:rgba(99,102,241,.3);
+  --green:#22c55e;--orange:#fb923c;--red:#f43f5e;--yellow:#fbbf24;
+  --t1:#f1f5f9;--t2:#94a3b8;--t3:#475569;
+  --sw:230px;--r:12px;--rs:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px}
+body{background:var(--bg);color:var(--t1);font-family:'DM Sans',sans-serif;display:flex;height:100vh;overflow:hidden}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:99px}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sw);background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;z-index:100;transition:transform .25s}
+.logo{display:flex;align-items:center;gap:10px;padding:20px 18px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.logo-icon{width:36px;height:36px;background:var(--acc);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:.9rem;box-shadow:0 0 14px var(--glow);color:#fff}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.5px;color:var(--t1);line-height:1}
+.logo-text span{color:var(--acc2)}
+.nav{padding:10px 8px;flex:1;display:flex;flex-direction:column;gap:2px}
+.nav-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);padding:10px 10px 4px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);color:var(--t2);text-decoration:none;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap;overflow:hidden;border:none;background:none;width:100%;text-align:left}
+.nav-item i{font-size:.82rem;width:16px;flex-shrink:0}
+.nav-item:hover{background:var(--bg3);color:var(--t1)}
+.nav-item.active{background:var(--acc);color:#fff;box-shadow:0 0 12px var(--glow)}
+.sidebar-footer{padding:12px 18px;border-top:1px solid var(--border);font-size:.72rem;color:var(--t3);flex-shrink:0}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* ── TOPBAR ── */
+.topbar{height:56px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 18px;flex-shrink:0}
+.tog-btn{background:none;border:none;color:var(--t2);cursor:pointer;font-size:.95rem;padding:6px 8px;border-radius:var(--rs);transition:all .15s;display:none}
+.tog-btn:hover{background:var(--bg3);color:var(--t1)}
+.srch{flex:1;max-width:380px;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:0 12px;transition:border-color .15s}
+.srch:focus-within{border-color:var(--acc)}
+.srch i{color:var(--t3);font-size:.82rem}
+.srch input{background:none;border:none;outline:none;color:var(--t1);font-family:inherit;font-size:.875rem;height:34px;width:100%}
+.srch input::placeholder{color:var(--t3)}
+.tb-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--rs);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn-primary{background:var(--acc);color:#fff}
+.btn-primary:hover{background:#4f46e5;box-shadow:0 0 12px var(--glow)}
+.btn-ghost{background:var(--bg3);color:var(--t2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg4);color:var(--t1)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#e11d48}
+.btn-icon{background:var(--bg3);border:1px solid var(--border);color:var(--t2);border-radius:var(--rs);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
+.btn-icon:hover{background:var(--bg4);color:var(--t1)}
+.badge{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;padding:22px}
+.page{display:none}
+.page.active{display:block}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:12px;flex-wrap:wrap}
+.pt{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:1px;line-height:1}
+.psub{color:var(--t3);font-size:.78rem;margin-top:2px}
+
+/* ── KPI ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;align-items:center;gap:14px;transition:all .15s}
+.kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
+.kpi-ico{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.kpi-lbl{font-size:.7rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.kpi-val{font-size:1.55rem;font-family:'Bebas Neue',sans-serif;color:var(--t1)}
+
+/* ── DASH GRID ── */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.card-full{grid-column:1/-1}
+.ch{padding:14px 18px;border-bottom:1px solid var(--border)}
+.ch h2{font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:7px}
+.list-body{padding:10px;display:flex;flex-direction:column;gap:7px;max-height:240px;overflow-y:auto}
+.alert-item{background:rgba(251,146,60,.07);border:1px solid rgba(251,146,60,.18);border-radius:var(--rs);padding:9px 13px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.83rem}
+.alert-qty{color:var(--orange);font-weight:700;font-size:.8rem}
+.top-item{background:var(--bg3);border-radius:var(--rs);padding:9px 13px;display:flex;align-items:center;gap:8px;font-size:.83rem}
+.top-rank{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;color:var(--acc2);width:22px;flex-shrink:0}
+.top-name{flex:1}
+.top-sold{color:var(--green);font-weight:600;font-size:.78rem}
+.empty-msg{color:var(--t3);font-size:.83rem;text-align:center;padding:18px}
+.lbars{padding:18px;display:flex;flex-direction:column;gap:11px}
+.lbar-row{display:flex;align-items:center;gap:11px}
+.lbar-lbl{width:130px;font-size:.78rem;color:var(--t2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lbar-track{flex:1;height:7px;background:var(--bg4);border-radius:99px;overflow:hidden}
+.lbar-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:99px;transition:width .4s}
+.lbar-val{font-size:.78rem;color:var(--t3);width:48px;text-align:right}
+
+/* ── FILTERS ── */
+.filters{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.fsel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);color:var(--t2);font-family:inherit;font-size:.83rem;padding:7px 11px;cursor:pointer;outline:none;transition:all .15s}
+.fsel:focus{border-color:var(--acc);color:var(--t1)}
+
+/* ── TABLE ── */
+.tw{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:.81rem;min-width:800px}
+thead tr{background:var(--bg3);border-bottom:1px solid var(--border)}
+th{padding:11px 13px;text-align:left;font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;color:var(--t3);white-space:nowrap}
+td{padding:10px 13px;border-bottom:1px solid var(--border);color:var(--t2);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--bg3);color:var(--t1)}
+.et{display:none;text-align:center;color:var(--t3);padding:36px;font-size:.83rem}
+
+/* STATUS */
+.st{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:.7rem;font-weight:600;white-space:nowrap}
+.st::before{content:'';width:5px;height:5px;border-radius:50%}
+.sd{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}.sd::before{background:var(--green)}
+.sr{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.2)}.sr::before{background:var(--yellow)}
+.sv{background:rgba(244,63,94,.1);color:var(--red);border:1px solid rgba(244,63,94,.2)}.sv::before{background:var(--red)}
+.sp{background:rgba(99,102,241,.1);color:var(--acc2);border:1px solid rgba(99,102,241,.2)}.sp::before{background:var(--acc2)}
+.se{background:rgba(251,146,60,.1);color:var(--orange);border:1px solid rgba(251,146,60,.2)}.se::before{background:var(--orange)}
+.sent{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}.sent::before{background:var(--green)}
+
+.ta{display:flex;gap:5px}
+.tb{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);color:var(--t2);width:29px;height:29px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72rem;transition:all .15s}
+.tb:hover{background:var(--bg4);color:var(--t1)}
+.tb.del:hover{background:rgba(244,63,94,.15);color:var(--red);border-color:rgba(244,63,94,.3)}
+.cb{font-weight:600;color:var(--t1)}
+.lp{color:var(--green);font-weight:700}
+.ln{color:var(--red);font-weight:700}
+
+/* ── MODAL ── */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:300;padding:16px}
+.ov.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);width:100%;max-width:660px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:su .2s ease}
+.modal-sm{max-width:370px}
+@keyframes su{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.mh{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.mh h2{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.5px}
+.mc{background:none;border:none;color:var(--t3);cursor:pointer;font-size:.95rem;padding:4px;transition:color .15s}
+.mc:hover{color:var(--t1)}
+.mf{padding:18px 22px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.ff{grid-column:1/-1}
+.fg-item{display:flex;flex-direction:column;gap:5px}
+.fg-item label{font-size:.7rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
+.fg-item input,.fg-item select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);color:var(--t1);font-family:inherit;font-size:.875rem;padding:8px 11px;outline:none;transition:border-color .15s}
+.fg-item input:focus,.fg-item select:focus{border-color:var(--acc)}
+.ro{background:var(--bg4)!important;color:var(--t3)!important;cursor:default}
+.lucro-f{font-weight:700}
+.ma{display:flex;gap:9px;justify-content:flex-end;padding-top:14px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);padding:11px 18px;font-size:.83rem;font-weight:500;color:var(--t1);box-shadow:0 4px 20px rgba(0,0,0,.5);transform:translateY(70px);opacity:0;transition:all .22s;z-index:999;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{border-color:rgba(34,197,94,.4);color:var(--green)}
+.toast.err{border-color:rgba(244,63,94,.4);color:var(--red)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1050px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .tog-btn{display:flex}
+  .dash-grid{grid-template-columns:1fr}
+}
+@media(max-width:580px){.kpi-grid{grid-template-columns:1fr}.fg{grid-template-columns:1fr}.content{padding:14px}}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-icon"><i class="fa-solid fa-shirt"></i></div>
+    <div class="logo-text">Noria <span>Supply</span></div>
+  </div>
+  <nav class="nav">
+    <div class="nav-label">Principal</div>
+    <button class="nav-item active" data-page="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
+    <button class="nav-item" data-page="stock"><i class="fa-solid fa-boxes-stacked"></i> Gestão de Stock</button>
+    <button class="nav-item" data-page="clientes"><i class="fa-solid fa-truck-fast"></i> Clientes / Envios</button>
+    <div class="nav-label">Ligas</div>
+    <button class="nav-item nav-liga" data-liga="Primeira Liga"><i class="fa-solid fa-futbol"></i> Primeira Liga</button>
+    <button class="nav-item nav-liga" data-liga="Premier League"><i class="fa-solid fa-futbol"></i> Premier League</button>
+    <button class="nav-item nav-liga" data-liga="La Liga"><i class="fa-solid fa-futbol"></i> La Liga</button>
+    <button class="nav-item nav-liga" data-liga="Serie A"><i class="fa-solid fa-futbol"></i> Serie A</button>
+    <button class="nav-item nav-liga" data-liga="Bundesliga"><i class="fa-solid fa-futbol"></i> Bundesliga</button>
+    <button class="nav-item nav-liga" data-liga="Seleções"><i class="fa-solid fa-earth-europe"></i> Seleções</button>
+    <button class="nav-item nav-liga" data-liga="Retro"><i class="fa-solid fa-clock-rotate-left"></i> Retro</button>
+  </nav>
+  <div class="sidebar-footer"><i class="fa-solid fa-circle-dot" style="color:var(--acc)"></i> Sistema Online</div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <header class="topbar">
+    <button class="tog-btn" id="togBtn"><i class="fa-solid fa-bars"></i></button>
+    <div class="srch"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="gSearch" placeholder="Pesquisar cliente, clube, rastreio..."/></div>
+    <div class="tb-actions">
+      <button class="btn-icon" id="alertBtn"><i class="fa-solid fa-bell"></i><span class="badge" id="alertBadge" style="display:none">0</span></button>
+      <button class="btn btn-primary" id="topAdd"><i class="fa-solid fa-plus"></i> Adicionar</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <section class="page active" id="page-dashboard">
+      <div class="ph">
+        <div><div class="pt">Dashboard</div><div class="psub" id="dashDate"></div></div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-ico" style="background:rgba(99,102,241,.14);color:#818cf8"><i class="fa-solid fa-shirt"></i></div><div><div class="kpi-lbl">Total Camisolas</div><div class="kpi-val" id="k1">0</div></div></div>
+        <div class="kpi"><div class="kpi-ico" style="background:rgba(34,197,94,.12);color:#4ade80"><i class="fa-solid fa-warehouse"></i></div><div><div class="kpi-lbl">Stock Disponível</div><div class="kpi-val" id="k2">0</div></div></div>
+        <div class="kpi"><div class="kpi-ico" style="background:rgba(251,146,60,.12);color:#fb923c"><i class="fa-solid fa-bag-shopping"></i></div><div><div class="kpi-lbl">Vendidas</div><div class="kpi-val" id="k3">0</div></div></div>
+        <div class="kpi" style="border-color:rgba(251,191,36,.2)"><div class="kpi-ico" style="background:rgba(251,191,36,.12);color:#fbbf24"><i class="fa-solid fa-euro-sign"></i></div><div><div class="kpi-lbl">Lucro Total</div><div class="kpi-val" id="k4">€0.00</div></div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="card"><div class="ch"><h2><i class="fa-solid fa-triangle-exclamation" style="color:var(--orange)"></i> Alertas de Stock Baixo</h2></div><div class="list-body" id="alertList"><p class="empty-msg">Sem alertas</p></div></div>
+        <div class="card"><div class="ch"><h2><i class="fa-solid fa-fire" style="color:var(--red)"></i> Mais Vendidos</h2></div><div class="list-body" id="topList"><p class="empty-msg">Sem dados</p></div></div>
+        <div class="card card-full"><div class="ch"><h2><i class="fa-solid fa-chart-bar" style="color:var(--acc2)"></i> Visão Geral por Liga</h2></div><div class="lbars" id="leagueBars"></div></div>
+      </div>
+    </section>
+
+    <!-- STOCK -->
+    <section class="page" id="page-stock">
+      <div class="ph">
+        <div class="pt">Gestão de Stock</div>
+        <button class="btn btn-primary" id="addProdBtn"><i class="fa-solid fa-plus"></i> Novo Produto</button>
+      </div>
+      <div class="filters">
+        <select class="fsel" id="fLiga"><option value="">Todas as Ligas</option></select>
+        <select class="fsel" id="fClube"><option value="">Todos os Clubes</option></select>
+        <select class="fsel" id="fTam"><option value="">Tamanho</option><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Infantil"><option>14 (2-3a)</option><option>16 (3-4a)</option><option>18 (4-5a)</option><option>20 (5-6a)</option><option>22 (6-7a)</option><option>24 (8-9a)</option><option>26 (10-11a)</option><option>28 (12-13a)</option></optgroup></select>
+        <select class="fsel" id="fEst"><option value="">Estado</option><option>Disponível</option><option>Reservado</option><option>Vendido</option></select>
+        <button class="btn btn-ghost" id="clrStock"><i class="fa-solid fa-xmark"></i> Limpar</button>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Liga</th><th>Clube</th><th>Época</th><th>Tipo</th><th>Tam.</th><th>Qtd.</th><th>Custo</th><th>Frete</th><th>Total</th><th>Venda</th><th>Lucro</th><th>Estado</th><th>Ações</th></tr></thead>
+          <tbody id="stockBody"></tbody>
+        </table>
+        <p class="et" id="stockEt">Nenhum produto encontrado.</p>
+      </div>
+    </section>
+
+    <!-- CLIENTES -->
+    <section class="page" id="page-clientes">
+      <div class="ph">
+        <div class="pt">Clientes &amp; Envios</div>
+        <button class="btn btn-primary" id="addClienteBtn"><i class="fa-solid fa-plus"></i> Novo Cliente</button>
+      </div>
+      <div class="filters">
+        <select class="fsel" id="fcEst"><option value="">Estado</option><option>Em preparação</option><option>Enviado</option><option>Entregue</option></select>
+        <button class="btn btn-ghost" id="clrCliente"><i class="fa-solid fa-xmark"></i> Limpar</button>
+      </div>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Cliente</th><th>Telefone</th><th>Localidade</th><th>País</th><th>Camisola</th><th>Rastreio</th><th>Estado</th><th>Ações</th></tr></thead>
+          <tbody id="clienteBody"></tbody>
+        </table>
+        <p class="et" id="clienteEt">Nenhum cliente encontrado.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- MODAL PRODUTO -->
+<div class="ov" id="ovProd">
+  <div class="modal">
+    <div class="mh"><h2 id="mProdTit">Novo Produto</h2><button class="mc" data-close="ovProd"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="mf">
+      <div class="fg">
+        <div class="fg-item"><label>Liga *</label><select id="pLiga"><option value="">Selecionar</option><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Seleções</option><option>Retro</option></select></div>
+        <div class="fg-item"><label>Clube *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
+        <div class="fg-item"><label>Época</label><input type="text" id="pEpoca" placeholder="ex: 2024/25"/></div>
+        <div class="fg-item"><label>Tipo</label><select id="pTipo"><option>Fan Version</option><option>Player Version</option></select></div>
+        <div class="fg-item"><label>Tamanho</label><select id="pTam"><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Kit Infantil (Criança)"><option>14 (2-3 anos)</option><option>16 (3-4 anos)</option><option>18 (4-5 anos)</option><option>20 (5-6 anos)</option><option>22 (6-7 anos)</option><option>24 (8-9 anos)</option><option>26 (10-11 anos)</option><option>28 (12-13 anos)</option></optgroup></select></div>
+        <div class="fg-item"><label>Quantidade *</label><input type="number" id="pQtd" min="0" value="1"/></div>
+        <div class="fg-item"><label>Preço Camisola (€)</label><input type="number" id="pPreco" step="0.01" min="0" value="0" id="pPreco"/></div>
+        <div class="fg-item"><label>Frete (€)</label><input type="number" id="pFrete" step="0.01" min="0" value="0"/></div>
+        <div class="fg-item"><label>Custo Total (€)</label><input type="number" id="pCusto" class="ro" readonly/></div>
+        <div class="fg-item"><label>Preço de Venda (€)</label><input type="number" id="pVenda" step="0.01" min="0" value="0"/></div>
+        <div class="fg-item"><label>Lucro (€)</label><input type="number" id="pLucro" class="ro lucro-f" readonly/></div>
+        <div class="fg-item"><label>Estado</label><select id="pEst"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
+      </div>
+      <div class="ma">
+        <button class="btn btn-ghost" data-close="ovProd">Cancelar</button>
+        <button class="btn btn-primary" id="saveProd">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CLIENTE -->
+<div class="ov" id="ovCliente">
+  <div class="modal">
+    <div class="mh"><h2 id="mClienteTit">Novo Cliente</h2><button class="mc" data-close="ovCliente"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="mf">
+      <div class="fg">
+        <div class="fg-item ff"><label>Nome Completo *</label><input type="text" id="cNome"/></div>
+        <div class="fg-item"><label>Telefone</label><input type="text" id="cTel"/></div>
+        <div class="fg-item"><label>País</label><input type="text" id="cPais" value="Portugal"/></div>
+        <div class="fg-item ff"><label>Morada *</label><input type="text" id="cMorada"/></div>
+        <div class="fg-item"><label>Código Postal / CEP</label><input type="text" id="cCP"/></div>
+        <div class="fg-item"><label>Localidade / Cidade</label><input type="text" id="cCidade"/></div>
+        <div class="fg-item"><label>Produto (Camisola)</label><select id="cProduto"><option value="">Selecionar produto</option></select></div>
+        <div class="fg-item"><label>Código de Rastreio</label><input type="text" id="cRastreio"/></div>
+        <div class="fg-item"><label>Estado da Encomenda</label><select id="cEst"><option>Em preparação</option><option>Enviado</option><option>Entregue</option></select></div>
+      </div>
+      <div class="ma">
+        <button class="btn btn-ghost" data-close="ovCliente">Cancelar</button>
+        <button class="btn btn-primary" id="saveCliente">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="ov" id="ovConfirm">
+  <div class="modal modal-sm">
+    <div class="mh"><h2>Confirmar</h2><button class="mc" data-close="ovConfirm"><i class="fa-solid fa-xmark"></i></button></div>
+    <p id="confirmMsg" style="padding:0 22px 14px;color:var(--t2)">Tens a certeza?</p>
+    <div class="ma" style="padding:0 22px 18px">
+      <button class="btn btn-ghost" data-close="ovConfirm">Cancelar</button>
+      <button class="btn btn-danger" id="confirmOk">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+let produtos = [], clientes = [];
+try { produtos = JSON.parse(localStorage.getItem('ns_prod')) || []; } catch(e){}
+try { clientes = JSON.parse(localStorage.getItem('ns_cli'))  || []; } catch(e){}
+function save(){ try{localStorage.setItem('ns_prod',JSON.stringify(produtos));localStorage.setItem('ns_cli',JSON.stringify(clientes));}catch(e){} }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
+
+// ── TOAST ────────────────────────────────────────────────────
+let _tt;
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.className='toast show '+type;
+  clearTimeout(_tt); _tt=setTimeout(()=>el.className='toast',2800);
+}
+
+// ── MODALS ───────────────────────────────────────────────────
+function openM(id){ document.getElementById(id).classList.add('open'); }
+function closeM(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeM(b.dataset.close)));
+document.querySelectorAll('.ov').forEach(ov=>ov.addEventListener('click',e=>{ if(e.target===ov) closeM(ov.id); }));
+
+// ── CONFIRM ──────────────────────────────────────────────────
+let _cb=null;
+function askConfirm(msg,cb){ document.getElementById('confirmMsg').textContent=msg; _cb=cb; openM('ovConfirm'); }
+document.getElementById('confirmOk').addEventListener('click',()=>{ if(_cb) _cb(); _cb=null; closeM('ovConfirm'); });
+
+// ── NAVIGATION ───────────────────────────────────────────────
+const navBtns = document.querySelectorAll('.nav-item');
+const sidebar  = document.getElementById('sidebar');
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(id==='dashboard') refreshDash();
+  if(id==='stock')     renderStock();
+  if(id==='clientes')  renderClientes();
+}
+
+navBtns.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    navBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    if(btn.classList.contains('nav-liga')){
+      showPage('stock');
+      document.getElementById('fLiga').value=btn.dataset.liga;
+      renderStock();
+    } else {
+      showPage(btn.dataset.page);
+    }
+    if(window.innerWidth<860) sidebar.classList.remove('open');
+  });
+});
+
+document.getElementById('togBtn').addEventListener('click',()=>sidebar.classList.toggle('open'));
+
+document.getElementById('topAdd').addEventListener('click',()=>{
+  navBtns.forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-page="stock"]').classList.add('active');
+  showPage('stock');
+  openProdModal(null);
+});
+
+document.getElementById('gSearch').addEventListener('input',()=>{
+  const ap=document.querySelector('.page.active');
+  if(ap.id==='page-stock') renderStock();
+  if(ap.id==='page-clientes') renderClientes();
+});
+
+// ── CALC ─────────────────────────────────────────────────────
+function calcProd(){
+  const pc=parseFloat(document.getElementById('pPreco').value)||0;
+  const fr=parseFloat(document.getElementById('pFrete').value)||0;
+  const vd=parseFloat(document.getElementById('pVenda').value)||0;
+  const tot=pc+fr, luc=vd-tot;
+  document.getElementById('pCusto').value=tot.toFixed(2);
+  const lf=document.getElementById('pLucro');
+  lf.value=luc.toFixed(2);
+  lf.style.color=luc>=0?'var(--green)':'var(--red)';
+}
+['pPreco','pFrete','pVenda'].forEach(id=>document.getElementById(id).addEventListener('input',calcProd));
+
+// ── PRODUTO MODAL ────────────────────────────────────────────
+let _eProd=null;
+function openProdModal(id){
+  _eProd=id;
+  ['pLiga','pClube','pEpoca','pPreco','pFrete','pVenda','pQtd'].forEach(i=>{
+    const el=document.getElementById(i);
+    if(el.tagName==='SELECT') el.selectedIndex=0; else el.value=i==='pQtd'?'1':'0';
+  });
+  document.getElementById('pTipo').selectedIndex=0;
+  document.getElementById('pTam').selectedIndex=0;
+  document.getElementById('pEst').selectedIndex=0;
+  document.getElementById('pCusto').value='0.00';
+  document.getElementById('pLucro').value='0.00';
+  document.getElementById('pLucro').style.color='var(--green)';
+  document.getElementById('mProdTit').textContent=id?'Editar Produto':'Novo Produto';
+  if(id){
+    const p=produtos.find(x=>x.id===id);
+    if(p){
+      document.getElementById('pLiga').value=p.liga;
+      document.getElementById('pClube').value=p.clube;
+      document.getElementById('pEpoca').value=p.epoca||'';
+      document.getElementById('pTipo').value=p.tipo;
+      document.getElementById('pTam').value=p.tam;
+      document.getElementById('pQtd').value=p.qtd;
+      document.getElementById('pPreco').value=p.preco;
+      document.getElementById('pFrete').value=p.frete;
+      document.getElementById('pVenda').value=p.venda;
+      document.getElementById('pEst').value=p.estado;
+      calcProd();
+    }
+  }
+  openM('ovProd');
+}
+
+document.getElementById('addProdBtn').addEventListener('click',()=>openProdModal(null));
+
+document.getElementById('saveProd').addEventListener('click',()=>{
+  const liga=document.getElementById('pLiga').value;
+  const clube=document.getElementById('pClube').value.trim();
+  if(!liga||!clube){ toast('Preenche os campos obrigatórios','err'); return; }
+  const preco=parseFloat(document.getElementById('pPreco').value)||0;
+  const frete=parseFloat(document.getElementById('pFrete').value)||0;
+  const venda=parseFloat(document.getElementById('pVenda').value)||0;
+  const entry={
+    id:_eProd||uid(), liga, clube,
+    epoca:document.getElementById('pEpoca').value.trim(),
+    tipo:document.getElementById('pTipo').value,
+    tam:document.getElementById('pTam').value,
+    qtd:parseInt(document.getElementById('pQtd').value)||0,
+    preco, frete, custoTotal:preco+frete, venda, lucro:venda-(preco+frete),
+    estado:document.getElementById('pEst').value
+  };
+  if(_eProd){ const i=produtos.findIndex(x=>x.id===_eProd); produtos[i]=entry; toast('Produto atualizado!'); }
+  else { produtos.push(entry); toast('Produto adicionado!'); }
+  save(); closeM('ovProd'); renderStock(); refreshDash();
+});
+
+// ── STOCK RENDER ─────────────────────────────────────────────
+function estClass(e){ return e==='Disponível'?'sd':e==='Reservado'?'sr':e==='Vendido'?'sv':''; }
+
+function renderStock(){
+  const liga=document.getElementById('fLiga').value;
+  const clube=document.getElementById('fClube').value;
+  const tam=document.getElementById('fTam').value;
+  const est=document.getElementById('fEst').value;
+  const q=document.getElementById('gSearch').value.toLowerCase();
+  const data=produtos.filter(p=>{
+    if(liga&&p.liga!==liga) return false;
+    if(clube&&p.clube!==clube) return false;
+    if(tam&&p.tam!==tam) return false;
+    if(est&&p.estado!==est) return false;
+    if(q&&!p.clube.toLowerCase().includes(q)&&!p.liga.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const tb=document.getElementById('stockBody');
+  const et=document.getElementById('stockEt');
+  tb.innerHTML='';
+  et.style.display=data.length?'none':'block';
+  data.forEach(p=>{
+    const lc=p.lucro>=0?'lp':'ln';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${p.liga}</td><td class="cb">${p.clube}</td><td>${p.epoca||'-'}</td><td>${p.tipo}</td><td>${p.tam}</td><td>${p.qtd}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(p.estado)}">${p.estado}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${p.id}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${p.id}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    tb.appendChild(tr);
+  });
+  fillFilters();
+}
+
+window.delProd=function(id){
+  askConfirm('Eliminar este produto?',()=>{
+    produtos=produtos.filter(p=>p.id!==id); save(); renderStock(); refreshDash(); toast('Produto eliminado','err');
+  });
+};
+
+function fillFilters(){
+  const ligas=[...new Set(produtos.map(p=>p.liga))].sort();
+  const clubes=[...new Set(produtos.map(p=>p.clube))].sort();
+  const fl=document.getElementById('fLiga'), fc=document.getElementById('fClube');
+  const cv1=fl.value, cv2=fc.value;
+  fl.innerHTML='<option value="">Todas as Ligas</option>'+ligas.map(l=>`<option${l===cv1?' selected':''}>${l}</option>`).join('');
+  fc.innerHTML='<option value="">Todos os Clubes</option>'+clubes.map(c=>`<option${c===cv2?' selected':''}>${c}</option>`).join('');
+}
+
+['fLiga','fClube','fTam','fEst'].forEach(id=>document.getElementById(id).addEventListener('change',renderStock));
+document.getElementById('clrStock').addEventListener('click',()=>{
+  ['fLiga','fClube','fTam','fEst'].forEach(id=>document.getElementById(id).value='');
+  renderStock();
+});
+
+// ── CLIENTE MODAL ────────────────────────────────────────────
+let _eCli=null;
+function openClienteModal(id){
+  _eCli=id;
+  ['cNome','cTel','cMorada','cCP','cCidade','cRastreio'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('cPais').value='Portugal';
+  document.getElementById('cEst').selectedIndex=0;
+  document.getElementById('mClienteTit').textContent=id?'Editar Cliente':'Novo Cliente';
+  const sel=document.getElementById('cProduto');
+  sel.innerHTML='<option value="">Selecionar produto</option>';
+  produtos.forEach(p=>{ const o=document.createElement('option'); o.value=p.id; o.textContent=`${p.clube} — ${p.liga} (${p.tam})${p.epoca?' · '+p.epoca:''}`; sel.appendChild(o); });
+  if(id){
+    const c=clientes.find(x=>x.id===id);
+    if(c){
+      document.getElementById('cNome').value=c.nome;
+      document.getElementById('cTel').value=c.tel||'';
+      document.getElementById('cPais').value=c.pais||'Portugal';
+      document.getElementById('cMorada').value=c.morada||'';
+      document.getElementById('cCP').value=c.cp||'';
+      document.getElementById('cCidade').value=c.cidade||'';
+      document.getElementById('cProduto').value=c.prodId||'';
+      document.getElementById('cRastreio').value=c.rastreio||'';
+      document.getElementById('cEst').value=c.estado;
+    }
+  }
+  openM('ovCliente');
+}
+
+document.getElementById('addClienteBtn').addEventListener('click',()=>openClienteModal(null));
+
+document.getElementById('saveCliente').addEventListener('click',()=>{
+  const nome=document.getElementById('cNome').value.trim();
+  const morada=document.getElementById('cMorada').value.trim();
+  if(!nome||!morada){ toast('Preenche os campos obrigatórios','err'); return; }
+  const prodId=document.getElementById('cProduto').value;
+  const entry={
+    id:_eCli||uid(), nome,
+    tel:document.getElementById('cTel').value.trim(),
+    pais:document.getElementById('cPais').value.trim(),
+    morada,
+    cp:document.getElementById('cCP').value.trim(),
+    cidade:document.getElementById('cCidade').value.trim(),
+    prodId,
+    rastreio:document.getElementById('cRastreio').value.trim(),
+    estado:document.getElementById('cEst').value
+  };
+  if(_eCli){ const i=clientes.findIndex(x=>x.id===_eCli); clientes[i]=entry; toast('Cliente atualizado!'); }
+  else { clientes.push(entry); toast('Cliente adicionado!'); }
+  if(prodId){
+    const pi=produtos.findIndex(p=>p.id===prodId);
+    if(pi!==-1){
+      if(entry.estado==='Entregue') produtos[pi].estado='Vendido';
+      else if(entry.estado==='Enviado') produtos[pi].estado='Reservado';
+    }
+  }
+  save(); closeM('ovCliente'); renderClientes(); refreshDash();
+});
+
+// ── CLIENTES RENDER ──────────────────────────────────────────
+function cliEstClass(e){ return e==='Em preparação'?'sp':e==='Enviado'?'se':e==='Entregue'?'sent':''; }
+
+function renderClientes(){
+  const est=document.getElementById('fcEst').value;
+  const q=document.getElementById('gSearch').value.toLowerCase();
+  const data=clientes.filter(c=>{
+    if(est&&c.estado!==est) return false;
+    if(q&&!c.nome.toLowerCase().includes(q)&&!(c.rastreio||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+  const tb=document.getElementById('clienteBody');
+  const et=document.getElementById('clienteEt');
+  tb.innerHTML='';
+  et.style.display=data.length?'none':'block';
+  data.forEach(c=>{
+    const prod=produtos.find(p=>p.id===c.prodId);
+    const pn=prod?`${prod.clube} (${prod.tam})`:'—';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td class="cb">${c.nome}</td><td>${c.tel||'—'}</td><td>${c.cidade||'—'}</td><td>${c.pais||'—'}</td><td>${pn}</td><td>${c.rastreio?`<code style="font-size:.72rem;color:var(--acc2)">${c.rastreio}</code>`:'—'}</td><td><span class="st ${cliEstClass(c.estado)}">${c.estado}</span></td><td><div class="ta"><button class="tb" onclick="openClienteModal('${c.id}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delCliente('${c.id}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+window.delCliente=function(id){
+  askConfirm('Eliminar este cliente?',()=>{
+    clientes=clientes.filter(c=>c.id!==id); save(); renderClientes(); toast('Cliente eliminado','err');
+  });
+};
+
+document.getElementById('fcEst').addEventListener('change',renderClientes);
+document.getElementById('clrCliente').addEventListener('click',()=>{ document.getElementById('fcEst').value=''; renderClientes(); });
+
+// ── DASHBOARD ────────────────────────────────────────────────
+function refreshDash(){
+  const d=new Date();
+  document.getElementById('dashDate').textContent=d.toLocaleDateString('pt-PT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const totQ=produtos.reduce((s,p)=>s+p.qtd,0);
+  const dispQ=produtos.filter(p=>p.estado==='Disponível').reduce((s,p)=>s+p.qtd,0);
+  const vendN=produtos.filter(p=>p.estado==='Vendido').length;
+  const lucroT=produtos.filter(p=>p.estado==='Vendido').reduce((s,p)=>s+p.lucro,0);
+  document.getElementById('k1').textContent=totQ;
+  document.getElementById('k2').textContent=dispQ;
+  document.getElementById('k3').textContent=vendN;
+  document.getElementById('k4').textContent='€'+lucroT.toFixed(2);
+
+  const alertas=produtos.filter(p=>p.qtd<=2&&p.estado!=='Vendido');
+  const badge=document.getElementById('alertBadge');
+  badge.textContent=alertas.length;
+  badge.style.display=alertas.length?'flex':'none';
+  const al=document.getElementById('alertList');
+  al.innerHTML=alertas.length?alertas.map(p=>`<div class="alert-item"><span><i class="fa-solid fa-shirt" style="color:var(--orange);margin-right:6px"></i>${p.clube} · ${p.tam}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem alertas de stock</p>';
+
+  const vm={};
+  produtos.filter(p=>p.estado==='Vendido').forEach(p=>{ const k=`${p.clube} (${p.liga})`; vm[k]=(vm[k]||0)+1; });
+  const top=Object.entries(vm).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('topList').innerHTML=top.length?top.map(([n,c],i)=>`<div class="top-item"><span class="top-rank">${i+1}</span><span class="top-name">${n}</span><span class="top-sold">${c} vendida${c!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem vendas registadas</p>';
+
+  const lm={};
+  produtos.forEach(p=>{ lm[p.liga]=(lm[p.liga]||0)+p.qtd; });
+  const lEntries=Object.entries(lm).sort((a,b)=>b[1]-a[1]);
+  const mx=lEntries.length?lEntries[0][1]:1;
+  document.getElementById('leagueBars').innerHTML=lEntries.length?lEntries.map(([l,q])=>`<div class="lbar-row"><span class="lbar-lbl">${l}</span><div class="lbar-track"><div class="lbar-fill" style="width:${(q/mx*100).toFixed(1)}%"></div></div><span class="lbar-val">${q} un.</span></div>`).join(''):'<p class="empty-msg">Sem dados</p>';
+}
+
+// ── SEED ─────────────────────────────────────────────────────
+if(!produtos.length){
+  const s=[
+    {id:uid(),liga:'Primeira Liga',clube:'Benfica',epoca:'2024/25',tipo:'Fan Version',tam:'M',qtd:5,preco:18,frete:4,custoTotal:22,venda:35,lucro:13,estado:'Disponível'},
+    {id:uid(),liga:'Primeira Liga',clube:'Porto',epoca:'2024/25',tipo:'Player Version',tam:'L',qtd:2,preco:28,frete:4,custoTotal:32,venda:50,lucro:18,estado:'Disponível'},
+    {id:uid(),liga:'Premier League',clube:'Manchester City',epoca:'2024/25',tipo:'Fan Version',tam:'XL',qtd:1,preco:20,frete:5,custoTotal:25,venda:40,lucro:15,estado:'Reservado'},
+    {id:uid(),liga:'La Liga',clube:'Real Madrid',epoca:'2023/24',tipo:'Fan Version',tam:'S',qtd:3,preco:18,frete:4,custoTotal:22,venda:38,lucro:16,estado:'Disponível'},
+    {id:uid(),liga:'La Liga',clube:'Barcelona',epoca:'2024/25',tipo:'Player Version',tam:'M',qtd:0,preco:30,frete:5,custoTotal:35,venda:55,lucro:20,estado:'Vendido'},
+    {id:uid(),liga:'Seleções',clube:'Portugal',epoca:'2024',tipo:'Fan Version',tam:'L',qtd:4,preco:22,frete:4,custoTotal:26,venda:42,lucro:16,estado:'Disponível'},
+    {id:uid(),liga:'Serie A',clube:'Inter',epoca:'2024/25',tipo:'Fan Version',tam:'M',qtd:2,preco:19,frete:4,custoTotal:23,venda:37,lucro:14,estado:'Disponível'},
+    {id:uid(),liga:'Retro',clube:'AC Milan',epoca:'2006/07',tipo:'Fan Version',tam:'L',qtd:1,preco:15,frete:4,custoTotal:19,venda:32,lucro:13,estado:'Disponível'},
+    {id:uid(),liga:'Bundesliga',clube:'Bayern Munich',epoca:'2024/25',tipo:'Fan Version',tam:'XL',qtd:3,preco:21,frete:5,custoTotal:26,venda:42,lucro:16,estado:'Disponível'},
+  ];
+  const pid=s[4].id;
+  produtos=s; save();
+  clientes=[
+    {id:uid(),nome:'João Ferreira',tel:'912345678',pais:'Portugal',morada:'Rua da Paz 12',cp:'1000-001',cidade:'Lisboa',prodId:pid,rastreio:'PT123456789PT',estado:'Entregue'},
+    {id:uid(),nome:'Maria Carvalho',tel:'934567890',pais:'Portugal',morada:'Av. Central 5',cp:'4000-010',cidade:'Porto',prodId:s[2].id,rastreio:'PT987654321PT',estado:'Em preparação'},
+  ];
+  save();
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+refreshDash();
+fillFilters();
+</script>
+</body>
+</html>
