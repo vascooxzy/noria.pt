@@ -2732,7 +2732,7 @@ document.getElementById('clrStock').addEventListener('click',()=>{
 
 // ── CLIENTE MODAL ─────────────────────────────────────────────
 let _eCli=null;
-function openClienteModal(id){
+window.openClienteModal = function openClienteModal(id){
   _eCli=id;
   ['cNome','cTel','cMorada','cCP','cCidade','cRastreio'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('cPais').value='Portugal';
@@ -3638,7 +3638,34 @@ function closePdfModal(){
 
 document.getElementById('pdfExportBtn').addEventListener('click', openPdfModal);
 
-document.getElementById('pdfGenerate').addEventListener('click', ()=>{
+document.addEventListener('DOMContentLoaded', function(){
+  // PDF generate (element is rendered after this script tag)
+  const pdfGen = document.getElementById('pdfGenerate');
+  if(pdfGen) pdfGen.addEventListener('click', _doPdfGenerate);
+
+  // Copy sheet buttons
+  const _ids = {
+    copyMorada:  ()=>{ if(_copySheetClienteId){ copyToClipboard(buildClienteText(_copySheetClienteId,'morada')); closeCopySheet(); }},
+    copyFull:    ()=>{ if(_copySheetClienteId){ copyToClipboard(buildClienteText(_copySheetClienteId,'full')); closeCopySheet(); }},
+    shareWa:     ()=>{ if(_copySheetClienteId) shareCliente(_copySheetClienteId,'whatsapp'); },
+    shareEmail:  ()=>{ if(_copySheetClienteId) shareCliente(_copySheetClienteId,'email'); },
+    shareNative: ()=>{ if(_copySheetClienteId) shareCliente(_copySheetClienteId,'share'); },
+    copySheetClose: closeCopySheet,
+    copySheetBg: closeCopySheet,
+    open17track: ()=>{
+      if(!_copySheetClienteId) return;
+      const c = clientes.find(x=>x.id===_copySheetClienteId);
+      if(!c||!c.rastreio){ toast('Este cliente não tem código de rastreio','err'); return; }
+      window.open(`https://t.17track.net/en#nums=${encodeURIComponent(c.rastreio)}`,'_blank');
+      closeCopySheet();
+    }
+  };
+  Object.entries(_ids).forEach(([id,fn])=>{
+    const el=document.getElementById(id);
+    if(el) el.addEventListener('click',fn);
+  });
+});
+function _doPdfGenerate(){
   closePdfModal();
   const inclStock = document.getElementById('pdfStock').checked;
   const inclClientes = document.getElementById('pdfClientes').checked;
@@ -3719,12 +3746,12 @@ document.getElementById('pdfGenerate').addEventListener('click', ()=>{
     setTimeout(()=>{ document.body.removeChild(printDiv); },800);
   },200);
   toast('A gerar PDF…');
-});
+}
 
 // ── COPY SHEET (Clientes) ─────────────────────────────────────
 let _copySheetClienteId = null;
 
-function openCopySheet(id){
+window.openCopySheet = function openCopySheet(id){
   _copySheetClienteId = id;
   const c = clientes.find(x=>x.id===id);
   if(!c) return;
@@ -3791,33 +3818,6 @@ function shareCliente(id, via){
   closeCopySheet();
 }
 
-document.getElementById('copyMorada').addEventListener('click',()=>{
-  if(_copySheetClienteId) copyToClipboard(buildClienteText(_copySheetClienteId,'morada'));
-  closeCopySheet();
-});
-document.getElementById('copyFull').addEventListener('click',()=>{
-  if(_copySheetClienteId) copyToClipboard(buildClienteText(_copySheetClienteId,'full'));
-  closeCopySheet();
-});
-document.getElementById('shareWa').addEventListener('click',()=>{
-  if(_copySheetClienteId) shareCliente(_copySheetClienteId,'whatsapp');
-});
-document.getElementById('shareEmail').addEventListener('click',()=>{
-  if(_copySheetClienteId) shareCliente(_copySheetClienteId,'email');
-});
-document.getElementById('shareNative').addEventListener('click',()=>{
-  if(_copySheetClienteId) shareCliente(_copySheetClienteId,'share');
-});
-document.getElementById('copySheetClose').addEventListener('click', closeCopySheet);
-document.getElementById('copySheetBg').addEventListener('click', closeCopySheet);
-document.getElementById('open17track').addEventListener('click',()=>{
-  if(!_copySheetClienteId) return;
-  const c = clientes.find(x=>x.id===_copySheetClienteId);
-  if(!c||!c.rastreio){ toast('Este cliente não tem código de rastreio','err'); return; }
-  window.open(`https://t.17track.net/en#nums=${encodeURIComponent(c.rastreio)}`,'_blank');
-  closeCopySheet();
-});
-
 // ── EVENT DELEGATION para botões das tabelas de clientes ────────
 function _cliTableHandler(e){
   const btn=e.target.closest('button');
@@ -3848,76 +3848,7 @@ document.addEventListener('click', function(e){
   else if(btn.classList.contains('cli-del')){ delCliente(id); }
 });
 
-// ── PATCH renderClientes to add copy button ────────────────────
-const _origRenderClientes = renderClientes;
-window.renderClientes = function(){
-  _origRenderClientes();
-  // Add copy action button to each row
-  const body = document.getElementById('clienteBody');
-  if(!body) return;
-  const rows = body.querySelectorAll('tr');
-  // We'll identify clients by rebuilding — attach after render
-};
 
-// Override renderClientes with copy-capable version
-function renderClientes(){
-  const est=document.getElementById('fcEst').value;
-  const q=document.getElementById('gSearch').value.toLowerCase().trim();
-  const data=clientes.filter(c=>{
-    if(est&&c.estado!==est) return false;
-    if(q){
-      const prod=produtos.find(p=>p.id===c.prodId);
-      const clubeMatch=prod?prod.clube.toLowerCase().includes(q):false;
-      const ligaMatch=prod?prod.liga.toLowerCase().includes(q):false;
-      const nomeMatch=c.nome.toLowerCase().includes(q);
-      const rastreioMatch=(c.rastreio||'').toLowerCase().includes(q);
-      const cidadeMatch=(c.cidade||'').toLowerCase().includes(q);
-      const telMatch=(c.tel||'').toLowerCase().includes(q);
-      if(!nomeMatch&&!rastreioMatch&&!clubeMatch&&!ligaMatch&&!cidadeMatch&&!telMatch) return false;
-    }
-    return true;
-  });
-  const tb=document.getElementById('clienteBody');
-  const et=document.getElementById('clienteEt');
-  tb.innerHTML='';
-  et.style.display=data.length?'none':'block';
-  if(!data.length) et.textContent=q?`Nenhum resultado para "${q}"`:'Nenhum cliente encontrado.';
-  const countBadge2=document.getElementById('clienteCount');
-  if(countBadge2){
-    const hasFilter2=est||q;
-    countBadge2.textContent=hasFilter2?`${data.length} resultado${data.length!==1?'s':''}`:`${data.length} cliente${data.length!==1?'s':''}`;
-  }
-  const editIco=`<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
-  const trashIco=`<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
-  const copyIco=`<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
-  const shareIco=`<svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
-  data.forEach(c=>{
-    const prod=produtos.find(p=>p.id===c.prodId);
-    const pn=prod?`${prod.clube} (${prod.tam})`:'—';
-    const tr=document.createElement('tr');
-    tr.className='cliente-copy-row';
-    tr.dataset.cid=c.id;
-    const rastreioCell2=c.rastreio
-      ?`<a href="https://t.17track.net/en#nums=${encodeURIComponent(c.rastreio)}" target="_blank" rel="noopener" title="Rastrear no 17track" style="display:inline-flex;align-items:center;gap:5px;font-size:.72rem;color:var(--acc2);background:rgba(99,102,241,.08);padding:2px 7px;border-radius:5px;font-family:monospace;text-decoration:none;border:1px solid rgba(99,102,241,.15)">${esc(c.rastreio)}<svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`
-      :'—';
-    tr.innerHTML=`
-      <td class="cb">${esc(c.nome)}</td>
-      <td style="color:var(--t2)">${esc(c.tel||'—')}</td>
-      <td style="color:var(--t2)">${esc(c.cidade||'—')}</td>
-      <td style="color:var(--t2)">${esc(c.pais||'—')}</td>
-      <td>${esc(pn)}</td>
-      <td>${rastreioCell2}</td>
-      <td><span class="st ${cliEstClass(c.estado)}">${esc(c.estado)}</span></td>
-      <td>
-        <div class="ta">
-          <button class="tb cli-share" style="color:var(--acc2)" title="Copiar / Partilhar">${shareIco}</button>
-          <button class="tb cli-edit">${editIco}</button>
-          <button class="tb del cli-del">${trashIco}</button>
-        </div>
-      </td>`;
-    tb.appendChild(tr);
-  });
-}
 
 // Initial sync
 syncBnav('dashboard');
