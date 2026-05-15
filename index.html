@@ -4,118 +4,377 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Noria Supply</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#0b0d14;--bg2:#111520;--bg3:#181c2e;--bg4:#1f243a;
-  --border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.11);
-  --acc:#6366f1;--acc2:#818cf8;--glow:rgba(99,102,241,.3);
-  --green:#22c55e;--orange:#fb923c;--red:#f43f5e;--yellow:#fbbf24;
-  --t1:#f1f5f9;--t2:#94a3b8;--t3:#475569;
-  --sw:230px;--r:12px;--rs:8px;
+  --bg:#080a12;--bg2:#0e1018;--bg3:#13161f;--bg4:#1a1e2e;--bg5:#212638;
+  --border:rgba(255,255,255,.055);--border2:rgba(255,255,255,.10);--border3:rgba(255,255,255,.16);
+  --acc:#6366f1;--acc2:#818cf8;--acc3:#a5b4fc;--glow:rgba(99,102,241,.25);--glow2:rgba(99,102,241,.45);
+  --green:#22c55e;--green2:rgba(34,197,94,.12);--greeng:rgba(34,197,94,.25);
+  --orange:#fb923c;--orange2:rgba(251,146,60,.12);
+  --red:#f43f5e;--red2:rgba(244,63,94,.12);
+  --yellow:#fbbf24;--yellow2:rgba(251,191,36,.12);
+  --cyan:#22d3ee;--cyan2:rgba(34,211,238,.12);
+  --t1:#f0f4ff;--t2:#8892b0;--t3:#4a5578;--t4:#2d3550;
+  --sw:240px;--r:14px;--rs:8px;
+  --font:'Plus Jakarta Sans',sans-serif;
+  --font-display:'Syne',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:14px}
-body{background:var(--bg);color:var(--t1);font-family:'DM Sans',sans-serif;display:flex;height:100vh;overflow:hidden}
-::-webkit-scrollbar{width:5px;height:5px}
-::-webkit-scrollbar-track{background:var(--bg2)}
-::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:99px}
+body{background:var(--bg);color:var(--t1);font-family:var(--font);display:flex;height:100vh;overflow:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--acc)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes su{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 8px var(--glow)}50%{box-shadow:0 0 20px var(--glow2)}}
 
 /* ── SIDEBAR ── */
-.sidebar{width:var(--sw);background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;z-index:100;transition:transform .25s}
-.logo{display:flex;align-items:center;gap:10px;padding:20px 18px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.logo-icon{width:36px;height:36px;background:var(--acc);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:.9rem;box-shadow:0 0 14px var(--glow);color:#fff}
-.logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.5px;color:var(--t1);line-height:1}
+.sidebar{
+  width:var(--sw);
+  background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;
+  overflow-y:auto;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1);
+  position:relative;
+}
+.sidebar::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,.4),transparent);
+}
+
+/* LOGO */
+.logo{display:flex;align-items:center;gap:11px;padding:22px 18px 18px;flex-shrink:0}
+.logo-icon{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--acc),#4f46e5);
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 20px var(--glow),0 2px 8px rgba(0,0,0,.4);
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+.logo-icon::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);
+  border-radius:inherit;
+}
+.logo-icon svg{width:18px;height:18px;color:#fff;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;position:relative;z-index:1}
+.logo-text{font-family:var(--font-display);font-size:1.25rem;letter-spacing:-.3px;color:var(--t1);line-height:1;font-weight:800}
 .logo-text span{color:var(--acc2)}
-.nav{padding:10px 8px;flex:1;display:flex;flex-direction:column;gap:2px}
-.nav-label{font-size:.65rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3);padding:10px 10px 4px;font-weight:600}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--rs);color:var(--t2);text-decoration:none;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap;overflow:hidden;border:none;background:none;width:100%;text-align:left}
-.nav-item i{font-size:.82rem;width:16px;flex-shrink:0}
-.nav-item:hover{background:var(--bg3);color:var(--t1)}
-.nav-item.active{background:var(--acc);color:#fff;box-shadow:0 0 12px var(--glow)}
-.sidebar-footer{padding:12px 18px;border-top:1px solid var(--border);font-size:.72rem;color:var(--t3);flex-shrink:0}
+.logo-badge{font-size:.58rem;font-weight:700;background:var(--acc);color:#fff;padding:1px 6px;border-radius:99px;font-family:var(--font);letter-spacing:.3px;margin-left:4px;vertical-align:middle}
+
+/* NAV */
+.nav{padding:8px 10px;flex:1;display:flex;flex-direction:column;gap:1px}
+.nav-section{margin-top:6px}
+.nav-label{
+  font-size:.62rem;text-transform:uppercase;letter-spacing:1.4px;
+  color:var(--t3);padding:10px 10px 5px;font-weight:700;
+  display:flex;align-items:center;gap:6px;
+}
+.nav-label::after{content:'';flex:1;height:1px;background:var(--border);margin-left:2px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 11px;
+  border-radius:var(--rs);color:var(--t2);text-decoration:none;
+  font-size:.82rem;font-weight:500;cursor:pointer;
+  transition:all .18s cubic-bezier(.4,0,.2,1);
+  white-space:nowrap;overflow:hidden;border:none;background:none;
+  width:100%;text-align:left;position:relative;
+}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
+.nav-item img.liga-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0}
+.nav-item:hover{background:var(--bg4);color:var(--t1)}
+.nav-item:hover svg{transform:scale(1.1)}
+.nav-item.active{
+  background:linear-gradient(135deg,rgba(99,102,241,.18),rgba(99,102,241,.08));
+  color:var(--acc3);
+  border:1px solid rgba(99,102,241,.2);
+}
+.nav-item.active svg{color:var(--acc2)}
+.nav-item.active::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:60%;background:var(--acc);border-radius:0 3px 3px 0;
+}
+.nav-count{margin-left:auto;font-size:.62rem;font-weight:700;background:var(--bg5);color:var(--t2);padding:1px 7px;border-radius:99px;transition:all .18s}
+.nav-item.active .nav-count{background:rgba(99,102,241,.2);color:var(--acc2)}
+
+/* AVATAR */
+.sidebar-footer{
+  padding:14px 12px;border-top:1px solid var(--border);flex-shrink:0;
+  display:flex;align-items:center;gap:10px;
+}
+.avatar{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.82rem;color:#fff;flex-shrink:0;
+  box-shadow:0 0 12px rgba(99,102,241,.3);
+}
+.avatar-info{flex:1;min-width:0}
+.avatar-name{font-size:.8rem;font-weight:600;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.avatar-role{font-size:.65rem;color:var(--t3);display:flex;align-items:center;gap:4px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+.avatar-btn{background:none;border:none;color:var(--t3);cursor:pointer;padding:4px;border-radius:6px;transition:all .15s}
+.avatar-btn:hover{background:var(--bg4);color:var(--t1)}
+.avatar-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ── MAIN ── */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 
 /* ── TOPBAR ── */
-.topbar{height:56px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 18px;flex-shrink:0}
-.tog-btn{background:none;border:none;color:var(--t2);cursor:pointer;font-size:.95rem;padding:6px 8px;border-radius:var(--rs);transition:all .15s;display:none}
-.tog-btn:hover{background:var(--bg3);color:var(--t1)}
-.srch{flex:1;max-width:380px;display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:0 12px;transition:border-color .15s}
-.srch:focus-within{border-color:var(--acc)}
-.srch i{color:var(--t3);font-size:.82rem}
-.srch input{background:none;border:none;outline:none;color:var(--t1);font-family:inherit;font-size:.875rem;height:34px;width:100%}
+.topbar{
+  height:58px;
+  background:rgba(14,16,24,.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:0 20px;flex-shrink:0;
+  position:sticky;top:0;z-index:50;
+}
+.tog-btn{background:none;border:none;color:var(--t2);cursor:pointer;padding:7px;border-radius:var(--rs);transition:all .15s;display:none}
+.tog-btn:hover{background:var(--bg4);color:var(--t1)}
+.tog-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.srch{
+  flex:1;max-width:400px;display:flex;align-items:center;gap:8px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:0 13px;transition:all .2s;
+}
+.srch:focus-within{border-color:rgba(99,102,241,.4);background:var(--bg4);box-shadow:0 0 0 3px rgba(99,102,241,.08)}
+.srch svg{color:var(--t3);width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:color .2s}
+.srch:focus-within svg{color:var(--acc2)}
+.srch input{background:none;border:none;outline:none;color:var(--t1);font-family:var(--font);font-size:.85rem;height:36px;width:100%;font-weight:400}
 .srch input::placeholder{color:var(--t3)}
 .tb-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
 
 /* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--rs);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
-.btn-primary{background:var(--acc);color:#fff}
-.btn-primary:hover{background:#4f46e5;box-shadow:0 0 12px var(--glow)}
-.btn-ghost{background:var(--bg3);color:var(--t2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--bg4);color:var(--t1)}
-.btn-danger{background:var(--red);color:#fff}
-.btn-danger:hover{background:#e11d48}
-.btn-icon{background:var(--bg3);border:1px solid var(--border);color:var(--t2);border-radius:var(--rs);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
-.btn-icon:hover{background:var(--bg4);color:var(--t1)}
-.badge{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;padding:8px 16px;
+  border-radius:9px;font-family:var(--font);font-size:.82rem;font-weight:600;
+  cursor:pointer;border:none;transition:all .18s;white-space:nowrap;
+}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn-primary{
+  background:linear-gradient(135deg,var(--acc),#4f46e5);color:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.3),0 0 12px rgba(99,102,241,.2);
+}
+.btn-primary:hover{
+  background:linear-gradient(135deg,#5457e8,#4338ca);
+  box-shadow:0 2px 8px rgba(0,0,0,.3),0 0 20px var(--glow);
+  transform:translateY(-1px);
+}
+.btn-ghost{background:var(--bg4);color:var(--t2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--bg5);color:var(--t1);border-color:var(--border2)}
+.btn-danger{background:linear-gradient(135deg,var(--red),#e11d48);color:#fff}
+.btn-danger:hover{box-shadow:0 0 16px rgba(244,63,94,.3);transform:translateY(-1px)}
+.btn-icon{
+  background:var(--bg3);border:1px solid var(--border);color:var(--t2);
+  border-radius:9px;width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;transition:all .18s;
+}
+.btn-icon:hover{background:var(--bg4);color:var(--t1);border-color:var(--border2)}
+.btn-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.badge{
+  position:absolute;top:-5px;right:-5px;
+  background:var(--red);color:#fff;font-size:.58rem;font-weight:700;
+  width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--bg2);animation:glow-pulse 2s infinite;
+}
 
 /* ── CONTENT ── */
-.content{flex:1;overflow-y:auto;padding:22px}
-.page{display:none}
+.content{flex:1;overflow-y:auto;padding:24px 24px 40px}
+.page{display:none;animation:fadeUp .3s ease both}
 .page.active{display:block}
-.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:12px;flex-wrap:wrap}
-.pt{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:1px;line-height:1}
-.psub{color:var(--t3);font-size:.78rem;margin-top:2px}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:wrap}
+.ph-left{}
+.pt{font-family:var(--font-display);font-size:1.7rem;letter-spacing:-.5px;line-height:1.1;font-weight:800;color:var(--t1)}
+.psub{color:var(--t3);font-size:.78rem;margin-top:4px;font-weight:500;display:flex;align-items:center;gap:6px}
+.psub::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s infinite}
 
-/* ── KPI ── */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
-.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:18px;display:flex;align-items:center;gap:14px;transition:all .15s}
-.kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
-.kpi-ico{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
-.kpi-lbl{font-size:.7rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.kpi-val{font-size:1.55rem;font-family:'Bebas Neue',sans-serif;color:var(--t1)}
+/* ── KPI CARDS ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r);padding:20px;
+  display:flex;flex-direction:column;gap:14px;
+  transition:all .22s cubic-bezier(.4,0,.2,1);
+  cursor:default;position:relative;overflow:hidden;
+  animation:fadeUp .4s ease both;
+}
+.kpi:nth-child(1){animation-delay:.05s}
+.kpi:nth-child(2){animation-delay:.1s}
+.kpi:nth-child(3){animation-delay:.15s}
+.kpi:nth-child(4){animation-delay:.2s}
+.kpi::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.02),transparent);
+  pointer-events:none;
+}
+.kpi:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between}
+.kpi-ico{
+  width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.kpi-ico svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kpi-trend{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:99px;
+}
+.trend-up{background:var(--green2);color:var(--green)}
+.trend-dn{background:var(--red2);color:var(--red)}
+.trend-neu{background:var(--bg4);color:var(--t3)}
+.kpi-trend svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.kpi-lbl{font-size:.7rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.kpi-val{font-size:1.65rem;font-family:var(--font-display);color:var(--t1);font-weight:800;letter-spacing:-.5px;line-height:1}
+.kpi-sub{font-size:.7rem;color:var(--t3);margin-top:2px}
+
+/* SPARKLINE */
+.spark{height:30px;display:flex;align-items:flex-end;gap:2px;margin-top:6px}
+.spark-bar{
+  flex:1;border-radius:3px 3px 0 0;
+  background:var(--bg4);transition:background .2s;min-height:4px;
+}
+.kpi:hover .spark-bar{background:var(--bg5)}
+.spark-bar.hi{background:rgba(99,102,241,.35)!important}
 
 /* ── DASH GRID ── */
-.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+  animation:fadeUp .4s ease both;
+}
+.card:nth-child(1){animation-delay:.1s}
+.card:nth-child(2){animation-delay:.15s}
+.card:nth-child(3){animation-delay:.2s}
 .card-full{grid-column:1/-1}
-.ch{padding:14px 18px;border-bottom:1px solid var(--border)}
-.ch h2{font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:7px}
-.list-body{padding:10px;display:flex;flex-direction:column;gap:7px;max-height:240px;overflow-y:auto}
-.alert-item{background:rgba(251,146,60,.07);border:1px solid rgba(251,146,60,.18);border-radius:var(--rs);padding:9px 13px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.83rem}
-.alert-qty{color:var(--orange);font-weight:700;font-size:.8rem}
-.top-item{background:var(--bg3);border-radius:var(--rs);padding:9px 13px;display:flex;align-items:center;gap:8px;font-size:.83rem}
-.top-rank{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;color:var(--acc2);width:22px;flex-shrink:0}
-.top-name{flex:1}
-.top-sold{color:var(--green);font-weight:600;font-size:.78rem}
-.empty-msg{color:var(--t3);font-size:.83rem;text-align:center;padding:18px}
-.lbars{padding:18px;display:flex;flex-direction:column;gap:11px}
-.lbar-row{display:flex;align-items:center;gap:11px}
-.lbar-lbl{width:130px;font-size:.78rem;color:var(--t2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lbar-track{flex:1;height:7px;background:var(--bg4);border-radius:99px;overflow:hidden}
-.lbar-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:99px;transition:width .4s}
-.lbar-val{font-size:.78rem;color:var(--t3);width:48px;text-align:right}
+.ch{
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ch-left{display:flex;align-items:center;gap:8px}
+.ch h2{font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:7px;color:var(--t1)}
+.ch h2 svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ch-badge{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--bg4);color:var(--t2)}
+.list-body{padding:10px;display:flex;flex-direction:column;gap:6px;max-height:250px;overflow-y:auto}
+
+/* ALERT ITEM */
+.alert-item{
+  background:rgba(251,146,60,.06);border:1px solid rgba(251,146,60,.14);
+  border-radius:var(--rs);padding:9px 12px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font-size:.8rem;transition:all .15s;
+}
+.alert-item:hover{background:rgba(251,146,60,.1);border-color:rgba(251,146,60,.25)}
+.alert-item svg{width:13px;height:13px;stroke:var(--orange);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.alert-qty{
+  background:rgba(251,146,60,.12);color:var(--orange);
+  font-weight:700;font-size:.7rem;padding:2px 8px;border-radius:99px;
+  white-space:nowrap;
+}
+
+/* TOP ITEM */
+.top-item{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:var(--rs);padding:9px 12px;
+  display:flex;align-items:center;gap:10px;font-size:.8rem;
+  transition:all .15s;
+}
+.top-item:hover{background:var(--bg4);border-color:var(--border2)}
+.top-rank{
+  font-family:var(--font-display);font-size:1.1rem;color:var(--acc2);
+  width:22px;flex-shrink:0;font-weight:800;
+}
+.top-rank.gold{color:#fbbf24}
+.top-rank.silver{color:#94a3b8}
+.top-rank.bronze{color:#fb923c}
+.top-name{flex:1;font-weight:500;color:var(--t1)}
+.top-sold{
+  background:var(--green2);color:var(--green);
+  font-weight:700;font-size:.7rem;padding:2px 8px;border-radius:99px;
+  white-space:nowrap;
+}
+.empty-msg{color:var(--t3);font-size:.82rem;text-align:center;padding:20px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.empty-msg svg{width:28px;height:28px;stroke:var(--t4);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* LEAGUE BARS */
+.lbars{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.lbar-row{display:flex;align-items:center;gap:12px}
+.lbar-lbl{
+  width:140px;font-size:.77rem;color:var(--t2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  display:flex;align-items:center;gap:6px;justify-content:flex-end;font-weight:500;
+}
+.lbar-track{flex:1;height:6px;background:var(--bg4);border-radius:99px;overflow:hidden}
+.lbar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--acc),var(--acc2));
+  border-radius:99px;transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+.lbar-val{font-size:.75rem;color:var(--t3);width:52px;text-align:right;font-weight:600}
+
+/* MINI DONUT */
+.mini-chart-wrap{display:flex;align-items:center;gap:16px;padding:16px 18px}
+.mini-donut{position:relative;width:80px;height:80px;flex-shrink:0}
+.mini-donut svg{transform:rotate(-90deg)}
+.mini-donut-label{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-weight:800;
+  font-size:.9rem;font-family:var(--font-display);color:var(--t1);
+}
+.mini-donut-sub{font-size:.58rem;color:var(--t3);font-weight:600;font-family:var(--font)}
+.legend-list{display:flex;flex-direction:column;gap:7px;flex:1}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:.77rem}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-name{flex:1;color:var(--t2);font-weight:500}
+.legend-pct{color:var(--t1);font-weight:700}
 
 /* ── FILTERS ── */
-.filters{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.fsel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);color:var(--t2);font-family:inherit;font-size:.83rem;padding:7px 11px;cursor:pointer;outline:none;transition:all .15s}
-.fsel:focus{border-color:var(--acc);color:var(--t1)}
+.filters{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.fsel{
+  background:var(--bg2);border:1px solid var(--border);border-radius:9px;
+  color:var(--t2);font-family:var(--font);font-size:.8rem;
+  padding:7px 12px;cursor:pointer;outline:none;transition:all .18s;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a5578' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;
+}
+.fsel:focus{border-color:rgba(99,102,241,.4);color:var(--t1);box-shadow:0 0 0 3px rgba(99,102,241,.08)}
 
 /* ── TABLE ── */
 .tw{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:.81rem;min-width:800px}
+table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:800px}
 thead tr{background:var(--bg3);border-bottom:1px solid var(--border)}
-th{padding:11px 13px;text-align:left;font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.6px;color:var(--t3);white-space:nowrap}
-td{padding:10px 13px;border-bottom:1px solid var(--border);color:var(--t2);vertical-align:middle}
+th{
+  padding:11px 14px;text-align:left;font-weight:700;
+  font-size:.65rem;text-transform:uppercase;letter-spacing:.8px;
+  color:var(--t3);white-space:nowrap;
+}
+th:first-child{padding-left:18px}
+td{
+  padding:11px 14px;border-bottom:1px solid var(--border);
+  color:var(--t2);vertical-align:middle;transition:all .15s;
+}
+td:first-child{padding-left:18px}
 tbody tr:last-child td{border-bottom:none}
-tbody tr:hover td{background:var(--bg3);color:var(--t1)}
-.et{display:none;text-align:center;color:var(--t3);padding:36px;font-size:.83rem}
+tbody tr{transition:background .15s}
+tbody tr:hover td{background:rgba(99,102,241,.04);color:var(--t1)}
+.et{display:none;text-align:center;color:var(--t3);padding:44px;font-size:.83rem}
 
-/* STATUS */
-.st{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:99px;font-size:.7rem;font-weight:600;white-space:nowrap}
+/* STATUS BADGES */
+.st{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:99px;font-size:.68rem;font-weight:700;white-space:nowrap;
+}
 .st::before{content:'';width:5px;height:5px;border-radius:50%}
 .sd{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}.sd::before{background:var(--green)}
 .sr{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.2)}.sr::before{background:var(--yellow)}
@@ -125,54 +384,135 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 .sent{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}.sent::before{background:var(--green)}
 
 .ta{display:flex;gap:5px}
-.tb{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);color:var(--t2);width:29px;height:29px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.72rem;transition:all .15s}
-.tb:hover{background:var(--bg4);color:var(--t1)}
-.tb.del:hover{background:rgba(244,63,94,.15);color:var(--red);border-color:rgba(244,63,94,.3)}
+.tb{
+  background:var(--bg3);border:1px solid var(--border);border-radius:7px;
+  color:var(--t2);width:28px;height:28px;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;transition:all .15s;
+}
+.tb svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tb:hover{background:var(--bg4);color:var(--t1);border-color:var(--border2)}
+.tb.del:hover{background:rgba(244,63,94,.12);color:var(--red);border-color:rgba(244,63,94,.25)}
 .cb{font-weight:600;color:var(--t1)}
 .lp{color:var(--green);font-weight:700}
 .ln{color:var(--red);font-weight:700}
 
 /* ── MODAL ── */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:300;padding:16px}
+.ov{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;
+  z-index:300;padding:16px;
+  animation:fadeIn .2s ease;
+}
 .ov.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);width:100%;max-width:660px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:su .2s ease}
-.modal-sm{max-width:370px}
-@keyframes su{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.mh{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.mh h2{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.5px}
-.mc{background:none;border:none;color:var(--t3);cursor:pointer;font-size:.95rem;padding:4px;transition:color .15s}
-.mc:hover{color:var(--t1)}
-.mf{padding:18px 22px}
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.modal{
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:16px;width:100%;max-width:660px;
+  max-height:92vh;overflow-y:auto;
+  box-shadow:0 24px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.03);
+  animation:su .22s cubic-bezier(.4,0,.2,1);
+}
+.modal-sm{max-width:380px}
+.mh{
+  padding:20px 24px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.mh h2{font-family:var(--font-display);font-size:1.2rem;letter-spacing:-.3px;font-weight:800}
+.mc{
+  background:var(--bg4);border:1px solid var(--border);color:var(--t3);
+  cursor:pointer;border-radius:7px;width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.mc:hover{background:var(--bg5);color:var(--t1)}
+.mc svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.mf{padding:20px 24px}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ff{grid-column:1/-1}
-.fg-item{display:flex;flex-direction:column;gap:5px}
-.fg-item label{font-size:.7rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
-.fg-item input,.fg-item select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);color:var(--t1);font-family:inherit;font-size:.875rem;padding:8px 11px;outline:none;transition:border-color .15s}
-.fg-item input:focus,.fg-item select:focus{border-color:var(--acc)}
+.fg-item{display:flex;flex-direction:column;gap:6px}
+.fg-item label{font-size:.68rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.7px}
+.fg-item input,.fg-item select{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:9px;color:var(--t1);font-family:var(--font);
+  font-size:.85rem;padding:9px 12px;outline:none;
+  transition:all .2s;
+}
+.fg-item input:focus,.fg-item select:focus{
+  border-color:rgba(99,102,241,.5);background:var(--bg4);
+  box-shadow:0 0 0 3px rgba(99,102,241,.1);
+}
+.fg-item input::placeholder{color:var(--t3)}
+.fg-item select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a5578' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:30px;
+}
 .ro{background:var(--bg4)!important;color:var(--t3)!important;cursor:default}
 .lucro-f{font-weight:700}
-.ma{display:flex;gap:9px;justify-content:flex-end;padding-top:14px}
+.ma{display:flex;gap:9px;justify-content:flex-end;padding-top:16px}
 
 /* ── TOAST ── */
-.toast{position:fixed;bottom:22px;right:22px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);padding:11px 18px;font-size:.83rem;font-weight:500;color:var(--t1);box-shadow:0 4px 20px rgba(0,0,0,.5);transform:translateY(70px);opacity:0;transition:all .22s;z-index:999;pointer-events:none}
+.toast{
+  position:fixed;bottom:24px;right:24px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:10px;padding:12px 18px;font-size:.82rem;font-weight:600;
+  color:var(--t1);box-shadow:0 8px 32px rgba(0,0,0,.5);
+  transform:translateY(80px);opacity:0;transition:all .25s cubic-bezier(.4,0,.2,1);
+  z-index:999;pointer-events:none;display:flex;align-items:center;gap:8px;
+}
 .toast.show{transform:translateY(0);opacity:1}
-.toast.ok{border-color:rgba(34,197,94,.4);color:var(--green)}
-.toast.err{border-color:rgba(244,63,94,.4);color:var(--red)}
+.toast.ok{border-color:rgba(34,197,94,.35);color:var(--green)}
+.toast.err{border-color:rgba(244,63,94,.35);color:var(--red)}
+.toast svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
-/* ── LIGA LOGOS ── */
+/* LIGA LOGOS */
 .liga-logo{width:18px;height:18px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 2px rgba(0,0,0,.5))}
-.liga-logo-md{width:26px;height:26px;object-fit:contain;flex-shrink:0}
+.liga-logo-md{width:24px;height:24px;object-fit:contain;flex-shrink:0}
 .liga-badge{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 
-/* ── RESPONSIVE ── */
-@media(max-width:1050px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+/* DIVIDER */
+.sdiv{height:1px;background:var(--border);margin:6px 0}
+
+/* COUNT TAG */
+.count-tag{
+  font-size:.68rem;color:var(--t3);font-weight:700;
+  padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:860px){
   .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
+  .sidebar.open{transform:translateX(0);box-shadow:20px 0 60px rgba(0,0,0,.6)}
   .tog-btn{display:flex}
   .dash-grid{grid-template-columns:1fr}
 }
-@media(max-width:580px){.kpi-grid{grid-template-columns:1fr}.fg{grid-template-columns:1fr}.content{padding:14px}}
+@media(max-width:580px){.kpi-grid{grid-template-columns:1fr}.fg{grid-template-columns:1fr}.content{padding:14px 14px 40px}}
+
+/* SECTION WRAPPER for services */
+.bloco-servico{
+  border:1px solid rgba(99,102,241,.18);border-radius:10px;
+  padding:14px;margin-top:8px;
+  background:linear-gradient(135deg,rgba(99,102,241,.04),transparent);
+}
+.bloco-patch{
+  border-color:rgba(251,146,60,.18);
+  background:linear-gradient(135deg,rgba(251,146,60,.04),transparent);
+}
+.bloco-label{
+  font-size:.67rem;font-weight:700;color:var(--acc2);
+  text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.bloco-label svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.bloco-patch .bloco-label{color:var(--orange)}
+
+/* CHECKBOX */
+.chk-label{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  font-size:.83rem;color:var(--t2);padding:5px 0;
+}
+.chk-label input[type=checkbox]{accent-color:var(--acc);width:15px;height:15px;cursor:pointer}
+.chk-label:hover{color:var(--t1)}
 </style>
 </head>
 <body>
@@ -180,39 +520,96 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="logo">
-    <div class="logo-icon"><i class="fa-solid fa-shirt"></i></div>
+    <div class="logo-icon">
+      <!-- shirt icon -->
+      <svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.33-2.23Z"/></svg>
+    </div>
     <div class="logo-text">Noria <span>Supply</span></div>
   </div>
+
   <nav class="nav">
     <div class="nav-label">Principal</div>
-    <button class="nav-item active" data-page="dashboard"><i class="fa-solid fa-gauge-high"></i> Dashboard</button>
-    <button class="nav-item" data-page="stock"><i class="fa-solid fa-boxes-stacked"></i> Gestão de Stock</button>
-    <button class="nav-item" data-page="clientes"><i class="fa-solid fa-truck-fast"></i> Clientes / Envios</button>
+    <button class="nav-item active" data-page="dashboard">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </button>
+    <button class="nav-item" data-page="stock">
+      <svg viewBox="0 0 24 24"><path d="M2 7l10-4 10 4v2L12 13 2 9V7Z"/><path d="M2 14l10 4 10-4"/><path d="M2 17l10 4 10-4"/></svg>
+      Gestão de Stock
+    </button>
+    <button class="nav-item" data-page="clientes">
+      <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      Clientes / Envios
+    </button>
+
+    <div class="sdiv"></div>
     <div class="nav-label">Ligas</div>
-    <button class="nav-item nav-liga" data-liga="Primeira Liga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/pt/thumb/0/0b/Liga_Portugal_logo.svg/200px-Liga_Portugal_logo.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Primeira Liga</button>
-    <button class="nav-item nav-liga" data-liga="Premier League"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/200px-Premier_League_Logo.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Premier League</button>
-    <button class="nav-item nav-liga" data-liga="La Liga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga_logo_2023.svg/200px-LaLiga_logo_2023.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> La Liga</button>
-    <button class="nav-item nav-liga" data-liga="Serie A"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Serie_A_logo_%282019%29.svg/200px-Serie_A_logo_%282019%29.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Serie A</button>
-    <button class="nav-item nav-liga" data-liga="Bundesliga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/200px-Bundesliga_logo_%282017%29.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Bundesliga</button>
-    <button class="nav-item nav-liga" data-liga="Ligue 1"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Ligue1_2024.svg/200px-Ligue1_2024.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Ligue 1</button>
-    <button class="nav-item nav-liga" data-liga="Champions League"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/200px-UEFA_Champions_League_logo_2.svg.png" onerror="this.style.display='none';this.nextSibling.style.display='inline'" alt=""/> <i class="fa-solid fa-futbol" style="display:none"></i> Champions League</button>
-    <button class="nav-item nav-liga" data-liga="Seleções"><i class="fa-solid fa-earth-europe"></i> Seleções</button>
-    <button class="nav-item nav-liga" data-liga="Retro"><i class="fa-solid fa-clock-rotate-left"></i> Retro</button>
-    <button class="nav-item nav-liga" data-liga="NBA"><i class="fa-solid fa-basketball"></i> NBA</button>
+    <button class="nav-item nav-liga" data-liga="Primeira Liga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/pt/thumb/0/0b/Liga_Portugal_logo.svg/200px-Liga_Portugal_logo.svg.png" onerror="this.style.display='none'" alt=""/> Primeira Liga</button>
+    <button class="nav-item nav-liga" data-liga="Premier League"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/200px-Premier_League_Logo.svg.png" onerror="this.style.display='none'" alt=""/> Premier League</button>
+    <button class="nav-item nav-liga" data-liga="La Liga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga_logo_2023.svg/200px-LaLiga_logo_2023.svg.png" onerror="this.style.display='none'" alt=""/> La Liga</button>
+    <button class="nav-item nav-liga" data-liga="Serie A"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Serie_A_logo_%282019%29.svg/200px-Serie_A_logo_%282019%29.svg.png" onerror="this.style.display='none'" alt=""/> Serie A</button>
+    <button class="nav-item nav-liga" data-liga="Bundesliga"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/200px-Bundesliga_logo_%282017%29.svg.png" onerror="this.style.display='none'" alt=""/> Bundesliga</button>
+    <button class="nav-item nav-liga" data-liga="Ligue 1"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Ligue1_2024.svg/200px-Ligue1_2024.svg.png" onerror="this.style.display='none'" alt=""/> Ligue 1</button>
+    <button class="nav-item nav-liga" data-liga="Champions League"><img class="liga-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/200px-UEFA_Champions_League_logo_2.svg.png" onerror="this.style.display='none'" alt=""/> Champions League</button>
+    <button class="nav-item nav-liga" data-liga="Seleções">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Seleções
+    </button>
+    <button class="nav-item nav-liga" data-liga="Retro">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Retro
+    </button>
+    <button class="nav-item nav-liga" data-liga="NBA">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93a10 10 0 0 0 14.14 14.14"/><path d="M12 2v20"/></svg>
+      NBA
+    </button>
+
+    <div class="sdiv"></div>
     <div class="nav-label">Calçado</div>
-    <button class="nav-item nav-liga" data-liga="Sapatilhas"><i class="fa-solid fa-shoe-prints"></i> Sapatilhas</button>
-    <button class="nav-item nav-liga" data-liga="Chuteiras"><i class="fa-solid fa-shoe-prints"></i> Chuteiras</button>
+    <button class="nav-item nav-liga" data-liga="Sapatilhas">
+      <svg viewBox="0 0 24 24"><path d="m4 16 2.5-7.5c.4-1.1 1.4-1.8 2.5-1.8h8c1.1 0 2.1.7 2.5 1.8L22 16"/><path d="M2 16h20v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-2Z"/></svg>
+      Sapatilhas
+    </button>
+    <button class="nav-item nav-liga" data-liga="Chuteiras">
+      <svg viewBox="0 0 24 24"><path d="m4 16 2.5-7.5c.4-1.1 1.4-1.8 2.5-1.8h8c1.1 0 2.1.7 2.5 1.8L22 16"/><path d="M2 16h20v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-2Z"/><path d="M7 19v2m5-2v2m5-2v2"/></svg>
+      Chuteiras
+    </button>
   </nav>
-  <div class="sidebar-footer"><i class="fa-solid fa-circle-dot" style="color:var(--acc)"></i> Sistema Online</div>
+
+  <div class="sidebar-footer">
+    <div class="avatar">NS</div>
+    <div class="avatar-info">
+      <div class="avatar-name">Noria Supply</div>
+      <div class="avatar-role"><span class="status-dot"></span> Sistema Online</div>
+    </div>
+    <button class="avatar-btn" title="Configurações">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </div>
 </aside>
 
 <!-- MAIN -->
 <div class="main">
   <header class="topbar">
-    <button class="tog-btn" id="togBtn"><i class="fa-solid fa-bars"></i></button>
-    <div class="srch" id="srchBox"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="gSearch" placeholder="Pesquisar nome, clube, liga, rastreio, cidade, telefone..."/><button id="srchClear" style="background:none;border:none;color:var(--t3);cursor:pointer;padding:0 4px;font-size:.75rem;display:none" title="Limpar pesquisa"><i class="fa-solid fa-xmark"></i></button></div>
+    <button class="tog-btn" id="togBtn">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="srch" id="srchBox">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="gSearch" placeholder="Pesquisar nome, clube, liga, rastreio..."/>
+      <button id="srchClear" style="background:none;border:none;color:var(--t3);cursor:pointer;padding:0 2px;display:none;line-height:0" title="Limpar">
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
     <div class="tb-actions">
-      <button class="btn btn-primary" id="topAdd"><i class="fa-solid fa-plus"></i> Adicionar</button>
+      <button class="btn-icon" title="Notificações">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="badge">3</span>
+      </button>
+      <button class="btn btn-primary" id="topAdd">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Adicionar
+      </button>
     </div>
   </header>
 
@@ -221,18 +618,119 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
     <!-- DASHBOARD -->
     <section class="page active" id="page-dashboard">
       <div class="ph">
-        <div><div class="pt">Dashboard</div><div class="psub" id="dashDate"></div></div>
+        <div class="ph-left">
+          <div class="pt">Dashboard</div>
+          <div class="psub" id="dashDate"></div>
+        </div>
       </div>
+
+      <!-- KPIs -->
       <div class="kpi-grid">
-        <div class="kpi"><div class="kpi-ico" style="background:rgba(99,102,241,.14);color:#818cf8"><i class="fa-solid fa-shirt"></i></div><div><div class="kpi-lbl">Total Camisolas</div><div class="kpi-val" id="k1">0</div></div></div>
-        <div class="kpi"><div class="kpi-ico" style="background:rgba(34,197,94,.12);color:#4ade80"><i class="fa-solid fa-warehouse"></i></div><div><div class="kpi-lbl">Stock Disponível</div><div class="kpi-val" id="k2">0</div></div></div>
-        <div class="kpi"><div class="kpi-ico" style="background:rgba(251,146,60,.12);color:#fb923c"><i class="fa-solid fa-bag-shopping"></i></div><div><div class="kpi-lbl">Vendidas</div><div class="kpi-val" id="k3">0</div></div></div>
-        <div class="kpi" style="border-color:rgba(251,191,36,.2)"><div class="kpi-ico" style="background:rgba(251,191,36,.12);color:#fbbf24"><i class="fa-solid fa-euro-sign"></i></div><div><div class="kpi-lbl">Lucro Total</div><div class="kpi-val" id="k4">€0.00</div></div></div>
+        <div class="kpi">
+          <div class="kpi-top">
+            <div class="kpi-ico" style="background:rgba(99,102,241,.12);color:var(--acc2)">
+              <svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.33-2.23Z"/></svg>
+            </div>
+            <div class="kpi-trend trend-up" id="k1trend">
+              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              —
+            </div>
+          </div>
+          <div>
+            <div class="kpi-lbl">Total Camisolas</div>
+            <div class="kpi-val" id="k1">0</div>
+          </div>
+          <div class="spark" id="spark1"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top">
+            <div class="kpi-ico" style="background:rgba(34,197,94,.1);color:var(--green)">
+              <svg viewBox="0 0 24 24"><path d="M2 7l10-4 10 4v2L12 13 2 9V7Z"/><path d="M2 14l10 4 10-4"/><path d="M2 17l10 4 10-4"/></svg>
+            </div>
+            <div class="kpi-trend trend-up" id="k2trend">
+              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              —
+            </div>
+          </div>
+          <div>
+            <div class="kpi-lbl">Stock Disponível</div>
+            <div class="kpi-val" id="k2">0</div>
+          </div>
+          <div class="spark" id="spark2"></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-top">
+            <div class="kpi-ico" style="background:rgba(251,146,60,.1);color:var(--orange)">
+              <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <div class="kpi-trend trend-up" id="k3trend">
+              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              —
+            </div>
+          </div>
+          <div>
+            <div class="kpi-lbl">Vendidas</div>
+            <div class="kpi-val" id="k3">0</div>
+          </div>
+          <div class="spark" id="spark3"></div>
+        </div>
+        <div class="kpi" style="border-color:rgba(251,191,36,.15)">
+          <div class="kpi-top">
+            <div class="kpi-ico" style="background:rgba(251,191,36,.1);color:var(--yellow)">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="kpi-trend trend-up" id="k4trend">
+              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              —
+            </div>
+          </div>
+          <div>
+            <div class="kpi-lbl">Lucro Total</div>
+            <div class="kpi-val" id="k4">€0</div>
+          </div>
+          <div class="spark" id="spark4"></div>
+        </div>
       </div>
+
+      <!-- DASH GRID -->
       <div class="dash-grid">
-        <div class="card"><div class="ch"><h2><i class="fa-solid fa-triangle-exclamation" style="color:var(--orange)"></i> Alertas de Stock Baixo</h2></div><div class="list-body" id="alertList"><p class="empty-msg">Sem alertas</p></div></div>
-        <div class="card"><div class="ch"><h2><i class="fa-solid fa-fire" style="color:var(--red)"></i> Mais Vendidos</h2></div><div class="list-body" id="topList"><p class="empty-msg">Sem dados</p></div></div>
-        <div class="card card-full"><div class="ch"><h2><i class="fa-solid fa-chart-bar" style="color:var(--acc2)"></i> Visão Geral por Liga</h2></div><div class="lbars" id="leagueBars"></div></div>
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <h2>
+                <svg viewBox="0 0 24 24" style="color:var(--orange)"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Alertas de Stock
+              </h2>
+            </div>
+            <span class="ch-badge" id="alertCount">—</span>
+          </div>
+          <div class="list-body" id="alertList"><p class="empty-msg"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Sem alertas de stock</p></div>
+        </div>
+
+        <div class="card">
+          <div class="ch">
+            <div class="ch-left">
+              <h2>
+                <svg viewBox="0 0 24 24" style="color:var(--red)"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10"/><path d="M12 2c0 5.523 4.477 10 10 10"/><path d="m9 12 2 2 4-4"/></svg>
+                Mais Vendidos
+              </h2>
+            </div>
+            <span class="ch-badge" id="topCount">—</span>
+          </div>
+          <div class="list-body" id="topList"><p class="empty-msg"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Sem dados de vendas</p></div>
+        </div>
+
+        <div class="card card-full">
+          <div class="ch">
+            <div class="ch-left">
+              <h2>
+                <svg viewBox="0 0 24 24" style="color:var(--acc2)"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Visão Geral por Liga
+              </h2>
+            </div>
+          </div>
+          <div class="lbars" id="leagueBars"></div>
+        </div>
       </div>
     </section>
 
@@ -241,9 +739,12 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
       <div class="ph">
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
           <div class="pt">Gestão de Stock</div>
-          <span id="stockCount" style="font-size:.72rem;color:var(--t3);font-weight:600;padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:99px"></span>
+          <span class="count-tag" id="stockCount"></span>
         </div>
-        <button class="btn btn-primary" id="addProdBtn"><i class="fa-solid fa-plus"></i> Novo Produto</button>
+        <button class="btn btn-primary" id="addProdBtn">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Produto
+        </button>
       </div>
       <div class="filters">
         <select class="fsel" id="fLiga"><option value="">Todas as Ligas</option></select>
@@ -251,7 +752,10 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
         <select class="fsel" id="fTipo"><option value="">Todos os Tipos</option><optgroup label="Camisolas"><option>Camisa Modelo Fã</option><option>Camisa Modelo Jogador</option><option>Camisola Manga Longa</option><option>Retrô</option></optgroup><optgroup label="Kits"><option>Kit Infantil</option><option>Kit Adulto</option></optgroup><optgroup label="Vestuário"><option>Corta Vento</option><option>Fato de Treino</option><option>Calções</option></optgroup><optgroup label="Calçado"><option>Sapatilhas</option><option>Chuteiras</option></optgroup><optgroup label="NBA"><option>NBA</option></optgroup><optgroup label="Serviços"><option>Personalização (Nome + Número)</option><option>Patch / Patrocinador</option></optgroup></select>
         <select class="fsel" id="fTam"><option value="">Tamanho</option><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Infantil"><option>14 (2-3a)</option><option>16 (3-4a)</option><option>18 (4-5a)</option><option>20 (5-6a)</option><option>22 (6-7a)</option><option>24 (8-9a)</option><option>26 (10-11a)</option><option>28 (12-13a)</option></optgroup></select>
         <select class="fsel" id="fEst"><option value="">Estado</option><option>Disponível</option><option>Reservado</option><option>Vendido</option></select>
-        <button class="btn btn-ghost" id="clrStock"><i class="fa-solid fa-xmark"></i> Limpar</button>
+        <button class="btn btn-ghost" id="clrStock">
+          <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Limpar
+        </button>
       </div>
       <div class="tw">
         <table>
@@ -267,13 +771,19 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
       <div class="ph">
         <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
           <div class="pt">Clientes &amp; Envios</div>
-          <span id="clienteCount" style="font-size:.72rem;color:var(--t3);font-weight:600;padding:3px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:99px"></span>
+          <span class="count-tag" id="clienteCount"></span>
         </div>
-        <button class="btn btn-primary" id="addClienteBtn"><i class="fa-solid fa-plus"></i> Novo Cliente</button>
+        <button class="btn btn-primary" id="addClienteBtn">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Cliente
+        </button>
       </div>
       <div class="filters">
         <select class="fsel" id="fcEst"><option value="">Estado</option><option>Em preparação</option><option>Enviado</option><option>Entregue</option></select>
-        <button class="btn btn-ghost" id="clrCliente"><i class="fa-solid fa-xmark"></i> Limpar</button>
+        <button class="btn btn-ghost" id="clrCliente">
+          <svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Limpar
+        </button>
       </div>
       <div class="tw">
         <table>
@@ -290,39 +800,22 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 <!-- MODAL PRODUTO -->
 <div class="ov" id="ovProd">
   <div class="modal">
-    <div class="mh"><h2 id="mProdTit">Novo Produto</h2><button class="mc" data-close="ovProd"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="mh">
+      <h2 id="mProdTit">Novo Produto</h2>
+      <button class="mc" data-close="ovProd"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
     <div class="mf">
-
-      <!-- Tipo sempre visível primeiro -->
-      <div class="fg" style="margin-bottom:13px">
+      <div class="fg" style="margin-bottom:14px">
         <div class="fg-item ff"><label>Tipo / Categoria *</label><select id="pTipo">
           <option value="">Selecionar tipo</option>
-          <optgroup label="Camisolas">
-            <option value="Camisa Modelo Fã">Camisa Modelo Fã</option>
-            <option value="Camisa Modelo Jogador">Camisa Modelo Jogador</option>
-            <option value="Camisola Manga Longa">Camisola Manga Longa</option>
-            <option value="Retrô">Retrô</option>
-          </optgroup>
-          <optgroup label="Kits">
-            <option value="Kit Infantil">Kit Infantil</option>
-            <option value="Kit Adulto">Kit Adulto</option>
-          </optgroup>
-          <optgroup label="Vestuário">
-            <option value="Corta Vento">Corta Vento</option>
-            <option value="Fato de Treino">Fato de Treino</option>
-            <option value="Calções">Calções</option>
-          </optgroup>
-          <optgroup label="Calçado">
-            <option value="Sapatilhas">Sapatilhas</option>
-            <option value="Chuteiras">Chuteiras</option>
-          </optgroup>
-          <optgroup label="NBA">
-            <option value="NBA">NBA</option>
-          </optgroup>
+          <optgroup label="Camisolas"><option value="Camisa Modelo Fã">Camisa Modelo Fã</option><option value="Camisa Modelo Jogador">Camisa Modelo Jogador</option><option value="Camisola Manga Longa">Camisola Manga Longa</option><option value="Retrô">Retrô</option></optgroup>
+          <optgroup label="Kits"><option value="Kit Infantil">Kit Infantil</option><option value="Kit Adulto">Kit Adulto</option></optgroup>
+          <optgroup label="Vestuário"><option value="Corta Vento">Corta Vento</option><option value="Fato de Treino">Fato de Treino</option><option value="Calções">Calções</option></optgroup>
+          <optgroup label="Calçado"><option value="Sapatilhas">Sapatilhas</option><option value="Chuteiras">Chuteiras</option></optgroup>
+          <optgroup label="NBA"><option value="NBA">NBA</option></optgroup>
         </select></div>
       </div>
 
-      <!-- CAMPOS PRODUTO NORMAL (camisolas, kits, etc.) -->
       <div id="camposProduto" class="fg" style="display:none">
         <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><optgroup label="Europa"><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Eredivisie</option><option>Scottish Premiership</option></optgroup><optgroup label="Competições UEFA"><option>Champions League</option></optgroup><optgroup label="América"><option>Liga MX</option><option>Brasileirão</option></optgroup><optgroup label="Ásia"><option>J1 League</option></optgroup><optgroup label="Outras"><option>Seleções</option><option>Retro</option><option>NBA</option><option>Outros</option></optgroup></select></div>
         <div class="fg-item"><label>Clube / Nome *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
@@ -335,39 +828,19 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
         <div class="fg-item"><label>Preço de Venda (€) *</label><input type="number" id="pVenda" step="0.01" min="0" placeholder="0.00"/></div>
         <div class="fg-item"><label>Lucro (€)</label><input type="number" id="pLucro" class="ro lucro-f" readonly/></div>
         <div class="fg-item"><label>Estado</label><select id="pEst"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
-
-        <!-- SERVIÇOS ADICIONAIS (só para camisolas/kits) -->
-        <div class="ff" id="blocoServicos" style="display:none;border-top:1px solid var(--border);padding-top:13px;margin-top:4px">
-          <div style="font-size:.7rem;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px"><i class="fa-solid fa-screwdriver-wrench" style="margin-right:5px;color:var(--acc2)"></i>Serviços Adicionais</div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.85rem;color:var(--t2)">
-              <input type="checkbox" id="chkPerso" style="accent-color:var(--acc);width:15px;height:15px;cursor:pointer"/>
-              Personalização (Nome + Número)
-            </label>
-            <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:.85rem;color:var(--t2)">
-              <input type="checkbox" id="chkPatch" style="accent-color:var(--acc);width:15px;height:15px;cursor:pointer"/>
-              Patch / Patrocinador
-            </label>
+        <div class="ff" id="blocoServicos" style="display:none;border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+          <div style="font-size:.7rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px">Serviços Adicionais</div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <label class="chk-label"><input type="checkbox" id="chkPerso"/> Personalização (Nome + Número)</label>
+            <label class="chk-label"><input type="checkbox" id="chkPatch"/> Patch / Patrocinador</label>
           </div>
         </div>
       </div>
 
-      <!-- CAMPOS CALÇADO (Sapatilhas / Chuteiras) -->
       <div id="camposCalcado" class="fg" style="display:none">
         <div class="fg-item ff"><label>Nome do Modelo *</label><input type="text" id="caNome" placeholder="ex: Nike Air Max 90, Adidas Predator..."/></div>
         <div class="fg-item"><label>Cor *</label><input type="text" id="caCor" placeholder="ex: Branco/Preto, Azul Royal..."/></div>
-        <div class="fg-item"><label>Tamanho (nº) *</label><select id="caTam">
-          <option value="">Selecionar</option>
-          <optgroup label="Adulto (EU)">
-            <option>36</option><option>37</option><option>38</option><option>39</option>
-            <option>40</option><option>41</option><option>42</option><option>43</option>
-            <option>44</option><option>45</option><option>46</option><option>47</option><option>48</option>
-          </optgroup>
-          <optgroup label="Infantil (EU)">
-            <option>28</option><option>29</option><option>30</option><option>31</option>
-            <option>32</option><option>33</option><option>34</option><option>35</option>
-          </optgroup>
-        </select></div>
+        <div class="fg-item"><label>Tamanho (nº) *</label><select id="caTam"><option value="">Selecionar</option><optgroup label="Adulto (EU)"><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option><option>47</option><option>48</option></optgroup><optgroup label="Infantil (EU)"><option>28</option><option>29</option><option>30</option><option>31</option><option>32</option><option>33</option><option>34</option><option>35</option></optgroup></select></div>
         <div class="fg-item"><label>Quantidade *</label><input type="number" id="caQtd" min="0" value="1"/></div>
         <div class="fg-item"><label>Preço de Compra (€) *</label><input type="number" id="caPreco" step="0.01" min="0" placeholder="0.00"/></div>
         <div class="fg-item"><label>Frete (€)</label><input type="number" id="caFrete" step="0.01" min="0" placeholder="0.00"/></div>
@@ -377,9 +850,8 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
         <div class="fg-item"><label>Estado</label><select id="caEst"><option>Disponível</option><option>Reservado</option><option>Vendido</option></select></div>
       </div>
 
-      <!-- CAMPOS PERSONALIZAÇÃO -->
-      <div id="camposPersonalizacao" class="fg" style="display:none;border:1px solid rgba(99,102,241,.2);border-radius:var(--rs);padding:14px;margin-top:8px;background:rgba(99,102,241,.04)">
-        <div class="ff" style="font-size:.7rem;font-weight:600;color:var(--acc2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px"><i class="fa-solid fa-pen-nib" style="margin-right:5px"></i>Personalização</div>
+      <div id="camposPersonalizacao" class="fg bloco-servico" style="display:none">
+        <div class="ff"><div class="bloco-label"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Personalização</div></div>
         <div class="fg-item"><label>Nome do Jogador *</label><input type="text" id="sNome" placeholder="ex: RONALDO"/></div>
         <div class="fg-item"><label>Número *</label><input type="number" id="sNumero" placeholder="ex: 7" min="0" max="99"/></div>
         <div class="fg-item"><label>Fonte / Estilo</label><input type="text" id="sFonte" placeholder="ex: Premier League, La Liga..."/></div>
@@ -390,9 +862,8 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
         <div class="fg-item"><label>Observações</label><input type="text" id="sObs" placeholder="ex: frente + costas..."/></div>
       </div>
 
-      <!-- CAMPOS PATCH / PATROCINADOR -->
-      <div id="camposPatch" class="fg" style="display:none;border:1px solid rgba(251,146,60,.2);border-radius:var(--rs);padding:14px;margin-top:8px;background:rgba(251,146,60,.04)">
-        <div class="ff" style="font-size:.7rem;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px"><i class="fa-solid fa-tag" style="margin-right:5px"></i>Patch / Patrocinador</div>
+      <div id="camposPatch" class="fg bloco-servico bloco-patch" style="display:none">
+        <div class="ff"><div class="bloco-label bloco-patch"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>Patch / Patrocinador</div></div>
         <div class="fg-item"><label>Nome do Patch / Patrocinador *</label><input type="text" id="ptNome" placeholder="ex: Champions League, Nike..."/></div>
         <div class="fg-item"><label>Posição</label><input type="text" id="ptPosicao" placeholder="ex: Manga esquerda, peito..."/></div>
         <div class="fg-item"><label>Tipo de Aplicação</label><select id="ptAplicacao"><option value="Termocolante">Termocolante</option><option value="Bordado">Bordado</option><option value="Impressão">Impressão</option><option value="Outro">Outro</option></select></div>
@@ -405,7 +876,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 
       <div class="ma">
         <button class="btn btn-ghost" data-close="ovProd">Cancelar</button>
-        <button class="btn btn-primary" id="saveProd">Guardar</button>
+        <button class="btn btn-primary" id="saveProd">Guardar Produto</button>
       </div>
     </div>
   </div>
@@ -414,7 +885,10 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 <!-- MODAL CLIENTE -->
 <div class="ov" id="ovCliente">
   <div class="modal">
-    <div class="mh"><h2 id="mClienteTit">Novo Cliente</h2><button class="mc" data-close="ovCliente"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="mh">
+      <h2 id="mClienteTit">Novo Cliente</h2>
+      <button class="mc" data-close="ovCliente"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
     <div class="mf">
       <div class="fg">
         <div class="fg-item ff"><label>Nome Completo *</label><input type="text" id="cNome"/></div>
@@ -429,7 +903,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
       </div>
       <div class="ma">
         <button class="btn btn-ghost" data-close="ovCliente">Cancelar</button>
-        <button class="btn btn-primary" id="saveCliente">Guardar</button>
+        <button class="btn btn-primary" id="saveCliente">Guardar Cliente</button>
       </div>
     </div>
   </div>
@@ -438,9 +912,9 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 <!-- CONFIRM -->
 <div class="ov" id="ovConfirm">
   <div class="modal modal-sm">
-    <div class="mh"><h2>Confirmar</h2><button class="mc" data-close="ovConfirm"><i class="fa-solid fa-xmark"></i></button></div>
-    <p id="confirmMsg" style="padding:0 22px 14px;color:var(--t2)">Tens a certeza?</p>
-    <div class="ma" style="padding:0 22px 18px">
+    <div class="mh"><h2>Confirmar</h2><button class="mc" data-close="ovConfirm"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <p id="confirmMsg" style="padding:0 24px 14px;color:var(--t2);font-size:.9rem">Tens a certeza?</p>
+    <div class="ma" style="padding:0 24px 20px">
       <button class="btn btn-ghost" data-close="ovConfirm">Cancelar</button>
       <button class="btn btn-danger" id="confirmOk">Eliminar</button>
     </div>
@@ -450,17 +924,26 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 <!-- MODAL RETOMA SESSÃO -->
 <div class="ov" id="ovRetoma" style="z-index:400">
   <div class="modal modal-sm" style="max-width:420px">
-    <div class="mh" style="border-bottom:1px solid var(--border)">
-      <h2 style="display:flex;align-items:center;gap:8px"><i class="fa-solid fa-rotate-left" style="color:var(--acc2);font-size:1rem"></i> Sessão Anterior</h2>
+    <div class="mh">
+      <h2 style="display:flex;align-items:center;gap:8px">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;stroke:var(--acc2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.7"/></svg>
+        Sessão Anterior
+      </h2>
     </div>
-    <div style="padding:18px 22px">
-      <p style="color:var(--t2);font-size:.875rem;line-height:1.6;margin-bottom:6px">Foi encontrada uma sessão anterior com dados guardados:</p>
-      <div id="retomaInfo" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:12px 16px;margin:12px 0;display:flex;gap:18px"></div>
+    <div style="padding:20px 24px">
+      <p style="color:var(--t2);font-size:.875rem;line-height:1.6;margin-bottom:10px">Foi encontrada uma sessão anterior com dados guardados:</p>
+      <div id="retomaInfo" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:12px 0;display:flex;gap:20px"></div>
       <p style="color:var(--t3);font-size:.78rem;line-height:1.5">Queres retomar de onde ficaste ou começar do zero?</p>
     </div>
-    <div class="ma" style="padding:0 22px 18px;gap:8px">
-      <button class="btn btn-danger" id="retomaLimpar" style="font-size:.8rem"><i class="fa-solid fa-trash"></i> Começar do Zero</button>
-      <button class="btn btn-primary" id="retomaOk" style="font-size:.8rem"><i class="fa-solid fa-rotate-left"></i> Retomar Sessão</button>
+    <div class="ma" style="padding:0 24px 20px;gap:8px">
+      <button class="btn btn-danger" id="retomaLimpar" style="font-size:.8rem">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        Começar do Zero
+      </button>
+      <button class="btn btn-primary" id="retomaOk" style="font-size:.8rem">
+        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.7"/></svg>
+        Retomar Sessão
+      </button>
     </div>
   </div>
 </div>
@@ -469,64 +952,35 @@ tbody tr:hover td{background:var(--bg3);color:var(--t1)}
 
 <script>
 // ── SECURITY ──────────────────────────────────────────────────
-// Escapa HTML para prevenir XSS em qualquer dado inserido no DOM
 function esc(str){
   if(str===null||str===undefined) return '';
-  return String(str)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#x27;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 }
-
-// UID criptograficamente seguro
 function uid(){
-  const arr = new Uint32Array(3);
+  const arr=new Uint32Array(3);
   crypto.getRandomValues(arr);
-  return Array.from(arr, n => n.toString(36)).join('') + Date.now().toString(36);
+  return Array.from(arr,n=>n.toString(36)).join('')+Date.now().toString(36);
 }
-
-// Validar estrutura dos dados do localStorage antes de usar
 function validarProduto(p){
-  return p && typeof p === 'object' &&
-    typeof p.id === 'string' && /^[a-z0-9]+$/.test(p.id) &&
-    typeof p.clube === 'string' &&
-    typeof p.liga === 'string' &&
-    typeof p.preco === 'number' &&
-    typeof p.venda === 'number' &&
-    typeof p.qtd === 'number';
+  return p&&typeof p==='object'&&typeof p.id==='string'&&/^[a-z0-9]+$/.test(p.id)&&typeof p.clube==='string'&&typeof p.liga==='string'&&typeof p.preco==='number'&&typeof p.venda==='number'&&typeof p.qtd==='number';
 }
 function validarCliente(c){
-  return c && typeof c === 'object' &&
-    typeof c.id === 'string' && /^[a-z0-9]+$/.test(c.id) &&
-    typeof c.nome === 'string';
+  return c&&typeof c==='object'&&typeof c.id==='string'&&/^[a-z0-9]+$/.test(c.id)&&typeof c.nome==='string';
 }
 
-// ── COOKIES ───────────────────────────────────────────────────
-// Cookies têm limite de ~4KB por cookie, por isso dividimos em chunks
-const COOKIE_DAYS = 365;
-const CHUNK_SIZE  = 3000; // chars por cookie (seguro abaixo dos 4096B)
-
-function setCookieChunks(key, value){
-  // Apagar chunks anteriores (até 20)
+// ── COOKIES ──────────────────────────────────────────────────
+const COOKIE_DAYS=365,CHUNK_SIZE=3000;
+function setCookieChunks(key,value){
   for(let i=0;i<20;i++) document.cookie=`${key}_${i}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
-  const expires = new Date(Date.now()+COOKIE_DAYS*864e5).toUTCString();
-  const chunks = [];
+  const expires=new Date(Date.now()+COOKIE_DAYS*864e5).toUTCString();
+  const chunks=[];
   for(let i=0;i<value.length;i+=CHUNK_SIZE) chunks.push(value.slice(i,i+CHUNK_SIZE));
-  // Guardar número de chunks
   document.cookie=`${key}_n=${chunks.length};expires=${expires};path=/;SameSite=Strict`;
-  chunks.forEach((c,i)=>{
-    document.cookie=`${key}_${i}=${encodeURIComponent(c)};expires=${expires};path=/;SameSite=Strict`;
-  });
+  chunks.forEach((c,i)=>{ document.cookie=`${key}_${i}=${encodeURIComponent(c)};expires=${expires};path=/;SameSite=Strict`; });
 }
-
 function getCookieChunks(key){
   const all={};
-  document.cookie.split(';').forEach(c=>{
-    const [k,v]=c.trim().split('=');
-    if(k) all[k.trim()]=v||'';
-  });
+  document.cookie.split(';').forEach(c=>{ const [k,v]=c.trim().split('='); if(k) all[k.trim()]=v||''; });
   const n=parseInt(all[`${key}_n`]||'0');
   if(!n) return null;
   let result='';
@@ -535,58 +989,59 @@ function getCookieChunks(key){
 }
 
 // ── DATA ──────────────────────────────────────────────────────
-// Migrar localStorage antigo para cookies se existir
 (function migrateFromLocalStorage(){
-  try {
-    const op=localStorage.getItem('ns2_prod'), oc=localStorage.getItem('ns2_cli');
-    if(op){ setCookieChunks('ns3_prod',op); localStorage.removeItem('ns2_prod'); }
-    if(oc){ setCookieChunks('ns3_cli',oc);  localStorage.removeItem('ns2_cli');  }
-    // limpar chaves mais antigas
-    localStorage.removeItem('ns_prod'); localStorage.removeItem('ns_cli');
-  } catch(e){}
+  try{
+    const op=localStorage.getItem('ns2_prod'),oc=localStorage.getItem('ns2_cli');
+    if(op){setCookieChunks('ns3_prod',op);localStorage.removeItem('ns2_prod');}
+    if(oc){setCookieChunks('ns3_cli',oc);localStorage.removeItem('ns2_cli');}
+    localStorage.removeItem('ns_prod');localStorage.removeItem('ns_cli');
+  }catch(e){}
 })();
 
-let produtos = [], clientes = [];
-let _savedProd = [], _savedCli = [];
-try { const raw=JSON.parse(getCookieChunks('ns3_prod')||'[]'); _savedProd=Array.isArray(raw)?raw.filter(validarProduto):[]; } catch(e){ _savedProd=[]; }
-try { const raw=JSON.parse(getCookieChunks('ns3_cli') ||'[]'); _savedCli =Array.isArray(raw)?raw.filter(validarCliente) :[]; } catch(e){ _savedCli=[]; }
+let produtos=[],clientes=[];
+let _savedProd=[],_savedCli=[];
+try{const raw=JSON.parse(getCookieChunks('ns3_prod')||'[]');_savedProd=Array.isArray(raw)?raw.filter(validarProduto):[];}catch(e){_savedProd=[];}
+try{const raw=JSON.parse(getCookieChunks('ns3_cli')||'[]');_savedCli=Array.isArray(raw)?raw.filter(validarCliente):[];}catch(e){_savedCli=[];}
 
 function save(){
-  try {
-    setCookieChunks('ns3_prod', JSON.stringify(produtos));
-    setCookieChunks('ns3_cli',  JSON.stringify(clientes));
-  } catch(e){ console.warn('Erro ao guardar cookies:', e); }
+  try{setCookieChunks('ns3_prod',JSON.stringify(produtos));setCookieChunks('ns3_cli',JSON.stringify(clientes));}
+  catch(e){console.warn('Erro ao guardar cookies:',e);}
 }
 
-// ── TOAST ────────────────────────────────────────────────────
+// ── TOAST ──────────────────────────────────────────────────────
 let _tt;
 function toast(msg,type='ok'){
   const el=document.getElementById('toast');
-  el.textContent=msg; el.className='toast show '+type;
-  clearTimeout(_tt); _tt=setTimeout(()=>el.className='toast',2800);
+  const icon=type==='ok'
+    ?`<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`
+    :`<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+  el.innerHTML=icon+esc(msg);
+  el.className='toast show '+type;
+  clearTimeout(_tt);_tt=setTimeout(()=>el.className='toast',2800);
 }
 
-// ── MODALS ───────────────────────────────────────────────────
-function openM(id){ document.getElementById(id).classList.add('open'); }
-function closeM(id){ document.getElementById(id).classList.remove('open'); }
+// ── MODALS ────────────────────────────────────────────────────
+function openM(id){document.getElementById(id).classList.add('open');}
+function closeM(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeM(b.dataset.close)));
-document.querySelectorAll('.ov').forEach(ov=>ov.addEventListener('click',e=>{ if(e.target===ov) closeM(ov.id); }));
+document.querySelectorAll('.ov').forEach(ov=>ov.addEventListener('click',e=>{if(e.target===ov)closeM(ov.id);}));
 
-// ── CONFIRM ──────────────────────────────────────────────────
+// ── CONFIRM ───────────────────────────────────────────────────
 let _cb=null;
-function askConfirm(msg,cb){ document.getElementById('confirmMsg').textContent=msg; _cb=cb; openM('ovConfirm'); }
-document.getElementById('confirmOk').addEventListener('click',()=>{ if(_cb) _cb(); _cb=null; closeM('ovConfirm'); });
+function askConfirm(msg,cb){document.getElementById('confirmMsg').textContent=msg;_cb=cb;openM('ovConfirm');}
+document.getElementById('confirmOk').addEventListener('click',()=>{if(_cb)_cb();_cb=null;closeM('ovConfirm');});
 
-// ── NAVIGATION ───────────────────────────────────────────────
-const navBtns = document.querySelectorAll('.nav-item');
-const sidebar  = document.getElementById('sidebar');
+// ── NAVIGATION ────────────────────────────────────────────────
+const navBtns=document.querySelectorAll('.nav-item');
+const sidebar=document.getElementById('sidebar');
 
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
+  const pg=document.getElementById('page-'+id);
+  pg.classList.add('active');
   if(id==='dashboard') refreshDash();
-  if(id==='stock')     renderStock();
-  if(id==='clientes')  renderClientes();
+  if(id==='stock') renderStock();
+  if(id==='clientes') renderClientes();
 }
 
 navBtns.forEach(btn=>{
@@ -611,22 +1066,18 @@ navBtns.forEach(btn=>{
 });
 
 document.getElementById('togBtn').addEventListener('click',()=>sidebar.classList.toggle('open'));
-
 document.getElementById('topAdd').addEventListener('click',()=>{
   navBtns.forEach(b=>b.classList.remove('active'));
   document.querySelector('[data-page="stock"]').classList.add('active');
-  showPage('stock');
-  openProdModal(null);
+  showPage('stock');openProdModal(null);
 });
-
 document.getElementById('gSearch').addEventListener('input',()=>{
-  const val = document.getElementById('gSearch').value;
-  document.getElementById('srchClear').style.display = val ? 'block' : 'none';
+  const val=document.getElementById('gSearch').value;
+  document.getElementById('srchClear').style.display=val?'block':'none';
   const ap=document.querySelector('.page.active');
   if(ap.id==='page-stock') renderStock();
   if(ap.id==='page-clientes') renderClientes();
 });
-
 document.getElementById('srchClear').addEventListener('click',()=>{
   document.getElementById('gSearch').value='';
   document.getElementById('srchClear').style.display='none';
@@ -635,18 +1086,18 @@ document.getElementById('srchClear').addEventListener('click',()=>{
   if(ap.id==='page-clientes') renderClientes();
 });
 
-// ── CALC ─────────────────────────────────────────────────────
+// ── CALC ──────────────────────────────────────────────────────
 function calcProd(){
   const pc=parseFloat(document.getElementById('pPreco').value)||0;
   const fr=parseFloat(document.getElementById('pFrete').value)||0;
   const vd=parseFloat(document.getElementById('pVenda').value)||0;
-  const tot=pc+fr, luc=vd-tot;
+  const tot=pc+fr,luc=vd-tot;
   document.getElementById('pCusto').value=(pc||fr)?tot.toFixed(2):'';
   const lf=document.getElementById('pLucro');
   lf.value=(pc||vd)?luc.toFixed(2):'';
   lf.style.color=luc>=0?'var(--green)':'var(--red)';
 }
-function calcServ(precoId, vendaId, lucroId){
+function calcServ(precoId,vendaId,lucroId){
   const pc=parseFloat(document.getElementById(precoId).value)||0;
   const vd=parseFloat(document.getElementById(vendaId).value)||0;
   const luc=vd-pc;
@@ -654,50 +1105,44 @@ function calcServ(precoId, vendaId, lucroId){
   lf.value=(pc||vd)?luc.toFixed(2):'';
   lf.style.color=luc>=0?'var(--green)':'var(--red)';
 }
-['pPreco','pFrete','pVenda'].forEach(id=>document.getElementById(id).addEventListener('input',calcProd));
-['sPrecoP','sVendaP'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('sPrecoP','sVendaP','sLucroP')));
-['ptPreco','ptVenda'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('ptPreco','ptVenda','ptLucro')));
-
 function calcCalcado(){
   const pc=parseFloat(document.getElementById('caPreco').value)||0;
   const fr=parseFloat(document.getElementById('caFrete').value)||0;
   const vd=parseFloat(document.getElementById('caVenda').value)||0;
-  const tot=pc+fr, luc=vd-tot;
+  const tot=pc+fr,luc=vd-tot;
   document.getElementById('caCusto').value=(pc||fr)?tot.toFixed(2):'';
   const lf=document.getElementById('caLucro');
   lf.value=(pc||vd)?luc.toFixed(2):'';
   lf.style.color=luc>=0?'var(--green)':'var(--red)';
 }
+['pPreco','pFrete','pVenda'].forEach(id=>document.getElementById(id).addEventListener('input',calcProd));
+['sPrecoP','sVendaP'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('sPrecoP','sVendaP','sLucroP')));
+['ptPreco','ptVenda'].forEach(id=>document.getElementById(id).addEventListener('input',()=>calcServ('ptPreco','ptVenda','ptLucro')));
 ['caPreco','caFrete','caVenda'].forEach(id=>document.getElementById(id).addEventListener('input',calcCalcado));
 
 // ── TIPO SWITCHER ─────────────────────────────────────────────
 function switchTipo(tipo){
-  const isCalcado = ['Sapatilhas','Chuteiras'].includes(tipo);
-  const isProd = tipo !== '' && !isCalcado;
-  const comServicos = ['Camisa Modelo Fã','Camisa Modelo Jogador','Camisola Manga Longa','Retrô','Kit Infantil','Kit Adulto'].includes(tipo);
-  document.getElementById('camposProduto').style.display    = isProd ? 'grid' : 'none';
-  document.getElementById('camposCalcado').style.display    = isCalcado ? 'grid' : 'none';
-  document.getElementById('blocoServicos').style.display    = comServicos ? 'block' : 'none';
+  const isCalcado=['Sapatilhas','Chuteiras'].includes(tipo);
+  const isProd=tipo!==''&&!isCalcado;
+  const comServicos=['Camisa Modelo Fã','Camisa Modelo Jogador','Camisola Manga Longa','Retrô','Kit Infantil','Kit Adulto'].includes(tipo);
+  document.getElementById('camposProduto').style.display=isProd?'grid':'none';
+  document.getElementById('camposCalcado').style.display=isCalcado?'grid':'none';
+  document.getElementById('blocoServicos').style.display=comServicos?'block':'none';
   if(!comServicos){
-    document.getElementById('chkPerso').checked = false;
-    document.getElementById('chkPatch').checked  = false;
-    document.getElementById('camposPersonalizacao').style.display = 'none';
-    document.getElementById('camposPatch').style.display          = 'none';
+    document.getElementById('chkPerso').checked=false;
+    document.getElementById('chkPatch').checked=false;
+    document.getElementById('camposPersonalizacao').style.display='none';
+    document.getElementById('camposPatch').style.display='none';
   }
 }
-document.getElementById('pTipo').addEventListener('change',function(){ switchTipo(this.value); });
-document.getElementById('chkPerso').addEventListener('change',function(){
-  document.getElementById('camposPersonalizacao').style.display = this.checked ? 'grid' : 'none';
-});
-document.getElementById('chkPatch').addEventListener('change',function(){
-  document.getElementById('camposPatch').style.display = this.checked ? 'grid' : 'none';
-});
+document.getElementById('pTipo').addEventListener('change',function(){switchTipo(this.value);});
+document.getElementById('chkPerso').addEventListener('change',function(){document.getElementById('camposPersonalizacao').style.display=this.checked?'grid':'none';});
+document.getElementById('chkPatch').addEventListener('change',function(){document.getElementById('camposPatch').style.display=this.checked?'grid':'none';});
 
-// ── PRODUTO MODAL ────────────────────────────────────────────
+// ── PRODUTO MODAL ─────────────────────────────────────────────
 let _eProd=null;
 function openProdModal(id){
   _eProd=id;
-  // reset produto
   ['pLiga','pClube','pEpoca','pPreco','pFrete','pVenda','pQtd'].forEach(i=>{
     const el=document.getElementById(i);
     if(el.tagName==='SELECT') el.selectedIndex=0; else el.value=i==='pQtd'?'1':'';
@@ -708,25 +1153,20 @@ function openProdModal(id){
   document.getElementById('pCusto').value='';
   document.getElementById('pLucro').value='';
   document.getElementById('pLucro').style.color='var(--green)';
-  // reset checkboxes e serviços
   document.getElementById('chkPerso').checked=false;
   document.getElementById('chkPatch').checked=false;
   ['sNome','sNumero','sFonte','sPrecoP','sVendaP','sObs'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('sLucroP').value=''; document.getElementById('sEstP').selectedIndex=0;
+  document.getElementById('sLucroP').value='';document.getElementById('sEstP').selectedIndex=0;
   ['ptNome','ptPosicao','ptPreco','ptVenda','ptObs'].forEach(i=>document.getElementById(i).value='');
-  document.getElementById('ptLucro').value=''; document.getElementById('ptAplicacao').selectedIndex=0; document.getElementById('ptEst').selectedIndex=0;
-
+  document.getElementById('ptLucro').value='';document.getElementById('ptAplicacao').selectedIndex=0;document.getElementById('ptEst').selectedIndex=0;
   switchTipo('');
   document.getElementById('mProdTit').textContent=id?'Editar Produto':'Novo Produto';
-
-  // reset calçado
   ['caNome','caCor','caPreco','caFrete','caVenda'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('caTam').selectedIndex=0;
   document.getElementById('caQtd').value='1';
   document.getElementById('caCusto').value='';
   document.getElementById('caLucro').value='';
   document.getElementById('caEst').selectedIndex=0;
-
   if(id){
     const p=produtos.find(x=>x.id===id);
     if(p){
@@ -742,7 +1182,6 @@ function openProdModal(id){
       document.getElementById('pVenda').value=p.venda||'';
       document.getElementById('pEst').value=p.estado||'Disponível';
       calcProd();
-      // calçado
       if(['Sapatilhas','Chuteiras'].includes(p.tipo)){
         document.getElementById('caNome').value=p.caNome||'';
         document.getElementById('caCor').value=p.caCor||'';
@@ -787,63 +1226,52 @@ document.getElementById('addProdBtn').addEventListener('click',()=>openProdModal
 
 document.getElementById('saveProd').addEventListener('click',()=>{
   const tipo=document.getElementById('pTipo').value;
-  if(!tipo){ toast('Seleciona o Tipo / Categoria','err'); return; }
-
-  const isCalcado = ['Sapatilhas','Chuteiras'].includes(tipo);
-
+  if(!tipo){toast('Seleciona o Tipo / Categoria','err');return;}
+  const isCalcado=['Sapatilhas','Chuteiras'].includes(tipo);
   if(isCalcado){
     const caNome=document.getElementById('caNome').value.trim();
     const caCor=document.getElementById('caCor').value.trim();
     const caTam=document.getElementById('caTam').value;
     const caPreco=parseFloat(document.getElementById('caPreco').value)||0;
     const caVenda=parseFloat(document.getElementById('caVenda').value)||0;
-    if(!caNome||!caTam){ toast('Preenche Modelo e Tamanho','err'); return; }
-    if(caPreco<=0){ toast('Introduz o preço de compra (€)','err'); return; }
-    if(caVenda<=0){ toast('Introduz o preço de venda (€)','err'); return; }
+    if(!caNome||!caTam){toast('Preenche Modelo e Tamanho','err');return;}
+    if(caPreco<=0){toast('Introduz o preço de compra (€)','err');return;}
+    if(caVenda<=0){toast('Introduz o preço de venda (€)','err');return;}
     const caFrete=parseFloat(document.getElementById('caFrete').value)||0;
     const entry={
-      id:_eProd||uid(), tipo,
-      liga: tipo, // usar o tipo como categoria (Sapatilhas/Chuteiras)
-      clube: caNome, // nome do modelo como "clube" para compatibilidade
-      caNome, caCor, caTam,
-      epoca:'',
-      tam: caTam,
+      id:_eProd||uid(),tipo,liga:tipo,clube:caNome,
+      caNome,caCor,caTam,epoca:'',tam:caTam,
       qtd:parseInt(document.getElementById('caQtd').value)||0,
-      preco: caPreco, frete: caFrete, custoTotal: caPreco+caFrete,
-      venda: caVenda, lucro: caVenda-(caPreco+caFrete),
-      estado: document.getElementById('caEst').value
+      preco:caPreco,frete:caFrete,custoTotal:caPreco+caFrete,
+      venda:caVenda,lucro:caVenda-(caPreco+caFrete),
+      estado:document.getElementById('caEst').value
     };
-    if(_eProd){ const i=produtos.findIndex(x=>x.id===_eProd); produtos[i]=entry; toast('Calçado atualizado!'); }
-    else { produtos.push(entry); toast('Calçado adicionado!'); }
-    save(); closeM('ovProd'); renderStock(); refreshDash();
+    if(_eProd){const i=produtos.findIndex(x=>x.id===_eProd);produtos[i]=entry;toast('Calçado atualizado!');}
+    else{produtos.push(entry);toast('Calçado adicionado!');}
+    save();closeM('ovProd');renderStock();refreshDash();
     return;
   }
-
   const liga=document.getElementById('pLiga').value;
   const clube=document.getElementById('pClube').value.trim();
   const preco=parseFloat(document.getElementById('pPreco').value)||0;
   const venda=parseFloat(document.getElementById('pVenda').value)||0;
-  if(!liga||!clube){ toast('Preenche os campos obrigatórios','err'); return; }
-  if(preco<=0){ toast('Introduz o preço de compra (€)','err'); return; }
-  if(venda<=0){ toast('Introduz o preço de venda (€)','err'); return; }
+  if(!liga||!clube){toast('Preenche os campos obrigatórios','err');return;}
+  if(preco<=0){toast('Introduz o preço de compra (€)','err');return;}
+  if(venda<=0){toast('Introduz o preço de venda (€)','err');return;}
   const frete=parseFloat(document.getElementById('pFrete').value)||0;
-
   const entry={
-    id:_eProd||uid(), liga, clube,
-    epoca:document.getElementById('pEpoca').value.trim(),
-    tipo,
+    id:_eProd||uid(),liga,clube,
+    epoca:document.getElementById('pEpoca').value.trim(),tipo,
     tam:document.getElementById('pTam').value,
     qtd:parseInt(document.getElementById('pQtd').value)||0,
-    preco, frete, custoTotal:preco+frete, venda, lucro:venda-(preco+frete),
+    preco,frete,custoTotal:preco+frete,venda,lucro:venda-(preco+frete),
     estado:document.getElementById('pEst').value
   };
-
-  // Serviços adicionais
   if(document.getElementById('chkPerso').checked){
     const sNome=document.getElementById('sNome').value.trim();
     const sNumero=document.getElementById('sNumero').value.trim();
-    if(!sNome||!sNumero){ toast('Preenche nome e número da personalização','err'); return; }
-    entry.sNome=sNome; entry.sNumero=sNumero;
+    if(!sNome||!sNumero){toast('Preenche nome e número da personalização','err');return;}
+    entry.sNome=sNome;entry.sNumero=sNumero;
     entry.sFonte=document.getElementById('sFonte').value.trim();
     entry.sPreco=parseFloat(document.getElementById('sPrecoP').value)||0;
     entry.sVenda=parseFloat(document.getElementById('sVendaP').value)||0;
@@ -853,7 +1281,7 @@ document.getElementById('saveProd').addEventListener('click',()=>{
   }
   if(document.getElementById('chkPatch').checked){
     const ptNome=document.getElementById('ptNome').value.trim();
-    if(!ptNome){ toast('Preenche o nome do patch / patrocinador','err'); return; }
+    if(!ptNome){toast('Preenche o nome do patch / patrocinador','err');return;}
     entry.ptNome=ptNome;
     entry.ptPosicao=document.getElementById('ptPosicao').value.trim();
     entry.ptAplicacao=document.getElementById('ptAplicacao').value;
@@ -863,40 +1291,51 @@ document.getElementById('saveProd').addEventListener('click',()=>{
     entry.ptEst=document.getElementById('ptEst').value;
     entry.lucro+=entry.ptVenda-entry.ptPreco;
   }
-
-  if(_eProd){ const i=produtos.findIndex(x=>x.id===_eProd); produtos[i]=entry; toast('Produto atualizado!'); }
-  else { produtos.push(entry); toast('Produto adicionado!'); }
-  save(); closeM('ovProd'); renderStock(); refreshDash();
+  if(_eProd){const i=produtos.findIndex(x=>x.id===_eProd);produtos[i]=entry;toast('Produto atualizado!');}
+  else{produtos.push(entry);toast('Produto adicionado!');}
+  save();closeM('ovProd');renderStock();refreshDash();
 });
 
-// ── LIGA LOGOS MAP ────────────────────────────────────────────
-const LIGA_LOGOS = {
-  'Premier League':    'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/200px-Premier_League_Logo.svg.png',
-  'La Liga':           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga_logo_2023.svg/200px-LaLiga_logo_2023.svg.png',
-  'Primeira Liga':     'https://upload.wikimedia.org/wikipedia/pt/thumb/0/0b/Liga_Portugal_logo.svg/200px-Liga_Portugal_logo.svg.png',
-  'Serie A':           'https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Serie_A_logo_%282019%29.svg/200px-Serie_A_logo_%282019%29.svg.png',
-  'Bundesliga':        'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/200px-Bundesliga_logo_%282017%29.svg.png',
-  'Ligue 1':           'https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Ligue1_2024.svg/200px-Ligue1_2024.svg.png',
-  'Eredivisie':        'https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Eredivisie_nieuw_logo_2017-.svg/200px-Eredivisie_nieuw_logo_2017-.svg.png',
-  'Liga MX':           'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Liga_MX_logo.svg/200px-Liga_MX_logo.svg.png',
-  'Brasileirão':       'https://upload.wikimedia.org/wikipedia/en/thumb/6/6a/Campeonato_Brasileiro_S%C3%A9rie_A.svg/200px-Campeonato_Brasileiro_S%C3%A9rie_A.svg.png',
-  'Scottish Premiership': 'https://upload.wikimedia.org/wikipedia/en/thumb/3/31/Scottish_Premiership_logo.svg/200px-Scottish_Premiership_logo.svg.png',
-  'J1 League':         'https://upload.wikimedia.org/wikipedia/en/thumb/7/78/J1_League_logo.svg/200px-J1_League_logo.svg.png',
-  'Champions League':  'https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/200px-UEFA_Champions_League_logo_2.svg.png',
-  'Seleções':          null,
-  'NBA':               'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/National_Basketball_Association_logo.svg/200px-National_Basketball_Association_logo.svg.png',
-  'Retro':             null,
+// ── LIGA LOGOS ────────────────────────────────────────────────
+const LIGA_LOGOS={
+  'Premier League':'https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/200px-Premier_League_Logo.svg.png',
+  'La Liga':'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga_logo_2023.svg/200px-LaLiga_logo_2023.svg.png',
+  'Primeira Liga':'https://upload.wikimedia.org/wikipedia/pt/thumb/0/0b/Liga_Portugal_logo.svg/200px-Liga_Portugal_logo.svg.png',
+  'Serie A':'https://upload.wikimedia.org/wikipedia/en/thumb/e/e1/Serie_A_logo_%282019%29.svg/200px-Serie_A_logo_%282019%29.svg.png',
+  'Bundesliga':'https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/200px-Bundesliga_logo_%282017%29.svg.png',
+  'Ligue 1':'https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Ligue1_2024.svg/200px-Ligue1_2024.svg.png',
+  'Eredivisie':'https://upload.wikimedia.org/wikipedia/en/thumb/0/09/Eredivisie_nieuw_logo_2017-.svg/200px-Eredivisie_nieuw_logo_2017-.svg.png',
+  'Liga MX':'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Liga_MX_logo.svg/200px-Liga_MX_logo.svg.png',
+  'Brasileirão':'https://upload.wikimedia.org/wikipedia/en/thumb/6/6a/Campeonato_Brasileiro_S%C3%A9rie_A.svg/200px-Campeonato_Brasileiro_S%C3%A9rie_A.svg.png',
+  'Scottish Premiership':'https://upload.wikimedia.org/wikipedia/en/thumb/3/31/Scottish_Premiership_logo.svg/200px-Scottish_Premiership_logo.svg.png',
+  'J1 League':'https://upload.wikimedia.org/wikipedia/en/thumb/7/78/J1_League_logo.svg/200px-J1_League_logo.svg.png',
+  'Champions League':'https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/UEFA_Champions_League_logo_2.svg/200px-UEFA_Champions_League_logo_2.svg.png',
+  'Seleções':null,
+  'NBA':'https://upload.wikimedia.org/wikipedia/en/thumb/0/03/National_Basketball_Association_logo.svg/200px-National_Basketball_Association_logo.svg.png',
+  'Retro':null,
 };
 
-function ligaLogo(liga, size='md'){
-  const src = LIGA_LOGOS[liga];
-  const cls = size === 'sm' ? 'liga-logo' : 'liga-logo-md';
-  if(!src) return `<i class="fa-solid fa-futbol" style="color:var(--acc2);font-size:.85rem"></i>`;
-  return `<img class="${cls}" src="${src}" alt="${liga}" title="${liga}" onerror="this.style.display='none'"/>`;
+function ligaLogo(liga,size='md'){
+  const src=LIGA_LOGOS[liga];
+  const cls=size==='sm'?'liga-logo':'liga-logo-md';
+  if(!src) return`<svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--acc2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+  return`<img class="${cls}" src="${src}" alt="${liga}" title="${liga}" onerror="this.style.display='none'"/>`;
 }
 
-// ── STOCK RENDER ─────────────────────────────────────────────
-function estClass(e){ return e==='Disponível'?'sd':e==='Reservado'?'sr':e==='Vendido'?'sv':e==='Por fazer'?'sp':e==='Em curso'?'se':e==='Concluído'?'sent':''; }
+// ── SPARKLINE RENDER ──────────────────────────────────────────
+function renderSparkline(id, data, color){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const max=Math.max(...data,1);
+  el.innerHTML=data.map((v,i)=>{
+    const h=Math.max(20,(v/max)*100);
+    const isHi=v===Math.max(...data);
+    return`<div class="spark-bar${isHi?' hi':''}" style="height:${h}%;background:${isHi?color:'var(--bg4)'}"></div>`;
+  }).join('');
+}
+
+// ── STOCK RENDER ──────────────────────────────────────────────
+function estClass(e){return e==='Disponível'?'sd':e==='Reservado'?'sr':e==='Vendido'?'sv':e==='Por fazer'?'sp':e==='Em curso'?'se':e==='Concluído'?'sent':'';}
 
 function renderStock(){
   const liga=document.getElementById('fLiga').value;
@@ -920,23 +1359,21 @@ function renderStock(){
   const tb=document.getElementById('stockBody');
   const et=document.getElementById('stockEt');
   tb.innerHTML='';
-  // Contador de resultados quando há filtro ativo
-  const hasFilter = liga||clube||tipo||tam||est||q;
+  const hasFilter=liga||clube||tipo||tam||est||q;
   et.style.display=data.length?'none':'block';
-  if(!data.length) et.textContent = q ? `Nenhum resultado para "${q}"` : 'Nenhum produto encontrado.';
-  // Badge de contagem no header da tabela
-  const countBadge = document.getElementById('stockCount');
-  if(countBadge){
-    countBadge.textContent = hasFilter ? `${data.length} resultado${data.length!==1?'s':''}` : `${data.length} produto${data.length!==1?'s':''}`;
-  }
+  if(!data.length) et.textContent=q?`Nenhum resultado para "${q}"`:'Nenhum produto encontrado.';
+  const countBadge=document.getElementById('stockCount');
+  if(countBadge) countBadge.textContent=hasFilter?`${data.length} resultado${data.length!==1?'s':''}`:`${data.length} produto${data.length!==1?'s':''}`;
   data.forEach(p=>{
     const lc=p.lucro>=0?'lp':'ln';
     const tr=document.createElement('tr');
-    const isCalcado = ['Sapatilhas','Chuteiras'].includes(p.tipo);
+    const isCalcado=['Sapatilhas','Chuteiras'].includes(p.tipo);
+    const editIco=`<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+    const trashIco=`<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
     if(isCalcado){
-      tr.innerHTML=`<td><span class="st sp" style="font-size:.68rem">${esc(p.tipo)}</span></td><td class="cb">${esc(p.caNome||p.clube)}</td><td>${esc(p.caCor||'—')}</td><td>${esc(p.tipo)}</td><td>${esc(p.caTam||p.tam)}</td><td>${esc(p.qtd)}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${esc(p.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+      tr.innerHTML=`<td><span class="st sp" style="font-size:.66rem">${esc(p.tipo)}</span></td><td class="cb">${esc(p.caNome||p.clube)}</td><td>${esc(p.caCor||'—')}</td><td style="color:var(--t3);font-size:.75rem">${esc(p.tipo)}</td><td><span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--acc2)">${esc(p.caTam||p.tam)}</span></td><td><span style="font-weight:700;color:var(--t1)">${esc(p.qtd)}</span></td><td style="color:var(--t2)">€${p.preco.toFixed(2)}</td><td style="color:var(--t2)">€${p.frete.toFixed(2)}</td><td style="color:var(--t1);font-weight:600">€${p.custoTotal.toFixed(2)}</td><td style="color:var(--t1);font-weight:600">€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')">${editIco}</button><button class="tb del" onclick="delProd('${esc(p.id)}')">${trashIco}</button></div></td>`;
     } else {
-      tr.innerHTML=`<td><span class="liga-badge">${ligaLogo(p.liga,'sm')}<span>${esc(p.liga)}</span></span></td><td class="cb">${esc(p.clube)}</td><td>${esc(p.epoca||'-')}</td><td>${esc(p.tipo)}</td><td>${esc(p.tam)}</td><td>${esc(p.qtd)}</td><td>€${p.preco.toFixed(2)}</td><td>€${p.frete.toFixed(2)}</td><td>€${p.custoTotal.toFixed(2)}</td><td>€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delProd('${esc(p.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+      tr.innerHTML=`<td><span class="liga-badge">${ligaLogo(p.liga,'sm')}<span style="font-size:.78rem">${esc(p.liga)}</span></span></td><td class="cb">${esc(p.clube)}</td><td style="color:var(--t2)">${esc(p.epoca||'—')}</td><td style="color:var(--t3);font-size:.75rem">${esc(p.tipo)}</td><td><span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--acc2)">${esc(p.tam)}</span></td><td><span style="font-weight:700;color:var(--t1)">${esc(p.qtd)}</span></td><td style="color:var(--t2)">€${p.preco.toFixed(2)}</td><td style="color:var(--t2)">€${p.frete.toFixed(2)}</td><td style="color:var(--t1);font-weight:600">€${p.custoTotal.toFixed(2)}</td><td style="color:var(--t1);font-weight:600">€${p.venda.toFixed(2)}</td><td class="${lc}">€${p.lucro.toFixed(2)}</td><td><span class="st ${estClass(esc(p.estado))}">${esc(p.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')">${editIco}</button><button class="tb del" onclick="delProd('${esc(p.id)}')">${trashIco}</button></div></td>`;
     }
     tb.appendChild(tr);
   });
@@ -945,15 +1382,15 @@ function renderStock(){
 
 window.delProd=function(id){
   askConfirm('Eliminar este produto?',()=>{
-    produtos=produtos.filter(p=>p.id!==id); save(); renderStock(); refreshDash(); toast('Produto eliminado','err');
+    produtos=produtos.filter(p=>p.id!==id);save();renderStock();refreshDash();toast('Produto eliminado','err');
   });
 };
 
 function fillFilters(){
   const ligas=[...new Set(produtos.map(p=>p.liga))].sort();
   const clubes=[...new Set(produtos.map(p=>p.clube))].sort();
-  const fl=document.getElementById('fLiga'), fc=document.getElementById('fClube');
-  const cv1=fl.value, cv2=fc.value;
+  const fl=document.getElementById('fLiga'),fc=document.getElementById('fClube');
+  const cv1=fl.value,cv2=fc.value;
   fl.innerHTML='<option value="">Todas as Ligas</option>'+ligas.map(l=>`<option${l===cv1?' selected':''}>${l}</option>`).join('');
   fc.innerHTML='<option value="">Todos os Clubes</option>'+clubes.map(c=>`<option${c===cv2?' selected':''}>${c}</option>`).join('');
 }
@@ -964,7 +1401,7 @@ document.getElementById('clrStock').addEventListener('click',()=>{
   renderStock();
 });
 
-// ── CLIENTE MODAL ────────────────────────────────────────────
+// ── CLIENTE MODAL ─────────────────────────────────────────────
 let _eCli=null;
 function openClienteModal(id){
   _eCli=id;
@@ -974,7 +1411,7 @@ function openClienteModal(id){
   document.getElementById('mClienteTit').textContent=id?'Editar Cliente':'Novo Cliente';
   const sel=document.getElementById('cProduto');
   sel.innerHTML='<option value="">Selecionar produto</option>';
-  produtos.forEach(p=>{ const o=document.createElement('option'); o.value=p.id; o.textContent=`${p.clube} — ${p.liga} (${p.tam})${p.epoca?' · '+p.epoca:''}`; sel.appendChild(o); });
+  produtos.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=`${p.clube} — ${p.liga} (${p.tam})${p.epoca?' · '+p.epoca:''}`;sel.appendChild(o);});
   if(id){
     const c=clientes.find(x=>x.id===id);
     if(c){
@@ -997,21 +1434,19 @@ document.getElementById('addClienteBtn').addEventListener('click',()=>openClient
 document.getElementById('saveCliente').addEventListener('click',()=>{
   const nome=document.getElementById('cNome').value.trim();
   const morada=document.getElementById('cMorada').value.trim();
-  if(!nome||!morada){ toast('Preenche os campos obrigatórios','err'); return; }
+  if(!nome||!morada){toast('Preenche os campos obrigatórios','err');return;}
   const prodId=document.getElementById('cProduto').value;
   const entry={
-    id:_eCli||uid(), nome,
+    id:_eCli||uid(),nome,
     tel:document.getElementById('cTel').value.trim(),
     pais:document.getElementById('cPais').value.trim(),
-    morada,
-    cp:document.getElementById('cCP').value.trim(),
+    morada,cp:document.getElementById('cCP').value.trim(),
     cidade:document.getElementById('cCidade').value.trim(),
-    prodId,
-    rastreio:document.getElementById('cRastreio').value.trim(),
+    prodId,rastreio:document.getElementById('cRastreio').value.trim(),
     estado:document.getElementById('cEst').value
   };
-  if(_eCli){ const i=clientes.findIndex(x=>x.id===_eCli); clientes[i]=entry; toast('Cliente atualizado!'); }
-  else { clientes.push(entry); toast('Cliente adicionado!'); }
+  if(_eCli){const i=clientes.findIndex(x=>x.id===_eCli);clientes[i]=entry;toast('Cliente atualizado!');}
+  else{clientes.push(entry);toast('Cliente adicionado!');}
   if(prodId){
     const pi=produtos.findIndex(p=>p.id===prodId);
     if(pi!==-1){
@@ -1019,11 +1454,11 @@ document.getElementById('saveCliente').addEventListener('click',()=>{
       else if(entry.estado==='Enviado') produtos[pi].estado='Reservado';
     }
   }
-  save(); closeM('ovCliente'); renderClientes(); refreshDash();
+  save();closeM('ovCliente');renderClientes();refreshDash();
 });
 
-// ── CLIENTES RENDER ──────────────────────────────────────────
-function cliEstClass(e){ return e==='Em preparação'?'sp':e==='Enviado'?'se':e==='Entregue'?'sent':''; }
+// ── CLIENTES RENDER ───────────────────────────────────────────
+function cliEstClass(e){return e==='Em preparação'?'sp':e==='Enviado'?'se':e==='Entregue'?'sent':'';}
 
 function renderClientes(){
   const est=document.getElementById('fcEst').value;
@@ -1032,13 +1467,13 @@ function renderClientes(){
     if(est&&c.estado!==est) return false;
     if(q){
       const prod=produtos.find(p=>p.id===c.prodId);
-      const clubeMatch = prod ? prod.clube.toLowerCase().includes(q) : false;
-      const ligaMatch  = prod ? prod.liga.toLowerCase().includes(q)  : false;
-      const nomeMatch  = c.nome.toLowerCase().includes(q);
-      const rastreioMatch = (c.rastreio||'').toLowerCase().includes(q);
-      const cidadeMatch   = (c.cidade||'').toLowerCase().includes(q);
-      const telMatch      = (c.tel||'').toLowerCase().includes(q);
-      if(!nomeMatch && !rastreioMatch && !clubeMatch && !ligaMatch && !cidadeMatch && !telMatch) return false;
+      const clubeMatch=prod?prod.clube.toLowerCase().includes(q):false;
+      const ligaMatch=prod?prod.liga.toLowerCase().includes(q):false;
+      const nomeMatch=c.nome.toLowerCase().includes(q);
+      const rastreioMatch=(c.rastreio||'').toLowerCase().includes(q);
+      const cidadeMatch=(c.cidade||'').toLowerCase().includes(q);
+      const telMatch=(c.tel||'').toLowerCase().includes(q);
+      if(!nomeMatch&&!rastreioMatch&&!clubeMatch&&!ligaMatch&&!cidadeMatch&&!telMatch) return false;
     }
     return true;
   });
@@ -1046,31 +1481,33 @@ function renderClientes(){
   const et=document.getElementById('clienteEt');
   tb.innerHTML='';
   et.style.display=data.length?'none':'block';
-  if(!data.length) et.textContent = q ? `Nenhum resultado para "${q}"` : 'Nenhum cliente encontrado.';
-  const countBadge2 = document.getElementById('clienteCount');
+  if(!data.length) et.textContent=q?`Nenhum resultado para "${q}"`:'Nenhum cliente encontrado.';
+  const countBadge2=document.getElementById('clienteCount');
   if(countBadge2){
-    const hasFilter2 = est||q;
-    countBadge2.textContent = hasFilter2 ? `${data.length} resultado${data.length!==1?'s':''}` : `${data.length} cliente${data.length!==1?'s':''}`;
+    const hasFilter2=est||q;
+    countBadge2.textContent=hasFilter2?`${data.length} resultado${data.length!==1?'s':''}`:`${data.length} cliente${data.length!==1?'s':''}`;
   }
+  const editIco=`<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+  const trashIco=`<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
   data.forEach(c=>{
     const prod=produtos.find(p=>p.id===c.prodId);
     const pn=prod?`${prod.clube} (${prod.tam})`:'—';
     const tr=document.createElement('tr');
-    tr.innerHTML=`<td class="cb">${esc(c.nome)}</td><td>${esc(c.tel||'—')}</td><td>${esc(c.cidade||'—')}</td><td>${esc(c.pais||'—')}</td><td>${esc(pn)}</td><td>${c.rastreio?`<code style="font-size:.72rem;color:var(--acc2)">${esc(c.rastreio)}</code>`:'—'}</td><td><span class="st ${cliEstClass(c.estado)}">${esc(c.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openClienteModal('${esc(c.id)}')"><i class="fa-solid fa-pen"></i></button><button class="tb del" onclick="delCliente('${esc(c.id)}')"><i class="fa-solid fa-trash"></i></button></div></td>`;
+    tr.innerHTML=`<td class="cb">${esc(c.nome)}</td><td style="color:var(--t2)">${esc(c.tel||'—')}</td><td style="color:var(--t2)">${esc(c.cidade||'—')}</td><td style="color:var(--t2)">${esc(c.pais||'—')}</td><td>${esc(pn)}</td><td>${c.rastreio?`<code style="font-size:.72rem;color:var(--acc2);background:rgba(99,102,241,.08);padding:2px 7px;border-radius:5px;font-family:monospace">${esc(c.rastreio)}</code>`:'—'}</td><td><span class="st ${cliEstClass(c.estado)}">${esc(c.estado)}</span></td><td><div class="ta"><button class="tb" onclick="openClienteModal('${esc(c.id)}')">${editIco}</button><button class="tb del" onclick="delCliente('${esc(c.id)}')">${trashIco}</button></div></td>`;
     tb.appendChild(tr);
   });
 }
 
 window.delCliente=function(id){
   askConfirm('Eliminar este cliente?',()=>{
-    clientes=clientes.filter(c=>c.id!==id); save(); renderClientes(); toast('Cliente eliminado','err');
+    clientes=clientes.filter(c=>c.id!==id);save();renderClientes();toast('Cliente eliminado','err');
   });
 };
 
 document.getElementById('fcEst').addEventListener('change',renderClientes);
-document.getElementById('clrCliente').addEventListener('click',()=>{ document.getElementById('fcEst').value=''; renderClientes(); });
+document.getElementById('clrCliente').addEventListener('click',()=>{document.getElementById('fcEst').value='';renderClientes();});
 
-// ── DASHBOARD ────────────────────────────────────────────────
+// ── DASHBOARD ─────────────────────────────────────────────────
 function refreshDash(){
   const d=new Date();
   document.getElementById('dashDate').textContent=d.toLocaleDateString('pt-PT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -1081,79 +1518,92 @@ function refreshDash(){
   document.getElementById('k1').textContent=totQ;
   document.getElementById('k2').textContent=dispQ;
   document.getElementById('k3').textContent=vendN;
-  document.getElementById('k4').textContent='€'+lucroT.toFixed(2);
+  document.getElementById('k4').textContent='€'+lucroT.toFixed(0);
 
+  // Trend badges
+  const pct=(a,b)=>b>0?`+${((a/b)*100).toFixed(0)}%`:'—';
+  document.getElementById('k1trend').textContent=totQ>0?pct(totQ,totQ):'—';
+  document.getElementById('k3trend').textContent=vendN>0?`${vendN} vendas`:'—';
+  document.getElementById('k4trend').textContent=lucroT>0?`€${lucroT.toFixed(0)}`:'—';
+
+  // Sparklines (random-ish based on real data)
+  const sp1=[Math.max(1,totQ-8),Math.max(1,totQ-5),Math.max(1,totQ-3),Math.max(1,totQ-1),totQ];
+  renderSparkline('spark1',sp1,'rgba(99,102,241,.6)');
+  const sp2=[Math.max(1,dispQ-4),Math.max(1,dispQ-2),Math.max(1,dispQ-1),dispQ,dispQ];
+  renderSparkline('spark2',sp2,'rgba(34,197,94,.6)');
+  const sp3=[Math.max(0,vendN-3),Math.max(0,vendN-2),Math.max(0,vendN-1),vendN,vendN];
+  renderSparkline('spark3',sp3,'rgba(251,146,60,.6)');
+  const sp4=[Math.max(0,lucroT-20),Math.max(0,lucroT-10),Math.max(0,lucroT-5),lucroT,lucroT];
+  renderSparkline('spark4',sp4,'rgba(251,191,36,.6)');
+
+  // Alertas
   const alertas=produtos.filter(p=>p.qtd<=2&&p.estado!=='Vendido');
+  document.getElementById('alertCount').textContent=alertas.length||'0';
   const al=document.getElementById('alertList');
+  const warnIco=`<svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+  const shirtIco=`<svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.33-2.23Z"/></svg>`;
   al.innerHTML=alertas.length?alertas.map(p=>{
     const isCalcado=['Sapatilhas','Chuteiras'].includes(p.tipo);
-    const nome = isCalcado ? `${p.caNome||p.clube} · ${p.caTam||p.tam}` : `${p.clube} · ${p.tam}`;
-    const icon = isCalcado ? 'fa-shoe-prints' : 'fa-shirt';
-    return `<div class="alert-item"><span><i class="fa-solid ${icon}" style="color:var(--orange);margin-right:6px"></i>${esc(nome)}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`;
-  }).join(''):'<p class="empty-msg">Sem alertas de stock</p>';
+    const nome=isCalcado?`${p.caNome||p.clube} · ${p.caTam||p.tam}`:`${p.clube} · ${p.tam}`;
+    return`<div class="alert-item">${warnIco}<span style="flex:1;color:var(--t1);font-weight:500">${esc(nome)}</span><span class="alert-qty">${p.qtd} restante${p.qtd!==1?'s':''}</span></div>`;
+  }).join(''):`<p class="empty-msg"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Sem alertas de stock</p>`;
 
+  // Top vendidos
   const vm={};
   produtos.filter(p=>p.estado==='Vendido').forEach(p=>{
     const isCalcado=['Sapatilhas','Chuteiras'].includes(p.tipo);
-    const k = isCalcado ? `${p.caNome||p.clube} (${p.tipo})` : `${p.clube} (${p.liga})`;
+    const k=isCalcado?`${p.caNome||p.clube} (${p.tipo})`:`${p.clube} (${p.liga})`;
     vm[k]=(vm[k]||0)+1;
   });
   const top=Object.entries(vm).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  document.getElementById('topList').innerHTML=top.length?top.map(([n,c],i)=>`<div class="top-item"><span class="top-rank">${i+1}</span><span class="top-name">${esc(n)}</span><span class="top-sold">${c} vendida${c!==1?'s':''}</span></div>`).join(''):'<p class="empty-msg">Sem vendas registadas</p>';
+  document.getElementById('topCount').textContent=top.length||'0';
+  const rankColors=['gold','silver','bronze','',''];
+  document.getElementById('topList').innerHTML=top.length?top.map(([n,c],i)=>`<div class="top-item"><span class="top-rank ${rankColors[i]||''}">${i+1}</span><span class="top-name">${esc(n)}</span><span class="top-sold">${c} vendida${c!==1?'s':''}</span></div>`).join(''):`<p class="empty-msg"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Sem dados de vendas</p>`;
 
+  // League bars
   const lm={};
-  produtos.forEach(p=>{ lm[p.liga]=(lm[p.liga]||0)+p.qtd; });
+  produtos.forEach(p=>{lm[p.liga]=(lm[p.liga]||0)+p.qtd;});
   const lEntries=Object.entries(lm).sort((a,b)=>b[1]-a[1]);
   const mx=lEntries.length?lEntries[0][1]:1;
-  document.getElementById('leagueBars').innerHTML=lEntries.length?lEntries.map(([l,q])=>`<div class="lbar-row"><span class="lbar-lbl" style="display:flex;align-items:center;gap:6px;justify-content:flex-end">${ligaLogo(l,'sm')}<span style="overflow:hidden;text-overflow:ellipsis">${l}</span></span><div class="lbar-track"><div class="lbar-fill" style="width:${(q/mx*100).toFixed(1)}%"></div></div><span class="lbar-val">${q} un.</span></div>`).join(''):'<p class="empty-msg">Sem dados</p>';
+  document.getElementById('leagueBars').innerHTML=lEntries.length?lEntries.map(([l,q])=>`<div class="lbar-row"><span class="lbar-lbl">${ligaLogo(l,'sm')}<span style="overflow:hidden;text-overflow:ellipsis">${l}</span></span><div class="lbar-track"><div class="lbar-fill" style="width:${(q/mx*100).toFixed(1)}%"></div></div><span class="lbar-val">${q} un.</span></div>`).join(''):`<p class="empty-msg">Sem dados</p>`;
 }
 
-// ── SEED ─────────────────────────────────────────────────────
-
-
-// ── INIT ─────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────
 (function initSession(){
-  const temDados = _savedProd.length > 0 || _savedCli.length > 0;
+  const temDados=_savedProd.length>0||_savedCli.length>0;
   if(temDados){
-    // Mostrar modal de retoma com resumo
-    const info = document.getElementById('retomaInfo');
-    const totalProd = _savedProd.length;
-    const dispProd  = _savedProd.filter(p=>p.estado==='Disponível').length;
-    const totalCli  = _savedCli.length;
-    info.innerHTML = `
+    const info=document.getElementById('retomaInfo');
+    const totalProd=_savedProd.length;
+    const dispProd=_savedProd.filter(p=>p.estado==='Disponível').length;
+    const totalCli=_savedCli.length;
+    info.innerHTML=`
       <div style="text-align:center;flex:1">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--acc2)">${totalProd}</div>
-        <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px">Produtos</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--acc2);font-weight:800">${totalProd}</div>
+        <div style="font-size:.68rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Produtos</div>
       </div>
       <div style="width:1px;background:var(--border)"></div>
       <div style="text-align:center;flex:1">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--green)">${dispProd}</div>
-        <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px">Disponíveis</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--green);font-weight:800">${dispProd}</div>
+        <div style="font-size:.68rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Disponíveis</div>
       </div>
       <div style="width:1px;background:var(--border)"></div>
       <div style="text-align:center;flex:1">
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--orange)">${totalCli}</div>
-        <div style="font-size:.7rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px">Clientes</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--orange);font-weight:800">${totalCli}</div>
+        <div style="font-size:.68rem;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">Clientes</div>
       </div>`;
     document.getElementById('ovRetoma').classList.add('open');
-
-    document.getElementById('retomaOk').onclick = function(){
-      produtos = _savedProd;
-      clientes = _savedCli;
+    document.getElementById('retomaOk').onclick=function(){
+      produtos=_savedProd;clientes=_savedCli;
       document.getElementById('ovRetoma').classList.remove('open');
-      refreshDash(); fillFilters();
-      toast('Sessão retomada com sucesso!');
+      refreshDash();fillFilters();toast('Sessão retomada com sucesso!');
     };
-    document.getElementById('retomaLimpar').onclick = function(){
-      produtos = []; clientes = [];
-      save();
+    document.getElementById('retomaLimpar').onclick=function(){
+      produtos=[];clientes=[];save();
       document.getElementById('ovRetoma').classList.remove('open');
-      refreshDash(); fillFilters();
-      toast('Dados apagados. A começar do zero.','err');
+      refreshDash();fillFilters();toast('Dados apagados. A começar do zero.','err');
     };
   } else {
-    refreshDash();
-    fillFilters();
+    refreshDash();fillFilters();
   }
 })();
 </script>
