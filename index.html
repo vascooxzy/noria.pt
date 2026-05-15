@@ -1478,6 +1478,282 @@ input,select,textarea{font-size:max(16px, 1em) !important;}
   .nfl-search input{width:140px;}
   .nfl-main-title{font-size:1.7rem;}
 }
+
+/* ══════════════════════════════════════════════
+   TRACKING SYSTEM — tracking.css integrated
+══════════════════════════════════════════════ */
+@keyframes trackPulse{0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,.4)}70%{box-shadow:0 0 0 8px rgba(99,102,241,0)}}
+@keyframes progressBar{from{width:0}to{width:var(--pw)}}
+@keyframes shimmerTrack{0%{background-position:-400px 0}100%{background-position:400px 0}}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dotBounce{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+@keyframes scanLine{0%{top:0}100%{top:100%}}
+
+/* ─── TRACKING PAGE ─── */
+.trk-hero{
+  background:linear-gradient(135deg,rgba(99,102,241,.08) 0%,rgba(99,102,241,.02) 100%);
+  border:1px solid rgba(99,102,241,.15);
+  border-radius:var(--r);padding:28px;margin-bottom:20px;
+  position:relative;overflow:hidden;
+}
+.trk-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at top right,rgba(99,102,241,.12),transparent 60%);
+  pointer-events:none;
+}
+.trk-hero-grid{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+.trk-hero-title{font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--t1);margin-bottom:6px;letter-spacing:-.3px}
+.trk-hero-sub{font-size:.78rem;color:var(--t3);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.trk-carrier-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.trk-chip{
+  font-size:.6rem;font-weight:700;padding:3px 9px;border-radius:99px;letter-spacing:.5px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--t3);
+  text-transform:uppercase;transition:all .2s;
+}
+.trk-chip.active{background:rgba(99,102,241,.12);border-color:rgba(99,102,241,.3);color:var(--acc3)}
+.trk-search-box{
+  display:flex;gap:10px;align-items:center;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:12px;padding:6px 6px 6px 16px;
+  transition:all .2s;min-width:360px;
+}
+.trk-search-box:focus-within{border-color:rgba(99,102,241,.5);box-shadow:0 0 0 3px rgba(99,102,241,.1)}
+.trk-search-box input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--t1);font-family:var(--font);font-size:.88rem;height:34px;
+  font-weight:500;letter-spacing:.2px;
+}
+.trk-search-box input::placeholder{color:var(--t3)}
+.trk-search-btn{
+  background:linear-gradient(135deg,var(--acc),#4f46e5);color:#fff;
+  border:none;border-radius:8px;padding:0 16px;height:34px;
+  font-family:var(--font);font-size:.8rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;gap:6px;transition:all .18s;white-space:nowrap;
+}
+.trk-search-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px var(--glow)}
+.trk-search-btn svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.trk-search-btn.loading{opacity:.7;pointer-events:none}
+
+/* ─── KPI STRIP ─── */
+.trk-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.trk-kpi{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  padding:16px;display:flex;align-items:center;gap:12px;
+  transition:all .2s;cursor:default;
+}
+.trk-kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
+.trk-kpi-ico{
+  width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.trk-kpi-ico svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.trk-kpi-val{font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--t1);line-height:1}
+.trk-kpi-lbl{font-size:.65rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
+
+/* ─── TRACKING CARDS GRID ─── */
+.trk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:20px}
+.trk-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;transition:all .22s;cursor:pointer;position:relative;
+  animation:slideUp .35s ease both;
+}
+.trk-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.trk-card-header{
+  padding:14px 16px 12px;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+}
+.trk-card-code{
+  font-family:monospace;font-size:.75rem;font-weight:700;
+  color:var(--acc2);background:rgba(99,102,241,.08);
+  padding:3px 9px;border-radius:6px;letter-spacing:.3px;
+}
+.trk-card-client{font-size:.88rem;font-weight:600;color:var(--t1);margin-top:5px}
+.trk-card-carrier{font-size:.7rem;color:var(--t3);margin-top:2px;display:flex;align-items:center;gap:4px}
+.trk-card-carrier svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.trk-card-body{padding:12px 16px 14px}
+.trk-card-location{font-size:.78rem;color:var(--t2);display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.trk-card-location svg{width:13px;height:13px;stroke:var(--acc2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.trk-card-time{font-size:.68rem;color:var(--t3);margin-bottom:10px}
+.trk-card-actions{display:flex;gap:7px;margin-top:10px}
+.trk-btn-detail{
+  flex:1;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.18);
+  color:var(--acc2);border-radius:8px;padding:7px 12px;font-size:.75rem;font-weight:600;
+  cursor:pointer;font-family:var(--font);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:5px;
+}
+.trk-btn-detail:hover{background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.35)}
+.trk-btn-detail svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.trk-btn-refresh{
+  background:var(--bg3);border:1px solid var(--border);color:var(--t3);
+  border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .18s;flex-shrink:0;
+}
+.trk-btn-refresh:hover{background:var(--bg4);color:var(--t1)}
+.trk-btn-refresh svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.trk-btn-refresh.spinning svg{animation:spin .6s linear infinite}
+
+/* ─── STATUS BADGES ─── */
+.trk-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 11px;border-radius:99px;font-size:.67rem;font-weight:800;
+  letter-spacing:.4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;
+}
+.trk-badge-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.trk-delivered{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.25)}
+.trk-delivered .trk-badge-dot{background:#22c55e}
+.trk-transit{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.25)}
+.trk-transit .trk-badge-dot{background:#fbbf24;animation:pulse 1.5s infinite}
+.trk-exception{background:rgba(244,63,94,.1);color:#f43f5e;border:1px solid rgba(244,63,94,.25)}
+.trk-exception .trk-badge-dot{background:#f43f5e}
+.trk-pending{background:rgba(74,85,120,.2);color:var(--t3);border:1px solid var(--border)}
+.trk-pending .trk-badge-dot{background:var(--t3)}
+.trk-info_received{background:rgba(34,211,238,.08);color:var(--cyan);border:1px solid rgba(34,211,238,.2)}
+.trk-info_received .trk-badge-dot{background:var(--cyan)}
+.trk-pickup{background:rgba(99,102,241,.1);color:var(--acc2);border:1px solid rgba(99,102,241,.2)}
+.trk-pickup .trk-badge-dot{background:var(--acc2)}
+.trk-untracked{background:rgba(74,85,120,.15);color:var(--t4);border:1px solid var(--border)}
+
+/* ─── TRACKING MODAL ─── */
+.trk-modal-ov{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  z-index:600;display:none;align-items:center;justify-content:center;padding:16px;
+}
+.trk-modal-ov.open{display:flex}
+.trk-modal{
+  background:var(--bg2);border:1px solid var(--border2);border-radius:18px;
+  width:100%;max-width:620px;max-height:90vh;overflow:hidden;
+  display:flex;flex-direction:column;
+  animation:su .25s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 24px 64px rgba(0,0,0,.5);
+}
+.trk-modal-head{
+  padding:20px 24px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  flex-shrink:0;
+}
+.trk-modal-head-left{}
+.trk-modal-title{font-family:var(--font-display);font-size:1.1rem;font-weight:800;color:var(--t1);margin-bottom:4px}
+.trk-modal-code{font-family:monospace;font-size:.78rem;color:var(--acc2);background:rgba(99,102,241,.1);padding:3px 10px;border-radius:6px;letter-spacing:.5px}
+.trk-modal-close{
+  background:var(--bg4);border:1px solid var(--border);border-radius:8px;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--t3);transition:all .15s;flex-shrink:0;
+}
+.trk-modal-close:hover{background:var(--bg5);color:var(--t1)}
+.trk-modal-close svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.trk-modal-body{overflow-y:auto;flex:1;padding:20px 24px}
+
+/* ─── INFO ROW ─── */
+.trk-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.trk-info-cell{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:12px;
+}
+.trk-info-cell-lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);font-weight:700;margin-bottom:5px}
+.trk-info-cell-val{font-size:.82rem;font-weight:600;color:var(--t1)}
+
+/* ─── TIMELINE ─── */
+.trk-timeline-title{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--t3);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.trk-timeline-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.trk-timeline{position:relative;padding-left:28px}
+.trk-timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--acc) 0%,var(--border) 100%);border-radius:99px}
+.trk-tl-item{position:relative;padding-bottom:18px;animation:slideUp .3s ease both}
+.trk-tl-item:last-child{padding-bottom:0}
+.trk-tl-dot{
+  position:absolute;left:-24px;top:3px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--bg2);border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.trk-tl-item.latest .trk-tl-dot{
+  background:var(--acc);border-color:var(--acc2);
+  box-shadow:0 0 0 4px rgba(99,102,241,.2);
+  animation:trackPulse 2s infinite;
+}
+.trk-tl-dot-inner{width:6px;height:6px;border-radius:50%;background:var(--t4)}
+.trk-tl-item.latest .trk-tl-dot-inner{background:#fff}
+.trk-tl-content{}
+.trk-tl-event{font-size:.82rem;font-weight:600;color:var(--t1);margin-bottom:3px}
+.trk-tl-item.latest .trk-tl-event{color:var(--acc3)}
+.trk-tl-loc{font-size:.72rem;color:var(--t3);display:flex;align-items:center;gap:4px}
+.trk-tl-loc svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.trk-tl-date{font-size:.65rem;color:var(--t4);margin-top:2px}
+
+/* ─── EMPTY / LOADING STATES ─── */
+.trk-empty{
+  text-align:center;padding:60px 20px;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.trk-empty-ico{
+  width:64px;height:64px;border-radius:16px;
+  background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.1);
+  display:flex;align-items:center;justify-content:center;
+}
+.trk-empty-ico svg{width:28px;height:28px;stroke:var(--acc2);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.6}
+.trk-empty-title{font-size:.95rem;font-weight:700;color:var(--t2)}
+.trk-empty-sub{font-size:.78rem;color:var(--t3);max-width:280px;line-height:1.5}
+.trk-loading-dots{display:flex;gap:5px;align-items:center}
+.trk-loading-dots span{width:7px;height:7px;border-radius:50%;background:var(--acc2);animation:dotBounce 1.2s infinite ease-in-out}
+.trk-loading-dots span:nth-child(1){animation-delay:0s}
+.trk-loading-dots span:nth-child(2){animation-delay:.15s}
+.trk-loading-dots span:nth-child(3){animation-delay:.3s}
+
+/* ─── SKELETON ─── */
+.trk-skeleton{
+  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);
+  background-size:400px 100%;animation:shimmerTrack 1.2s infinite linear;
+  border-radius:6px;
+}
+
+/* ─── VERCEL ENV BANNER ─── */
+.trk-env-banner{
+  background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);
+  border-radius:var(--r);padding:14px 18px;margin-bottom:16px;
+  display:flex;align-items:center;gap:12px;font-size:.78rem;color:var(--yellow);
+}
+.trk-env-banner svg{width:16px;height:16px;stroke:var(--yellow);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.trk-env-banner strong{font-weight:700}
+.trk-env-banner code{
+  font-family:monospace;font-size:.72rem;background:rgba(251,191,36,.1);
+  padding:1px 6px;border-radius:4px;color:#fde68a;
+}
+
+/* ─── ADD TRACKING ROW ─── */
+.trk-add-row{
+  display:flex;gap:10px;margin-bottom:20px;padding:14px 16px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+  align-items:center;flex-wrap:wrap;
+}
+.trk-add-row label{font-size:.72rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.7px;white-space:nowrap}
+.trk-add-input{
+  flex:1;min-width:200px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:9px;color:var(--t1);font-family:monospace;font-size:.85rem;
+  padding:8px 14px;outline:none;transition:all .2s;letter-spacing:.5px;
+}
+.trk-add-input:focus{border-color:rgba(99,102,241,.4);box-shadow:0 0 0 3px rgba(99,102,241,.08)}
+.trk-add-input::placeholder{color:var(--t4);font-family:var(--font);letter-spacing:0;font-size:.82rem}
+.trk-client-sel{
+  background:var(--bg3);border:1px solid var(--border);border-radius:9px;
+  color:var(--t2);font-family:var(--font);font-size:.8rem;
+  padding:8px 28px 8px 12px;outline:none;transition:all .2s;min-width:160px;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a5578' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+}
+.trk-client-sel:focus{border-color:rgba(99,102,241,.4);color:var(--t1)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .trk-hero-grid{grid-template-columns:1fr}
+  .trk-search-box{min-width:auto}
+  .trk-kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .trk-info-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .trk-kpi-strip{grid-template-columns:1fr 1fr}
+  .trk-grid{grid-template-columns:1fr}
+  .trk-modal{border-radius:14px}
+}
 </style>
 </head>
 <body>
@@ -1507,6 +1783,11 @@ input,select,textarea{font-size:max(16px, 1em) !important;}
     <button class="nav-item" data-page="clientes">
       <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       Clientes / Envios
+    </button>
+    <button class="nav-item" data-page="tracking">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/><path d="M4.93 4.93l2.12 2.12m9.9 9.9 2.12 2.12M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12"/></svg>
+      Tracking 17TRACK
+      <span class="nav-count" id="navTrackCount">0</span>
     </button>
 
     <div class="sdiv"></div>
@@ -1704,6 +1985,148 @@ input,select,textarea{font-size:max(16px, 1em) !important;}
             </div>
           </div>
           <div class="lbars" id="leagueBars"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRACKING PAGE -->
+    <section class="page" id="page-tracking">
+      <div class="ph">
+        <div class="ph-left">
+          <div class="pt">Tracking de Encomendas</div>
+          <div class="psub">Rastreamento em tempo real via 17TRACK</div>
+        </div>
+        <button class="btn btn-primary" id="trkRefreshAll">
+          <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Atualizar Todos
+        </button>
+      </div>
+
+      <!-- ENV BANNER -->
+      <div class="trk-env-banner" id="trkEnvBanner">
+        <svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div>
+          <strong>API Key não configurada.</strong> Para produção no Vercel, define a variável de ambiente <code>VITE_17TRACK_KEY</code> ou usa o proxy em <code>/api/track</code>. Em modo demo os dados são simulados.
+        </div>
+      </div>
+
+      <!-- HERO SEARCH -->
+      <div class="trk-hero">
+        <div class="trk-hero-grid">
+          <div>
+            <div class="trk-hero-title">🛰️ Rastreamento em Tempo Real</div>
+            <div class="trk-hero-sub">
+              Suporta YunExpress · Cainiao · DHL · UPS · FedEx · CTT · transportadoras chinesas
+            </div>
+            <div class="trk-carrier-chips">
+              <span class="trk-chip active" data-carrier="yunexpress">YunExpress</span>
+              <span class="trk-chip active" data-carrier="cainiao">Cainiao</span>
+              <span class="trk-chip active" data-carrier="dhl">DHL</span>
+              <span class="trk-chip active" data-carrier="ups">UPS</span>
+              <span class="trk-chip active" data-carrier="fedex">FedEx</span>
+              <span class="trk-chip active" data-carrier="ctt">CTT</span>
+              <span class="trk-chip active" data-carrier="china">China Post</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:.65rem;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">Rastrear código</div>
+            <div class="trk-search-box">
+              <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:var(--t3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" id="trkSearchInput" placeholder="Inserir código de rastreio..." autocomplete="off" spellcheck="false"/>
+              <button class="trk-search-btn" id="trkSearchBtn">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                Rastrear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI STRIP -->
+      <div class="trk-kpi-strip">
+        <div class="trk-kpi">
+          <div class="trk-kpi-ico" style="background:rgba(99,102,241,.1);color:var(--acc2)">
+            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div>
+            <div class="trk-kpi-val" id="trkKpi1">0</div>
+            <div class="trk-kpi-lbl">Total Tracked</div>
+          </div>
+        </div>
+        <div class="trk-kpi">
+          <div class="trk-kpi-ico" style="background:rgba(251,191,36,.1);color:var(--yellow)">
+            <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </div>
+          <div>
+            <div class="trk-kpi-val" id="trkKpi2" style="color:var(--yellow)">0</div>
+            <div class="trk-kpi-lbl">Em Trânsito</div>
+          </div>
+        </div>
+        <div class="trk-kpi">
+          <div class="trk-kpi-ico" style="background:rgba(34,197,94,.1);color:var(--green)">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="trk-kpi-val" id="trkKpi3" style="color:var(--green)">0</div>
+            <div class="trk-kpi-lbl">Entregues</div>
+          </div>
+        </div>
+        <div class="trk-kpi">
+          <div class="trk-kpi-ico" style="background:rgba(244,63,94,.1);color:var(--red)">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div>
+            <div class="trk-kpi-val" id="trkKpi4" style="color:var(--red)">0</div>
+            <div class="trk-kpi-lbl">Exceções</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADD TRACKING ROW -->
+      <div class="trk-add-row" id="trkAddRow" style="display:none">
+        <label>Associar a cliente:</label>
+        <select class="trk-client-sel" id="trkClientSel">
+          <option value="">— Sem cliente —</option>
+        </select>
+        <input type="text" class="trk-add-input" id="trkNewCode" placeholder="Código de rastreio (ex: LV123456789CN)" spellcheck="false"/>
+        <button class="btn btn-primary" id="trkAddBtn" style="height:38px;padding:0 16px">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Guardar
+        </button>
+        <button class="btn btn-ghost" id="trkAddCancel" style="height:38px;padding:0 14px">Cancelar</button>
+      </div>
+
+      <!-- FILTERS BAR -->
+      <div class="filters" style="margin-bottom:16px">
+        <select class="fsel" id="trkFilter">
+          <option value="">Todos os estados</option>
+          <option value="transit">Em Trânsito</option>
+          <option value="delivered">Entregue</option>
+          <option value="exception">Exceção</option>
+          <option value="pending">Pendente</option>
+        </select>
+        <button class="btn btn-ghost" id="trkAddToggle">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Adicionar Rastreio
+        </button>
+        <button class="btn btn-ghost" id="trkImportClientes">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Importar de Clientes
+        </button>
+      </div>
+
+      <!-- CARDS GRID -->
+      <div class="trk-grid" id="trkGrid">
+        <div class="trk-empty" id="trkEmpty">
+          <div class="trk-empty-ico">
+            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="trk-empty-title">Nenhuma encomenda rastreada</div>
+          <div class="trk-empty-sub">Usa a barra de pesquisa acima ou importa os clientes com códigos de rastreio para começar.</div>
+          <button class="btn btn-primary" onclick="document.getElementById('trkImportClientes').click()">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Importar Clientes
+          </button>
         </div>
       </div>
     </section>
@@ -2314,6 +2737,7 @@ function showPage(id){
   if(id==='clientes') renderClientes();
   if(id==='nba') renderNBA();
   if(id==='nfl') renderNFL();
+  // tracking render is handled by the override below
 }
 
 navBtns.forEach(btn=>{
@@ -3905,6 +4329,11 @@ updateFab('dashboard');
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93a10 10 0 0 0 14.14 14.14"/><path d="M12 2v20"/></svg>
     <span class="bnav-label">NBA</span>
   </button>
+  <button class="bnav-item" data-page="tracking">
+    <span class="bnav-dot"></span>
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+    <span class="bnav-label">Tracking</span>
+  </button>
 </nav>
 
 <!-- ── FAB (mobile) ── -->
@@ -3985,6 +4414,520 @@ updateFab('dashboard');
     </button>
   </div>
 </div>
+
+<!-- ══════════════════════════════════════════════
+   TRACKING MODAL
+══════════════════════════════════════════════ -->
+<div class="trk-modal-ov" id="trkModalOv">
+  <div class="trk-modal">
+    <div class="trk-modal-head">
+      <div class="trk-modal-head-left">
+        <div class="trk-modal-title" id="trkModalTitle">Detalhes da Encomenda</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
+          <span class="trk-modal-code" id="trkModalCode">—</span>
+          <span id="trkModalBadge"></span>
+        </div>
+      </div>
+      <button class="trk-modal-close" id="trkModalClose">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="trk-modal-body">
+      <!-- INFO GRID -->
+      <div class="trk-info-grid" id="trkInfoGrid">
+        <div class="trk-info-cell">
+          <div class="trk-info-cell-lbl">Transportadora</div>
+          <div class="trk-info-cell-val" id="trkInfoCarrier">—</div>
+        </div>
+        <div class="trk-info-cell">
+          <div class="trk-info-cell-lbl">Localização Atual</div>
+          <div class="trk-info-cell-val" id="trkInfoLocation">—</div>
+        </div>
+        <div class="trk-info-cell">
+          <div class="trk-info-cell-lbl">Última Atualização</div>
+          <div class="trk-info-cell-val" id="trkInfoUpdated">—</div>
+        </div>
+      </div>
+      <!-- TIMELINE -->
+      <div class="trk-timeline-title">
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Histórico do Envio
+      </div>
+      <div class="trk-timeline" id="trkTimeline">
+        <div class="trk-empty" style="padding:30px 0">
+          <div class="trk-loading-dots"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+   TRACKING JS — tracking.js integrated
+══════════════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────────────
+   TRACKING SERVICE (API 17TRACK + Demo mode)
+───────────────────────────────────────────────── */
+const TrackingService = (() => {
+  // ── In Vercel: set VITE_17TRACK_KEY env var, and create /api/track.js proxy
+  // ── For demo mode (no key), we simulate rich data
+  const API_KEY = window.__17TRACK_KEY__ || '';
+  const API_BASE = '/api/track'; // Vercel serverless proxy endpoint
+
+  /* Map 17TRACK status codes → internal status keys */
+  const STATUS_MAP = {
+    0: 'pending',        // Not Found
+    10: 'info_received', // Info Received
+    20: 'transit',       // In Transit
+    25: 'transit',       // Expired
+    30: 'pickup',        // Pickup
+    35: 'undelivered',   // Undelivered
+    40: 'delivered',     // Delivered
+    50: 'exception',     // Exception
+    60: 'transit',       // On Hold
+  };
+
+  /* ── Demo data generator for when no API key is set ── */
+  const demoData = (code) => {
+    const seed = code.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+    const statuses = ['transit','transit','transit','delivered','exception','pickup','info_received'];
+    const status = statuses[seed % statuses.length];
+    const carriers = ['YunExpress','Cainiao','DHL','CTT','UPS','FedEx','China Post'];
+    const carrier = carriers[seed % carriers.length];
+    const locations = ['Shanghai, CN','Hong Kong, HK','Amsterdam, NL','Lisboa, PT','Madrid, ES','Paris, FR','Frankfurt, DE'];
+    const events = [
+      {desc:'Encomenda entregue ao destinatário',loc:'Lisboa, PT',delta:0},
+      {desc:'Saída do centro de distribuição nacional',loc:'Lisboa, PT',delta:1},
+      {desc:'Chegada ao centro de distribuição Lisboa',loc:'Lisboa, PT',delta:2},
+      {desc:'Chegada ao centro de distribuição Amsterdam',loc:'Amsterdam, NL',delta:4},
+      {desc:'Saída do centro de distribuição Hong Kong',loc:'Hong Kong, HK',delta:6},
+      {desc:'Chegada ao hub de exportação',loc:'Hong Kong, HK',delta:7},
+      {desc:'Recolha pelo operador logístico',loc:'Shenzhen, CN',delta:8},
+      {desc:'Informação de envio recebida',loc:'Shanghai, CN',delta:9},
+    ];
+    const now = Date.now();
+    const tl = events.map(e=>({
+      a: new Date(now - e.delta*24*3600*1000).toISOString(),
+      z: e.desc,
+      l: e.loc,
+    }));
+    const latest = tl[0];
+    return {
+      code,
+      status: status==='delivered' ? 'delivered' : (status==='exception'?'exception':status),
+      carrier,
+      location: latest.l,
+      updated: latest.a,
+      timeline: tl,
+      isDemo: true,
+    };
+  };
+
+  async function track(codes) {
+    if (!API_KEY) {
+      // Demo mode: simulate API delay + return demo data
+      await new Promise(r=>setTimeout(r,900+Math.random()*600));
+      return codes.map(c=>demoData(c));
+    }
+    try {
+      // Production: call Vercel proxy which holds the API key server-side
+      const res = await fetch(API_BASE, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ numbers: codes.map(c=>({number:c})) }),
+      });
+      if (!res.ok) throw new Error('API error '+res.status);
+      const data = await res.json();
+      return (data.data?.accepted || []).map(item => {
+        const ev = item.track?.e || [];
+        const latest = ev[0] || {};
+        return {
+          code: item.number,
+          status: STATUS_MAP[item.track?.w_status] || 'pending',
+          carrier: item.carrier || item.track?.carrier_name || '—',
+          location: latest.l || '—',
+          updated: latest.a || null,
+          timeline: ev.map(e=>({a:e.a,z:e.z,l:e.l})),
+          isDemo: false,
+        };
+      });
+    } catch(e) {
+      console.error('[17TRACK]', e);
+      return codes.map(c=>({...demoData(c), error: true}));
+    }
+  }
+
+  return { track, demoMode: !API_KEY };
+})();
+
+/* ─────────────────────────────────────────────────
+   TRACKING STATE
+───────────────────────────────────────────────── */
+let _trackItems = []; // { id, code, clientId, clientName, data, lastFetch }
+
+function trkSave() {
+  try {
+    const slim = _trackItems.map(i=>({id:i.id,code:i.code,clientId:i.clientId,clientName:i.clientName,data:i.data}));
+    localStorage.setItem('noria_track_v1', JSON.stringify(slim));
+  } catch(e) {}
+}
+function trkLoad() {
+  try {
+    const raw = localStorage.getItem('noria_track_v1');
+    if (raw) _trackItems = JSON.parse(raw);
+  } catch(e) { _trackItems = []; }
+}
+trkLoad();
+
+/* ─────────────────────────────────────────────────
+   BADGE HELPERS
+───────────────────────────────────────────────── */
+const STATUS_LABELS = {
+  transit: 'Em Trânsito',
+  delivered: 'Entregue',
+  exception: 'Exceção',
+  pending: 'Pendente',
+  pickup: 'Recolha',
+  info_received: 'Informação Recebida',
+  undelivered: 'Não Entregue',
+  untracked: 'Não Rastreado',
+};
+const STATUS_CLASS = {
+  transit: 'trk-transit',
+  delivered: 'trk-delivered',
+  exception: 'trk-exception',
+  pending: 'trk-pending',
+  pickup: 'trk-pickup',
+  info_received: 'trk-info_received',
+  undelivered: 'trk-exception',
+  untracked: 'trk-untracked',
+};
+
+function trkBadgeHTML(status) {
+  const cls = STATUS_CLASS[status] || 'trk-pending';
+  const lbl = STATUS_LABELS[status] || 'Desconhecido';
+  return `<span class="trk-badge ${cls}"><span class="trk-badge-dot"></span>${lbl}</span>`;
+}
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleString('pt-PT',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  } catch(e) { return iso; }
+}
+
+/* ─────────────────────────────────────────────────
+   RENDER TRACKING GRID
+───────────────────────────────────────────────── */
+function renderTrackGrid() {
+  const filter = document.getElementById('trkFilter')?.value || '';
+  const grid = document.getElementById('trkGrid');
+  const empty = document.getElementById('trkEmpty');
+  if (!grid) return;
+
+  const filtered = filter
+    ? _trackItems.filter(i=>i.data&&i.data.status===filter)
+    : _trackItems;
+
+  // Update KPIs
+  const all = _trackItems.filter(i=>i.data);
+  document.getElementById('trkKpi1').textContent = _trackItems.length;
+  document.getElementById('trkKpi2').textContent = all.filter(i=>i.data.status==='transit').length;
+  document.getElementById('trkKpi3').textContent = all.filter(i=>i.data.status==='delivered').length;
+  document.getElementById('trkKpi4').textContent = all.filter(i=>i.data.status==='exception').length;
+  const navCount = document.getElementById('navTrackCount');
+  if (navCount) navCount.textContent = _trackItems.length;
+
+  // Hide banner if no items and no key issues
+  if (!TrackingService.demoMode) document.getElementById('trkEnvBanner').style.display='none';
+
+  // Remove old cards (keep empty placeholder)
+  grid.querySelectorAll('.trk-card').forEach(c=>c.remove());
+  empty.style.display = filtered.length ? 'none' : 'flex';
+
+  filtered.forEach((item,i)=>{
+    const d = item.data;
+    const status = d ? d.status : 'untracked';
+    const carrier = d ? d.carrier : '—';
+    const location = d ? d.location : '—';
+    const updated = d ? fmtDate(d.updated) : '—';
+    const isDemo = d && d.isDemo;
+
+    const card = document.createElement('div');
+    card.className = 'trk-card';
+    card.style.animationDelay = (i*0.05)+'s';
+    card.innerHTML = `
+      <div class="trk-card-header">
+        <div>
+          <div class="trk-card-code">${esc(item.code)}</div>
+          <div class="trk-card-client">${esc(item.clientName || '—')}</div>
+          <div class="trk-card-carrier">
+            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            ${esc(carrier)}${isDemo?' <span style="font-size:.6rem;color:var(--t4)">(demo)</span>':''}
+          </div>
+        </div>
+        ${trkBadgeHTML(status)}
+      </div>
+      <div class="trk-card-body">
+        <div class="trk-card-location">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          ${esc(location)}
+        </div>
+        <div class="trk-card-time">🕐 Última atualização: ${updated}</div>
+        <div class="trk-card-actions">
+          <button class="trk-btn-detail" onclick="openTrkModal('${esc(item.id)}')">
+            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Ver Timeline
+          </button>
+          <button class="trk-btn-refresh" title="Atualizar" onclick="refreshSingle('${esc(item.id)}',this)">
+            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+          <button class="trk-btn-refresh" title="Remover" style="color:var(--red)" onclick="removeTrkItem('${esc(item.id)}')">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+/* ─────────────────────────────────────────────────
+   MODAL
+───────────────────────────────────────────────── */
+function openTrkModal(id) {
+  const item = _trackItems.find(i=>i.id===id);
+  if (!item) return;
+  const d = item.data;
+  document.getElementById('trkModalTitle').textContent = item.clientName || 'Encomenda';
+  document.getElementById('trkModalCode').textContent = item.code;
+  document.getElementById('trkModalBadge').innerHTML = d ? trkBadgeHTML(d.status) : trkBadgeHTML('untracked');
+  document.getElementById('trkInfoCarrier').textContent = d ? d.carrier : '—';
+  document.getElementById('trkInfoLocation').textContent = d ? d.location : '—';
+  document.getElementById('trkInfoUpdated').textContent = d ? fmtDate(d.updated) : '—';
+
+  const tl = document.getElementById('trkTimeline');
+  tl.innerHTML = '';
+  const events = d && d.timeline ? d.timeline : [];
+  if (!events.length) {
+    tl.innerHTML = `<div class="trk-empty" style="padding:30px 0"><div class="trk-empty-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="trk-empty-sub">Sem eventos de rastreio disponíveis.</div></div>`;
+  } else {
+    events.forEach((ev,i)=>{
+      const div = document.createElement('div');
+      div.className = 'trk-tl-item'+(i===0?' latest':'');
+      div.style.animationDelay = (i*0.06)+'s';
+      div.innerHTML = `
+        <div class="trk-tl-dot"><div class="trk-tl-dot-inner"></div></div>
+        <div class="trk-tl-content">
+          <div class="trk-tl-event">${esc(ev.z||'—')}</div>
+          <div class="trk-tl-loc">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            ${esc(ev.l||'—')}
+          </div>
+          <div class="trk-tl-date">${fmtDate(ev.a)}</div>
+        </div>`;
+      tl.appendChild(div);
+    });
+  }
+  document.getElementById('trkModalOv').classList.add('open');
+}
+
+document.getElementById('trkModalClose').addEventListener('click',()=>{
+  document.getElementById('trkModalOv').classList.remove('open');
+});
+document.getElementById('trkModalOv').addEventListener('click',e=>{
+  if (e.target===document.getElementById('trkModalOv'))
+    document.getElementById('trkModalOv').classList.remove('open');
+});
+
+/* ─────────────────────────────────────────────────
+   ADD / REMOVE / REFRESH
+───────────────────────────────────────────────── */
+async function addTrackItem(code, clientId, clientName) {
+  if (!code.trim()) return;
+  const existing = _trackItems.find(i=>i.code.toUpperCase()===code.toUpperCase().trim());
+  if (existing) { toast('Código já existe no rastreador','err'); return; }
+  const id = 'trk_'+Date.now();
+  const item = { id, code: code.trim().toUpperCase(), clientId: clientId||null, clientName: clientName||code.trim().toUpperCase(), data: null };
+  _trackItems.unshift(item);
+  trkSave();
+  renderTrackGrid();
+  // Fetch immediately
+  const btn = document.getElementById('trkAddBtn');
+  if(btn) btn.disabled = true;
+  toast('A rastrear '+item.code+'…','ok');
+  try {
+    const results = await TrackingService.track([item.code]);
+    if (results && results[0]) {
+      item.data = results[0];
+      trkSave();
+      renderTrackGrid();
+      toast('Rastreio atualizado ✓','ok');
+    }
+  } catch(e) {}
+  if(btn) btn.disabled = false;
+}
+
+async function refreshSingle(id, btn) {
+  const item = _trackItems.find(i=>i.id===id);
+  if (!item) return;
+  btn && btn.classList.add('spinning');
+  try {
+    const results = await TrackingService.track([item.code]);
+    if (results && results[0]) {
+      item.data = results[0];
+      trkSave();
+      renderTrackGrid();
+      toast(item.code+' atualizado ✓','ok');
+    }
+  } catch(e) { toast('Erro ao rastrear','err'); }
+  btn && btn.classList.remove('spinning');
+}
+
+function removeTrkItem(id) {
+  _trackItems = _trackItems.filter(i=>i.id!==id);
+  trkSave();
+  renderTrackGrid();
+  toast('Encomenda removida','ok');
+}
+
+async function refreshAll() {
+  if (!_trackItems.length) { toast('Nenhuma encomenda para atualizar','err'); return; }
+  const btn = document.getElementById('trkRefreshAll');
+  if(btn){ btn.disabled=true; btn.innerHTML=`<div class="trk-loading-dots"><span></span><span></span><span></span></div>`; }
+  toast('A atualizar '+_trackItems.length+' encomendas…','ok');
+  try {
+    const codes = _trackItems.map(i=>i.code);
+    const results = await TrackingService.track(codes);
+    results.forEach(r=>{
+      const item = _trackItems.find(i=>i.code===r.code);
+      if (item) item.data = r;
+    });
+    trkSave();
+    renderTrackGrid();
+    toast('Todas as encomendas atualizadas ✓','ok');
+  } catch(e) { toast('Erro ao atualizar','err'); }
+  if(btn){
+    btn.disabled=false;
+    btn.innerHTML=`<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Atualizar Todos`;
+  }
+}
+
+/* ─────────────────────────────────────────────────
+   IMPORT FROM CLIENTES
+───────────────────────────────────────────────── */
+async function importFromClientes() {
+  const withTracking = clientes.filter(c=>c.rastreio&&c.rastreio.trim());
+  if (!withTracking.length) { toast('Nenhum cliente com código de rastreio','err'); return; }
+  let added = 0;
+  withTracking.forEach(c=>{
+    const code = c.rastreio.trim().toUpperCase();
+    if (!_trackItems.find(i=>i.code===code)) {
+      _trackItems.push({
+        id:'trk_'+Date.now()+'_'+Math.random().toString(36).slice(2,7),
+        code,
+        clientId: c.id,
+        clientName: c.nome,
+        data: null,
+      });
+      added++;
+    }
+  });
+  if (!added) { toast('Todos os rastreios já estão importados','ok'); return; }
+  trkSave();
+  renderTrackGrid();
+  toast(`${added} rastreio${added>1?'s':''} importado${added>1?'s':''}! A carregar dados…`,'ok');
+  await refreshAll();
+}
+
+/* ─────────────────────────────────────────────────
+   SEARCH / QUICK TRACK
+───────────────────────────────────────────────── */
+async function quickTrack(code) {
+  if (!code.trim()) return;
+  const btn = document.getElementById('trkSearchBtn');
+  btn.classList.add('loading');
+  btn.innerHTML = `<div class="trk-loading-dots" style="height:13px"><span style="width:5px;height:5px;background:#fff"></span><span style="width:5px;height:5px;background:#fff"></span><span style="width:5px;height:5px;background:#fff"></span></div>`;
+
+  // Show in page-tracking
+  navBtns.forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-page="tracking"]')?.classList.add('active');
+  showPage('tracking');
+
+  await addTrackItem(code, null, code.trim().toUpperCase());
+
+  btn.classList.remove('loading');
+  btn.innerHTML = `<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg> Rastrear`;
+  document.getElementById('trkSearchInput').value = '';
+}
+
+/* ─────────────────────────────────────────────────
+   EVENT LISTENERS
+───────────────────────────────────────────────── */
+document.getElementById('trkSearchBtn').addEventListener('click',()=>{
+  quickTrack(document.getElementById('trkSearchInput').value);
+});
+document.getElementById('trkSearchInput').addEventListener('keydown',e=>{
+  if(e.key==='Enter') quickTrack(e.target.value);
+});
+document.getElementById('trkRefreshAll').addEventListener('click', refreshAll);
+document.getElementById('trkImportClientes').addEventListener('click', importFromClientes);
+document.getElementById('trkFilter').addEventListener('change', renderTrackGrid);
+
+// ADD ROW TOGGLE
+document.getElementById('trkAddToggle').addEventListener('click',()=>{
+  const row = document.getElementById('trkAddRow');
+  const visible = row.style.display !== 'none';
+  row.style.display = visible ? 'none' : 'flex';
+  if (!visible) {
+    // Populate client dropdown
+    const sel = document.getElementById('trkClientSel');
+    sel.innerHTML = '<option value="">— Sem cliente —</option>';
+    clientes.forEach(c=>{
+      if (!c.rastreio) { // Only show clients without tracking already
+        const o = document.createElement('option');
+        o.value = c.id;
+        o.textContent = c.nome + (c.cidade ? ' · '+c.cidade : '');
+        o.dataset.nome = c.nome;
+        sel.appendChild(o);
+      }
+    });
+    document.getElementById('trkNewCode').focus();
+  }
+});
+document.getElementById('trkAddCancel').addEventListener('click',()=>{
+  document.getElementById('trkAddRow').style.display='none';
+});
+document.getElementById('trkAddBtn').addEventListener('click',()=>{
+  const code = document.getElementById('trkNewCode').value;
+  const sel = document.getElementById('trkClientSel');
+  const clientId = sel.value || null;
+  const clientName = sel.value ? (sel.options[sel.selectedIndex]?.dataset.nome || code) : code;
+  addTrackItem(code, clientId, clientName);
+  document.getElementById('trkAddRow').style.display='none';
+  document.getElementById('trkNewCode').value='';
+});
+
+// Carrier chips (toggle visual only — filter could be extended)
+document.querySelectorAll('.trk-carrier-chips .trk-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>chip.classList.toggle('active'));
+});
+
+/* ─────────────────────────────────────────────────
+   PATCH showPage to render tracking
+───────────────────────────────────────────────── */
+const _origShowPage = showPage;
+window.showPage = function(id) {
+  _origShowPage(id);
+  if (id==='tracking') renderTrackGrid();
+};
+
+// Also patch the bottom nav / bnav tracking button (if added)
+// Initial render
+renderTrackGrid();
+
+</script>
 
 </body>
 </html>
