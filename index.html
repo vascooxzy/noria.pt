@@ -513,6 +513,643 @@ tbody tr:hover td{background:rgba(99,102,241,.04);color:var(--t1)}
 }
 .chk-label input[type=checkbox]{accent-color:var(--acc);width:15px;height:15px;cursor:pointer}
 .chk-label:hover{color:var(--t1)}
+
+/* ══════════════════════════════════════════════
+   NBA SECTION — PREMIUM DARK CATALOGUE
+═══════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+#page-nba { animation: fadeUp .35s ease both; }
+
+/* Header */
+.nba-header {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:28px;flex-wrap:wrap;gap:16px;
+}
+.nba-title-block { display:flex;align-items:center;gap:16px; }
+.nba-logo-badge {
+  width:52px;height:52px;border-radius:14px;
+  background:linear-gradient(135deg,#C8102E,#1D428A);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 24px rgba(200,16,46,.35),0 4px 12px rgba(0,0,0,.5);
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+.nba-logo-badge::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);
+}
+.nba-logo-badge svg{width:26px;height:26px;position:relative;z-index:1;}
+.nba-main-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:2.4rem;font-weight:900;letter-spacing:-.5px;
+  line-height:1;color:var(--t1);
+}
+.nba-main-title span { color:#C8102E; }
+.nba-subtitle { font-size:.75rem;color:var(--t3);font-weight:500;margin-top:3px; }
+
+/* NBA Search bar */
+.nba-controls {
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.nba-search {
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:0 13px;transition:all .2s;
+}
+.nba-search:focus-within{border-color:rgba(200,16,46,.4);box-shadow:0 0 0 3px rgba(200,16,46,.08);}
+.nba-search svg{color:var(--t3);width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.nba-search input{background:none;border:none;outline:none;color:var(--t1);font-family:var(--font);font-size:.85rem;height:36px;width:180px;font-weight:400;}
+.nba-search input::placeholder{color:var(--t3);}
+
+/* Filter pills */
+.nba-pills { display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px; }
+.nba-pill {
+  padding:5px 14px;border-radius:99px;font-size:.72rem;font-weight:700;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg3);
+  color:var(--t2);transition:all .18s;text-transform:uppercase;letter-spacing:.5px;
+}
+.nba-pill:hover{border-color:rgba(200,16,46,.3);color:var(--t1);}
+.nba-pill.active{
+  background:linear-gradient(135deg,#C8102E,#1D428A);
+  color:#fff;border-color:transparent;
+  box-shadow:0 2px 10px rgba(200,16,46,.3);
+}
+
+/* Stat strip */
+.nba-stats-strip {
+  display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;
+}
+.nba-stat {
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:10px;padding:10px 16px;flex:1;min-width:100px;
+  display:flex;flex-direction:column;gap:2px;transition:all .2s;
+}
+.nba-stat:hover{border-color:rgba(200,16,46,.25);transform:translateY(-2px);}
+.nba-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:800;color:var(--t1);line-height:1;}
+.nba-stat-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);font-weight:700;}
+
+/* Conference headers */
+.nba-conf {
+  margin-bottom:32px;
+}
+.nba-conf-header {
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+  padding-bottom:10px;border-bottom:1px solid var(--border);
+}
+.nba-conf-badge {
+  padding:3px 12px;border-radius:99px;font-size:.65rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:1px;
+}
+.conf-este { background:rgba(200,16,46,.15);color:#C8102E;border:1px solid rgba(200,16,46,.25); }
+.conf-oeste { background:rgba(29,66,138,.2);color:#6b9aff;border:1px solid rgba(29,66,138,.35); }
+.nba-conf-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.3rem;font-weight:800;color:var(--t1);letter-spacing:-.3px;
+}
+.nba-conf-count { font-size:.72rem;color:var(--t3);font-weight:600;margin-left:auto; }
+
+/* Division label */
+.nba-div-label {
+  font-size:.62rem;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--t3);font-weight:700;margin:20px 0 10px;
+  display:flex;align-items:center;gap:8px;
+}
+.nba-div-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* Team cards grid */
+.nba-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(185px,1fr));
+  gap:12px;
+}
+.nba-card {
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:14px;padding:16px 14px 14px;
+  cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:10px;
+  animation: fadeUp .35s ease both;
+}
+.nba-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--nba-c1,#C8102E),var(--nba-c2,#1D428A));
+  opacity:0;transition:opacity .2s;
+}
+.nba-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-4px);
+  box-shadow:0 12px 32px rgba(0,0,0,.4),0 0 0 1px var(--border2);
+}
+.nba-card:hover::before{opacity:1;}
+.nba-card.has-stock{border-color:rgba(34,197,94,.2);}
+.nba-card.has-stock::after{
+  content:'';position:absolute;top:8px;right:8px;
+  width:7px;height:7px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 6px rgba(34,197,94,.5);animation:pulse 2s infinite;
+}
+.nba-card-logo {
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;font-weight:900;letter-spacing:-1px;
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+.nba-card-logo::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+}
+.nba-card-name {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;font-weight:800;color:var(--t1);
+  line-height:1.1;letter-spacing:-.2px;
+}
+.nba-card-city { font-size:.7rem;color:var(--t3);font-weight:500; }
+.nba-card-footer {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:auto;padding-top:8px;border-top:1px solid var(--border);
+}
+.nba-stock-badge {
+  font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:99px;
+}
+.stock-zero{background:var(--bg4);color:var(--t3);}
+.stock-low{background:rgba(251,146,60,.12);color:var(--orange);}
+.stock-ok{background:rgba(34,197,94,.1);color:var(--green);}
+.nba-fav-btn {
+  background:none;border:none;color:var(--t3);cursor:pointer;
+  padding:3px;border-radius:6px;transition:all .15s;line-height:0;
+}
+.nba-fav-btn:hover{color:#fbbf24;}
+.nba-fav-btn.active{color:#fbbf24;}
+.nba-fav-btn svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.nba-fav-btn.active svg{fill:#fbbf24;stroke:#fbbf24;}
+
+/* Cat chips on card */
+.nba-cats {
+  display:flex;gap:4px;flex-wrap:wrap;
+}
+.nba-cat-chip {
+  font-size:.58rem;font-weight:700;padding:1px 6px;border-radius:4px;
+  background:rgba(99,102,241,.1);color:var(--acc2);
+  text-transform:uppercase;letter-spacing:.3px;
+}
+
+/* Add button on card hover */
+.nba-card-add {
+  background:linear-gradient(135deg,#C8102E,#1D428A);
+  color:#fff;border:none;border-radius:8px;
+  font-family:var(--font);font-size:.72rem;font-weight:700;
+  padding:6px 12px;cursor:pointer;width:100%;
+  transition:all .18s;opacity:0;transform:translateY(4px);
+}
+.nba-card:hover .nba-card-add{opacity:1;transform:translateY(0);}
+.nba-card-add:hover{filter:brightness(1.1);}
+
+/* No results */
+.nba-empty {
+  text-align:center;padding:60px 20px;color:var(--t3);
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  font-size:.88rem;
+}
+.nba-empty svg{width:40px;height:40px;stroke:var(--t4);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Cat filter section */
+.nba-cat-pills { display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px; }
+.nba-cat-pill {
+  display:flex;align-items:center;gap:6px;
+  padding:5px 13px;border-radius:8px;font-size:.72rem;font-weight:600;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg2);
+  color:var(--t2);transition:all .18s;
+}
+.nba-cat-pill:hover{border-color:var(--border2);color:var(--t1);}
+.nba-cat-pill.active{
+  background:rgba(200,16,46,.1);
+  color:#ff4d6d;border-color:rgba(200,16,46,.25);
+}
+.nba-cat-pill svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Section divider */
+.nba-section-sep{
+  height:1px;background:linear-gradient(90deg,rgba(200,16,46,.3),transparent);
+  margin:28px 0;
+}
+
+/* Stock table for NBA */
+.nba-table-wrap{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:14px;overflow:auto;margin-top:24px;
+}
+.nba-table-title{
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;font-weight:800;
+  color:var(--t1);display:flex;align-items:center;gap:8px;
+}
+.nba-table-title svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;color:#C8102E;}
+
+/* Responsive */
+@media(max-width:700px){
+  .nba-grid{grid-template-columns:repeat(2,1fr);}
+  .nba-main-title{font-size:1.8rem;}
+}
+
+/* ══════════════════════════════════════════════
+   NFL SECTION — ULTRA PREMIUM DARK CATALOGUE v2
+═══════════════════════════════════════════════ */
+@keyframes nfl-glow{0%,100%{box-shadow:0 0 12px rgba(213,10,10,.2)}50%{box-shadow:0 0 28px rgba(213,10,10,.5)}}
+@keyframes nfl-slide-in{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes nfl-badge-pop{0%{transform:scale(0.8);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+
+#page-nfl { animation: fadeUp .35s ease both; }
+
+/* ── HERO HEADER ─── */
+.nfl-hero {
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(1,51,105,.18) 0%,rgba(213,10,10,.08) 60%,transparent 100%);
+  border:1px solid var(--border2);
+  border-radius:18px;padding:28px 28px 24px;
+  margin-bottom:28px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.nfl-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(1,51,105,.15),transparent),
+             radial-gradient(ellipse 40% 60% at 100% 50%,rgba(213,10,10,.1),transparent);
+  pointer-events:none;
+}
+.nfl-hero-left{display:flex;align-items:center;gap:20px;position:relative;z-index:1;}
+.nfl-hero-emblem{
+  width:72px;height:72px;border-radius:18px;flex-shrink:0;
+  background:linear-gradient(145deg,#013369 0%,#1a4a8a 40%,#D50A0A 100%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 32px rgba(213,10,10,.3),0 8px 24px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.15);
+  position:relative;overflow:hidden;
+  animation:nfl-glow 3s ease infinite;
+}
+.nfl-hero-emblem::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.2) 0%,transparent 50%);
+  border-radius:inherit;
+}
+.nfl-hero-emblem svg{width:36px;height:36px;position:relative;z-index:1;}
+.nfl-hero-titles{}
+.nfl-hero-eyebrow{
+  font-size:.6rem;text-transform:uppercase;letter-spacing:2px;
+  color:rgba(213,10,10,.8);font-weight:800;margin-bottom:4px;
+  display:flex;align-items:center;gap:6px;
+}
+.nfl-hero-eyebrow::before{content:'';width:16px;height:1px;background:rgba(213,10,10,.6);}
+.nfl-main-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:2.8rem;font-weight:900;letter-spacing:-.8px;line-height:1;color:var(--t1);
+}
+.nfl-main-title span{
+  background:linear-gradient(135deg,#ff4444,#D50A0A);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nfl-subtitle{font-size:.75rem;color:var(--t3);font-weight:500;margin-top:5px;display:flex;align-items:center;gap:8px;}
+.nfl-subtitle-dot{width:4px;height:4px;border-radius:50%;background:var(--t4);}
+
+.nfl-hero-right{display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
+.nfl-search{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border2);
+  border-radius:12px;padding:0 14px;transition:all .2s;
+  backdrop-filter:blur(8px);
+}
+.nfl-search:focus-within{
+  border-color:rgba(213,10,10,.5);
+  box-shadow:0 0 0 3px rgba(213,10,10,.1),0 4px 16px rgba(0,0,0,.2);
+  background:rgba(255,255,255,.06);
+}
+.nfl-search svg{color:var(--t3);width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:color .2s;}
+.nfl-search:focus-within svg{color:rgba(213,10,10,.8);}
+.nfl-search input{background:none;border:none;outline:none;color:var(--t1);font-family:var(--font);font-size:.85rem;height:40px;width:200px;font-weight:400;}
+.nfl-search input::placeholder{color:var(--t3);}
+
+/* ── STATS STRIP ─── */
+.nfl-stats-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px;}
+.nfl-stat{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:4px;transition:all .22s;
+  position:relative;overflow:hidden;cursor:default;
+}
+.nfl-stat::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--nfl-stat-c1,#013369),var(--nfl-stat-c2,#D50A0A));
+  opacity:0;transition:opacity .2s;
+}
+.nfl-stat:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.25);}
+.nfl-stat:hover::before{opacity:1;}
+.nfl-stat-icon{
+  width:28px;height:28px;border-radius:7px;margin-bottom:6px;
+  display:flex;align-items:center;justify-content:center;
+}
+.nfl-stat-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nfl-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:800;color:var(--t1);line-height:1;}
+.nfl-stat-lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.9px;color:var(--t3);font-weight:700;}
+
+/* ── FILTER BARS ─── */
+.nfl-filter-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.nfl-filter-label{font-size:.6rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--t3);font-weight:700;flex-shrink:0;}
+.nfl-pills{display:flex;gap:5px;flex-wrap:wrap;}
+.nfl-pill{
+  padding:5px 14px;border-radius:99px;font-size:.7rem;font-weight:700;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg3);
+  color:var(--t2);transition:all .18s;text-transform:uppercase;letter-spacing:.5px;
+  display:flex;align-items:center;gap:5px;
+}
+.nfl-pill:hover{border-color:var(--border2);color:var(--t1);background:var(--bg4);}
+.nfl-pill.active{
+  background:linear-gradient(135deg,#013369,#D50A0A);
+  color:#fff;border-color:transparent;
+  box-shadow:0 2px 12px rgba(213,10,10,.3);
+}
+.nfl-pill-dot{width:6px;height:6px;border-radius:50%;}
+
+/* Div tabs */
+.nfl-div-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px;padding:4px;background:var(--bg3);border-radius:10px;border:1px solid var(--border);}
+.nfl-div-tab{
+  padding:4px 12px;border-radius:7px;font-size:.68rem;font-weight:700;
+  cursor:pointer;color:var(--t3);transition:all .15s;flex:1;text-align:center;
+  text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;
+}
+.nfl-div-tab:hover{color:var(--t1);}
+.nfl-div-tab.active{background:var(--bg5);color:var(--t1);box-shadow:0 2px 6px rgba(0,0,0,.3);}
+
+/* Cat pills */
+.nfl-cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;}
+.nfl-cat-pill{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:9px;font-size:.7rem;font-weight:600;
+  cursor:pointer;border:1px solid var(--border);background:var(--bg2);
+  color:var(--t2);transition:all .18s;
+}
+.nfl-cat-pill:hover{border-color:var(--border2);color:var(--t1);background:var(--bg3);}
+.nfl-cat-pill.active{
+  background:rgba(213,10,10,.1);color:#ff6b6b;
+  border-color:rgba(213,10,10,.3);
+  box-shadow:0 0 0 1px rgba(213,10,10,.15);
+}
+.nfl-cat-pill svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── CONFERENCE SECTION ─── */
+.nfl-conf{margin-bottom:36px;animation:fadeUp .3s ease both;}
+.nfl-conf-header{
+  display:flex;align-items:center;gap:14px;margin-bottom:20px;
+  padding:16px 20px;border-radius:14px;
+  position:relative;overflow:hidden;
+}
+.nfl-conf-header.afc-header{
+  background:linear-gradient(135deg,rgba(213,10,10,.08),rgba(213,10,10,.03));
+  border:1px solid rgba(213,10,10,.2);
+}
+.nfl-conf-header.nfc-header{
+  background:linear-gradient(135deg,rgba(1,51,105,.12),rgba(1,51,105,.04));
+  border:1px solid rgba(1,51,105,.25);
+}
+.nfl-conf-logo{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+}
+.nfl-conf-logo::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);}
+.nfl-conf-logo svg{position:relative;z-index:1;}
+.afc-conf-logo{background:linear-gradient(135deg,#8B0000,#D50A0A);}
+.nfc-conf-logo{background:linear-gradient(135deg,#003087,#013369);}
+.nfl-conf-info{flex:1;}
+.nfl-conf-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:2px 10px;border-radius:99px;font-size:.6rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px;
+}
+.nfl-afc{background:rgba(213,10,10,.15);color:#ff5555;border:1px solid rgba(213,10,10,.3);}
+.nfl-nfc{background:rgba(1,51,105,.2);color:#7aabff;border:1px solid rgba(1,51,105,.4);}
+.nfl-conf-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.25rem;font-weight:900;color:var(--t1);letter-spacing:-.3px;
+}
+.nfl-conf-meta{display:flex;align-items:center;gap:14px;margin-left:auto;}
+.nfl-conf-stat{text-align:right;}
+.nfl-conf-stat-val{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;color:var(--t1);line-height:1;}
+.nfl-conf-stat-lbl{font-size:.58rem;text-transform:uppercase;letter-spacing:.8px;color:var(--t3);font-weight:700;}
+
+/* ── DIVISION BLOCK ─── */
+.nfl-division{margin-bottom:24px;}
+.nfl-div-label{
+  font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--t3);font-weight:800;margin:0 0 12px;
+  display:flex;align-items:center;gap:10px;
+}
+.nfl-div-label-text{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg3);border:1px solid var(--border);
+  padding:4px 12px;border-radius:99px;
+}
+.nfl-div-label-text svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;}
+.nfl-div-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.nfl-div-count{font-size:.6rem;color:var(--t4);font-weight:600;text-transform:none;letter-spacing:0;margin-left:6px;}
+
+/* ── TEAM CARDS ─── */
+.nfl-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:14px;
+}
+.nfl-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:16px;padding:0;
+  cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  animation:fadeUp .35s ease both;
+}
+/* Colored top bar */
+.nfl-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--nfl-c1,#013369),var(--nfl-c2,#D50A0A));
+  transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.4,0,.2,1);
+}
+/* Glow background on hover */
+.nfl-card::after{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(255,255,255,.03),transparent);
+  transition:opacity .25s;pointer-events:none;
+}
+.nfl-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-5px) scale(1.01);
+  box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);
+}
+.nfl-card:hover::before{transform:scaleX(1);}
+.nfl-card:hover::after{opacity:1;}
+.nfl-card.has-stock{border-color:rgba(34,197,94,.25);}
+
+/* Card inner body */
+.nfl-card-body{padding:16px 16px 14px;display:flex;flex-direction:column;gap:11px;flex:1;}
+
+/* Team logo area */
+.nfl-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.nfl-card-logo{
+  width:54px;height:54px;border-radius:13px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.nfl-card-logo-inner{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,var(--nfl-c1,#013369),var(--nfl-c2,#D50A0A));
+}
+.nfl-card-logo-inner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.2) 0%,transparent 60%);
+}
+.nfl-card-logo-abbr{
+  font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:900;
+  color:#fff;letter-spacing:-1px;position:relative;z-index:1;
+  text-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+/* Stock pulse dot */
+.nfl-card-stock-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px rgba(34,197,94,.6);animation:pulse 2s infinite;flex-shrink:0;
+  margin-top:4px;
+}
+
+/* Top right actions */
+.nfl-card-actions{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
+.nfl-fav-btn{
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  color:var(--t4);cursor:pointer;
+  width:26px;height:26px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;
+}
+.nfl-fav-btn:hover{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);color:#fbbf24;}
+.nfl-fav-btn.active{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.35);color:#fbbf24;}
+.nfl-fav-btn svg{width:11px;height:11px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.nfl-fav-btn.active svg{fill:#fbbf24;stroke:#fbbf24;}
+
+/* Team info */
+.nfl-card-info{}
+.nfl-card-city{font-size:.68rem;color:var(--t3);font-weight:500;line-height:1.2;margin-bottom:1px;}
+.nfl-card-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.15rem;font-weight:900;color:var(--t1);
+  line-height:1;letter-spacing:-.3px;
+}
+
+/* Category chips */
+.nfl-cats{display:flex;gap:4px;flex-wrap:wrap;min-height:22px;}
+.nfl-cat-chip{
+  font-size:.56rem;font-weight:800;padding:2px 7px;border-radius:5px;
+  background:rgba(213,10,10,.1);color:rgba(255,120,120,.9);
+  text-transform:uppercase;letter-spacing:.4px;
+  border:1px solid rgba(213,10,10,.15);
+}
+.nfl-cat-chip.cat-jersey{background:rgba(99,102,241,.1);color:var(--acc2);border-color:rgba(99,102,241,.2);}
+.nfl-cat-chip.cat-retro{background:rgba(251,191,36,.1);color:var(--yellow);border-color:rgba(251,191,36,.2);}
+.nfl-cat-chip.cat-shorts{background:rgba(34,211,238,.1);color:var(--cyan);border-color:rgba(34,211,238,.2);}
+.nfl-cat-chip.cat-hoodie{background:rgba(139,92,246,.1);color:#a78bfa;border-color:rgba(139,92,246,.2);}
+
+/* Card footer */
+.nfl-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;
+  border-top:1px solid var(--border);
+  background:rgba(0,0,0,.15);
+}
+.nfl-stock-badge{
+  font-size:.62rem;font-weight:800;padding:3px 10px;border-radius:99px;
+  display:flex;align-items:center;gap:4px;
+}
+.nfl-stock-badge svg{width:8px;height:8px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;}
+.stock-zero{background:var(--bg4);color:var(--t3);border:1px solid var(--border);}
+.stock-low{background:rgba(251,146,60,.12);color:var(--orange);border:1px solid rgba(251,146,60,.2);}
+.stock-ok{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2);}
+.nfl-card-add{
+  background:linear-gradient(135deg,#013369,#D50A0A);
+  color:#fff;border:none;border-radius:7px;
+  font-family:var(--font);font-size:.65rem;font-weight:700;
+  padding:5px 10px;cursor:pointer;letter-spacing:.3px;
+  transition:all .18s;opacity:0;transform:translateY(4px);
+  display:flex;align-items:center;gap:4px;
+}
+.nfl-card-add svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;}
+.nfl-card:hover .nfl-card-add{opacity:1;transform:translateY(0);}
+.nfl-card-add:hover{filter:brightness(1.15);box-shadow:0 4px 12px rgba(213,10,10,.3);}
+
+/* ── EMPTY STATE ─── */
+.nfl-empty{
+  text-align:center;padding:80px 20px;color:var(--t3);
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  font-size:.9rem;
+}
+.nfl-empty-icon{
+  width:64px;height:64px;border-radius:18px;
+  background:var(--bg3);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+}
+.nfl-empty-icon svg{width:28px;height:28px;stroke:var(--t4);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.nfl-empty strong{color:var(--t2);}
+
+/* ── SECTION SEPARATOR ─── */
+.nfl-section-sep{
+  height:1px;margin:32px 0;
+  background:linear-gradient(90deg,rgba(213,10,10,.25),rgba(1,51,105,.15),transparent);
+}
+
+/* ── STOCK TABLE ─── */
+.nfl-table-wrap{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;margin-top:28px;
+}
+.nfl-table-header{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:linear-gradient(135deg,rgba(213,10,10,.05),transparent);
+}
+.nfl-table-title{
+  font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;
+  color:var(--t1);display:flex;align-items:center;gap:9px;
+}
+.nfl-table-title svg{width:16px;height:16px;stroke:#D50A0A;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nfl-table-count{
+  font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:99px;
+  background:rgba(213,10,10,.1);color:#ff6b6b;border:1px solid rgba(213,10,10,.2);
+}
+.nfl-table-wrap table{min-width:780px;width:100%;border-collapse:collapse;}
+.nfl-table-wrap thead tr th{
+  padding:10px 14px;text-align:left;
+  font-size:.6rem;text-transform:uppercase;letter-spacing:1px;
+  color:var(--t3);font-weight:800;
+  background:rgba(0,0,0,.2);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:2;white-space:nowrap;
+}
+.nfl-table-wrap tbody tr{
+  border-bottom:1px solid rgba(255,255,255,.03);
+  transition:background .15s;
+}
+.nfl-table-wrap tbody tr:hover{background:rgba(255,255,255,.025);}
+.nfl-table-wrap tbody tr:last-child{border-bottom:none;}
+.nfl-table-wrap td{padding:10px 14px;font-size:.78rem;color:var(--t2);vertical-align:middle;}
+.nfl-table-wrap td.cb{color:var(--t1);font-weight:600;}
+.nfl-team-cell{display:flex;align-items:center;gap:9px;}
+.nfl-team-swatch{
+  width:28px;height:28px;border-radius:7px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.6rem;
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,var(--tc1,#013369),var(--tc2,#D50A0A));
+}
+
+/* ── RESPONSIVE ─── */
+@media(max-width:900px){.nfl-stats-strip{grid-template-columns:repeat(3,1fr);}
+  .nfl-hero{padding:20px;} .nfl-main-title{font-size:2rem;}
+}
+@media(max-width:700px){
+  .nfl-grid{grid-template-columns:repeat(2,1fr);}
+  .nfl-stats-strip{grid-template-columns:repeat(2,1fr);}
+  .nfl-search input{width:140px;}
+  .nfl-main-title{font-size:1.7rem;}
+}
 </style>
 </head>
 <body>
@@ -558,9 +1195,13 @@ tbody tr:hover td{background:rgba(99,102,241,.04);color:var(--t1)}
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       Retro
     </button>
-    <button class="nav-item nav-liga" data-liga="NBA">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93a10 10 0 0 0 14.14 14.14"/><path d="M12 2v20"/></svg>
+    <button class="nav-item nav-nba" data-page="nba">
+      <svg viewBox="0 0 24 24" style="color:#C8102E"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93a10 10 0 0 0 14.14 14.14"/><path d="M12 2v20"/></svg>
       NBA
+    </button>
+    <button class="nav-item nav-nfl" data-page="nfl">
+      <svg viewBox="0 0 24 24" style="color:#013369" fill="none"><ellipse cx="12" cy="12" rx="10" ry="6" stroke="currentColor" stroke-width="1.8"/><line x1="12" y1="6" x2="12" y2="18" stroke="currentColor" stroke-width="1.8"/><path d="M9 10.5c2 .8 4 .8 6 0M9 13.5c2-.8 4-.8 6 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      NFL
     </button>
 
     <div class="sdiv"></div>
@@ -748,7 +1389,7 @@ tbody tr:hover td{background:rgba(99,102,241,.04);color:var(--t1)}
       <div class="filters">
         <select class="fsel" id="fLiga"><option value="">Todas as Ligas</option></select>
         <select class="fsel" id="fClube"><option value="">Todos os Clubes</option></select>
-        <select class="fsel" id="fTipo"><option value="">Todos os Tipos</option><optgroup label="Camisolas"><option>Camisa Modelo Fã</option><option>Camisa Modelo Jogador</option><option>Camisola Manga Longa</option><option>Retrô</option></optgroup><optgroup label="Kits"><option>Kit Infantil</option><option>Kit Adulto</option></optgroup><optgroup label="Vestuário"><option>Corta Vento</option><option>Fato de Treino</option><option>Calções</option></optgroup><optgroup label="Calçado"><option>Sapatilhas</option><option>Chuteiras</option></optgroup><optgroup label="NBA"><option>NBA</option></optgroup><optgroup label="Serviços"><option>Personalização (Nome + Número)</option><option>Patch / Patrocinador</option></optgroup></select>
+        <select class="fsel" id="fTipo"><option value="">Todos os Tipos</option><optgroup label="Camisolas"><option>Camisa Modelo Fã</option><option>Camisa Modelo Jogador</option><option>Camisola Manga Longa</option><option>Retrô</option></optgroup><optgroup label="Kits"><option>Kit Infantil</option><option>Kit Adulto</option></optgroup><optgroup label="Vestuário"><option>Corta Vento</option><option>Fato de Treino</option><option>Calções</option></optgroup><optgroup label="Calçado"><option>Sapatilhas</option><option>Chuteiras</option></optgroup><optgroup label="NFL"><option>NFL Jerseys</option><option>NFL Retro Jerseys</option><option>NFL Shorts</option><option>NFL Tracksuits</option><option>NFL Hoodies</option><option>NFL Kids Kits</option><option>NFL Training Wear</option><option>NFL Caps</option></optgroup><optgroup label="NBA"><option>NBA Jerseys</option><option>NBA Retro Jerseys</option><option>NBA Shorts</option><option>NBA Tracksuits</option><option>NBA Sleeveless Jerseys</option><option>NBA Kids Kits</option><option>NBA Training Wear</option></optgroup><optgroup label="Serviços"><option>Personalização (Nome + Número)</option><option>Patch / Patrocinador</option></optgroup></select>
         <select class="fsel" id="fTam"><option value="">Tamanho</option><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Infantil"><option>14 (2-3a)</option><option>16 (3-4a)</option><option>18 (4-5a)</option><option>20 (5-6a)</option><option>22 (6-7a)</option><option>24 (8-9a)</option><option>26 (10-11a)</option><option>28 (12-13a)</option></optgroup></select>
         <select class="fsel" id="fEst"><option value="">Estado</option><option>Disponível</option><option>Reservado</option><option>Vendido</option></select>
         <button class="btn btn-ghost" id="clrStock">
@@ -793,6 +1434,280 @@ tbody tr:hover td{background:rgba(99,102,241,.04);color:var(--t1)}
       </div>
     </section>
 
+  <!-- NFL PAGE -->
+  <section class="page" id="page-nfl">
+
+    <!-- HERO HEADER -->
+    <div class="nfl-hero">
+      <div class="nfl-hero-left">
+        <div class="nfl-hero-emblem">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="20" cy="20" rx="16" ry="10" stroke="#fff" stroke-width="2.2"/>
+            <line x1="20" y1="10" x2="20" y2="30" stroke="#fff" stroke-width="2.2"/>
+            <path d="M13.5 16.5c4.3 1.5 8.7 1.5 13 0" stroke="rgba(255,255,255,.75)" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M13.5 23.5c4.3-1.5 8.7-1.5 13 0" stroke="rgba(255,255,255,.75)" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M14.5 20h11" stroke="rgba(255,255,255,.5)" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="nfl-hero-titles">
+          <div class="nfl-hero-eyebrow">National Football League</div>
+          <div class="nfl-main-title">NFL <span>Catálogo</span></div>
+          <div class="nfl-subtitle">
+            32 Equipas
+            <span class="nfl-subtitle-dot"></span>
+            2 Conferências
+            <span class="nfl-subtitle-dot"></span>
+            8 Divisões
+            <span class="nfl-subtitle-dot"></span>
+            8 Categorias
+          </div>
+        </div>
+      </div>
+      <div class="nfl-hero-right">
+        <div class="nfl-search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="nflSrch" placeholder="Pesquisar equipa, cidade..."/>
+        </div>
+        <button class="btn btn-primary" onclick="openProdModal(null)" style="background:linear-gradient(135deg,#013369,#D50A0A);box-shadow:0 0 14px rgba(213,10,10,.3);height:40px;">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Produto
+        </button>
+      </div>
+    </div>
+
+    <!-- STATS STRIP -->
+    <div class="nfl-stats-strip">
+      <div class="nfl-stat" style="--nfl-stat-c1:#6366f1;--nfl-stat-c2:#818cf8">
+        <div class="nfl-stat-icon" style="background:rgba(99,102,241,.1);color:var(--acc2)">
+          <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="5.5"/><line x1="12" y1="6.5" x2="12" y2="17.5"/></svg>
+        </div>
+        <div class="nfl-stat-val">32</div>
+        <div class="nfl-stat-lbl">Equipas NFL</div>
+      </div>
+      <div class="nfl-stat" style="--nfl-stat-c1:#D50A0A;--nfl-stat-c2:#ff5555">
+        <div class="nfl-stat-icon" style="background:rgba(213,10,10,.1);color:#ff6b6b">
+          <svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.33-2.23Z"/></svg>
+        </div>
+        <div class="nfl-stat-val" id="nflStat2" style="color:#ff5555">0</div>
+        <div class="nfl-stat-lbl">Equipas c/ Stock</div>
+      </div>
+      <div class="nfl-stat" style="--nfl-stat-c1:#22c55e;--nfl-stat-c2:#4ade80">
+        <div class="nfl-stat-icon" style="background:rgba(34,197,94,.1);color:var(--green)">
+          <svg viewBox="0 0 24 24"><path d="M2 7l10-4 10 4v2L12 13 2 9V7Z"/><path d="M2 14l10 4 10-4"/><path d="M2 17l10 4 10-4"/></svg>
+        </div>
+        <div class="nfl-stat-val" id="nflStat3" style="color:var(--green)">0</div>
+        <div class="nfl-stat-lbl">Itens Disponíveis</div>
+      </div>
+      <div class="nfl-stat" style="--nfl-stat-c1:#fbbf24;--nfl-stat-c2:#f59e0b">
+        <div class="nfl-stat-icon" style="background:rgba(251,191,36,.1);color:var(--yellow)">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="nfl-stat-val" id="nflStat4" style="color:var(--yellow)">€0</div>
+        <div class="nfl-stat-lbl">Lucro NFL</div>
+      </div>
+      <div class="nfl-stat" style="--nfl-stat-c1:#fbbf24;--nfl-stat-c2:#fcd34d">
+        <div class="nfl-stat-icon" style="background:rgba(251,191,36,.1);color:var(--yellow)">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="nfl-stat-val" id="nflStat5">0</div>
+        <div class="nfl-stat-lbl">Favoritos</div>
+      </div>
+    </div>
+
+    <!-- CONFERENCE FILTER -->
+    <div class="nfl-filter-row">
+      <span class="nfl-filter-label">Conferência</span>
+      <div class="nfl-pills" id="nflConfPills">
+        <div class="nfl-pill active" data-conf="all">
+          <svg viewBox="0 0 24 24" style="width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Todas
+        </div>
+        <div class="nfl-pill" data-conf="AFC">
+          <span class="nfl-pill-dot" style="background:#D50A0A"></span>AFC
+        </div>
+        <div class="nfl-pill" data-conf="NFC">
+          <span class="nfl-pill-dot" style="background:#5b9aff"></span>NFC
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY FILTER -->
+    <div class="nfl-cat-pills" id="nflCatPills">
+      <div class="nfl-cat-pill active" data-cat="all">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Todas
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Jerseys">
+        <svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.33-2.23Z"/></svg>
+        Jerseys
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Retro Jerseys">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Retro
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Shorts">
+        <svg viewBox="0 0 24 24"><path d="M6 2h12l2 7H4L6 2z"/><path d="M4 9l2 13h4l2-6 2 6h4l2-13"/></svg>
+        Shorts
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Tracksuits">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        Tracksuits
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Hoodies">
+        <svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.33-2.23Z"/><path d="M8 2c0 4 8 4 8 0"/></svg>
+        Hoodies
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Kids Kits">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>
+        Kids
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Training Wear">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Training
+      </div>
+      <div class="nfl-cat-pill" data-cat="NFL Caps">
+        <svg viewBox="0 0 24 24"><path d="M3 18c0-4 4-7 9-7s9 3 9 7"/><path d="M3 18h18"/><path d="M12 11V4"/></svg>
+        Caps
+      </div>
+    </div>
+
+    <!-- CARDS AREA -->
+    <div id="nflCardsArea"></div>
+
+    <!-- STOCK TABLE -->
+    <div class="nfl-table-wrap" id="nflTableWrap" style="display:none">
+      <div class="nfl-table-header">
+        <div class="nfl-table-title">
+          <svg viewBox="0 0 24 24"><path d="M2 7l10-4 10 4v2L12 13 2 9V7Z"/><path d="M2 14l10 4 10-4"/><path d="M2 17l10 4 10-4"/></svg>
+          Produtos NFL em Stock
+        </div>
+        <span class="nfl-table-count" id="nflTableCount">0 produtos</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Equipa</th>
+              <th>Conferência</th>
+              <th>Categoria</th>
+              <th>Época</th>
+              <th>Tam.</th>
+              <th>Qtd.</th>
+              <th>Preço Venda</th>
+              <th>Lucro</th>
+              <th>Estado</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="nflStockBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- NBA PAGE -->
+  <section class="page" id="page-nba">
+
+    <!-- Header -->
+    <div class="nba-header">
+      <div class="nba-title-block">
+        <div class="nba-logo-badge">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="1.5"/>
+            <path d="M8 6c0 0 0 8 0 12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M8 12c2-2 4-2 6 0" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M14 6v12" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 8h16" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+            <path d="M4 16h16" stroke="rgba(255,255,255,.3)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div>
+          <div class="nba-main-title">NBA <span>Catálogo</span></div>
+          <div class="nba-subtitle">30 equipas · 2 conferências · 6 divisões</div>
+        </div>
+      </div>
+      <div class="nba-controls">
+        <div class="nba-search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="nbaSrch" placeholder="Pesquisar equipa..."/>
+        </div>
+        <button class="btn btn-primary" onclick="openProdModal(null)" style="background:linear-gradient(135deg,#C8102E,#8b0000);box-shadow:0 0 12px rgba(200,16,46,.25);">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Produto NBA
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="nba-stats-strip" id="nbaStatsStrip">
+      <div class="nba-stat"><div class="nba-stat-val" id="nbaStat1">30</div><div class="nba-stat-lbl">Equipas</div></div>
+      <div class="nba-stat"><div class="nba-stat-val" id="nbaStat2" style="color:#C8102E">0</div><div class="nba-stat-lbl">Em Stock</div></div>
+      <div class="nba-stat"><div class="nba-stat-val" id="nbaStat3" style="color:var(--green)">0</div><div class="nba-stat-lbl">Itens Disp.</div></div>
+      <div class="nba-stat"><div class="nba-stat-val" id="nbaStat4" style="color:var(--yellow)">€0</div><div class="nba-stat-lbl">Lucro NBA</div></div>
+      <div class="nba-stat"><div class="nba-stat-val" id="nbaStat5">0</div><div class="nba-stat-lbl">Favoritos</div></div>
+    </div>
+
+    <!-- Conference filter pills -->
+    <div class="nba-pills" id="nbaConfPills">
+      <div class="nba-pill active" data-conf="all">Todas</div>
+      <div class="nba-pill" data-conf="Este">🔴 Conferência Este</div>
+      <div class="nba-pill" data-conf="Oeste">🔵 Conferência Oeste</div>
+    </div>
+
+    <!-- Category filter -->
+    <div class="nba-cat-pills" id="nbaCatPills">
+      <div class="nba-cat-pill active" data-cat="all">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Todas as Categorias
+      </div>
+      <div class="nba-cat-pill" data-cat="NBA Jerseys">
+        <svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.33-2.23Z"/></svg>
+        Jerseys
+      </div>
+      <div class="nba-cat-pill" data-cat="NBA Retro Jerseys">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Retro Jerseys
+      </div>
+      <div class="nba-cat-pill" data-cat="NBA Shorts">
+        <svg viewBox="0 0 24 24"><path d="M6 2h12l2 7H4L6 2z"/><path d="M4 9l2 13h4l2-6 2 6h4l2-13"/></svg>
+        Shorts
+      </div>
+      <div class="nba-cat-pill" data-cat="NBA Tracksuits">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+        Tracksuits
+      </div>
+      <div class="nba-cat-pill" data-cat="NBA Sleeveless Jerseys">
+        <svg viewBox="0 0 24 24"><path d="M8 2h8v20H8z"/></svg>
+        Sleeveless
+      </div>
+      <div class="nba-cat-pill" data-cat="NBA Kids Kits">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>
+        Kids Kits
+      </div>
+      <div class="nba-cat-pill" data-cat="NBA Training Wear">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Training Wear
+      </div>
+    </div>
+
+    <!-- Cards area -->
+    <div id="nbaCardsArea"></div>
+
+    <!-- NBA stock table -->
+    <div class="nba-table-wrap" id="nbaTableWrap" style="display:none">
+      <div class="nba-table-title">
+        <svg viewBox="0 0 24 24"><path d="M2 7l10-4 10 4v2L12 13 2 9V7Z"/><path d="M2 14l10 4 10-4"/><path d="M2 17l10 4 10-4"/></svg>
+        Produtos NBA em Stock
+      </div>
+      <table style="min-width:700px">
+        <thead><tr><th>Equipa</th><th>Categoria</th><th>Época</th><th>Tam.</th><th>Qtd.</th><th>Venda</th><th>Lucro</th><th>Estado</th><th>Ações</th></tr></thead>
+        <tbody id="nbaStockBody"></tbody>
+      </table>
+    </div>
+
+  </section>
+
   </div>
 </div>
 
@@ -811,13 +1726,35 @@ tbody tr:hover td{background:rgba(99,102,241,.04);color:var(--t1)}
           <optgroup label="Kits"><option value="Kit Infantil">Kit Infantil</option><option value="Kit Adulto">Kit Adulto</option></optgroup>
           <optgroup label="Vestuário"><option value="Corta Vento">Corta Vento</option><option value="Fato de Treino">Fato de Treino</option><option value="Calções">Calções</option></optgroup>
           <optgroup label="Calçado"><option value="Sapatilhas">Sapatilhas</option><option value="Chuteiras">Chuteiras</option></optgroup>
-          <optgroup label="NBA"><option value="NBA">NBA</option></optgroup>
+          <optgroup label="NFL">
+          <option>NFL Jerseys</option>
+          <option>NFL Retro Jerseys</option>
+          <option>NFL Shorts</option>
+          <option>NFL Tracksuits</option>
+          <option>NFL Hoodies</option>
+          <option>NFL Kids Kits</option>
+          <option>NFL Training Wear</option>
+          <option>NFL Caps</option>
+        </optgroup>
+        <optgroup label="NBA">
+          <option>NBA Jerseys</option>
+          <option>NBA Retro Jerseys</option>
+          <option>NBA Shorts</option>
+          <option>NBA Tracksuits</option>
+          <option>NBA Sleeveless Jerseys</option>
+          <option>NBA Kids Kits</option>
+          <option>NBA Training Wear</option>
+        </optgroup>
         </select></div>
       </div>
 
       <div id="camposProduto" class="fg" style="display:none">
-        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><optgroup label="Europa"><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Eredivisie</option><option>Scottish Premiership</option></optgroup><optgroup label="Competições UEFA"><option>Champions League</option></optgroup><optgroup label="América"><option>Liga MX</option><option>Brasileirão</option></optgroup><optgroup label="Ásia"><option>J1 League</option></optgroup><optgroup label="Outras"><option>Seleções</option><option>Retro</option><option>NBA</option><option>Outros</option></optgroup></select></div>
+        <div class="fg-item"><label>Liga / Categoria *</label><select id="pLiga"><option value="">Selecionar</option><optgroup label="Europa"><option>Primeira Liga</option><option>Premier League</option><option>La Liga</option><option>Serie A</option><option>Bundesliga</option><option>Ligue 1</option><option>Eredivisie</option><option>Scottish Premiership</option></optgroup><optgroup label="Competições UEFA"><option>Champions League</option></optgroup><optgroup label="América"><option>Liga MX</option><option>Brasileirão</option></optgroup><optgroup label="Ásia"><option>J1 League</option></optgroup><optgroup label="Outras"><option>NFL</option><option>Seleções</option><option>Retro</option><option>NBA</option><option>Outros</option></optgroup></select></div>
         <div class="fg-item"><label>Clube / Nome *</label><input type="text" id="pClube" placeholder="ex: Benfica"/></div>
+        <div class="ff" id="ligaWarn" style="display:none;background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.25);border-radius:8px;padding:8px 12px;font-size:.78rem;color:var(--orange);display:none;align-items:center;gap:7px">
+          <svg viewBox="0 0 24 24" style="width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span id="ligaWarnMsg"></span>
+        </div>
         <div class="fg-item"><label>Época</label><input type="text" id="pEpoca" placeholder="ex: 2024/25"/></div>
         <div class="fg-item"><label>Tamanho</label><select id="pTam"><optgroup label="Adulto"><option>S</option><option>M</option><option>L</option><option>XL</option><option>2XL</option><option>3XL</option><option>4XL</option></optgroup><optgroup label="Kit Infantil (Criança)"><option>14 (2-3 anos)</option><option>16 (3-4 anos)</option><option>18 (4-5 anos)</option><option>20 (5-6 anos)</option><option>22 (6-7 anos)</option><option>24 (8-9 anos)</option><option>26 (10-11 anos)</option><option>28 (12-13 anos)</option></optgroup></select></div>
         <div class="fg-item"><label>Quantidade *</label><input type="number" id="pQtd" min="0" value="1"/></div>
@@ -1041,13 +1978,21 @@ function showPage(id){
   if(id==='dashboard') refreshDash();
   if(id==='stock') renderStock();
   if(id==='clientes') renderClientes();
+  if(id==='nba') renderNBA();
+  if(id==='nfl') renderNFL();
 }
 
 navBtns.forEach(btn=>{
   btn.addEventListener('click',()=>{
     navBtns.forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    if(btn.classList.contains('nav-liga')){
+    if(btn.classList.contains('nav-nfl')){
+      showPage('nfl');
+      renderNFL();
+    } else if(btn.classList.contains('nav-nba')){
+      showPage('nba');
+      renderNBA();
+    } else if(btn.classList.contains('nav-liga')){
       showPage('stock');
       document.getElementById('fLiga').value=btn.dataset.liga;
       document.getElementById('fTipo').value='';
@@ -1122,7 +2067,9 @@ function calcCalcado(){
 // ── TIPO SWITCHER ─────────────────────────────────────────────
 function switchTipo(tipo){
   const isCalcado=['Sapatilhas','Chuteiras'].includes(tipo);
-  const isProd=tipo!==''&&!isCalcado;
+  const isNBA=['NBA Jerseys','NBA Retro Jerseys','NBA Shorts','NBA Tracksuits','NBA Sleeveless Jerseys','NBA Kids Kits','NBA Training Wear'].includes(tipo);
+  const isNFL=['NFL Jerseys','NFL Retro Jerseys','NFL Shorts','NFL Tracksuits','NFL Hoodies','NFL Kids Kits','NFL Training Wear','NFL Caps'].includes(tipo);
+  const isProd=(tipo!==''&&!isCalcado)||isNBA||isNFL;
   const comServicos=['Camisa Modelo Fã','Camisa Modelo Jogador','Camisola Manga Longa','Retrô','Kit Infantil','Kit Adulto'].includes(tipo);
   document.getElementById('camposProduto').style.display=isProd?'grid':'none';
   document.getElementById('camposCalcado').style.display=isCalcado?'grid':'none';
@@ -1135,6 +2082,55 @@ function switchTipo(tipo){
   }
 }
 document.getElementById('pTipo').addEventListener('change',function(){switchTipo(this.value);});
+
+// ── VALIDAÇÃO CLUBE / LIGA ─────────────────────────────────────
+const CLUBES_POR_LIGA = {
+  'Primeira Liga': ['benfica','sporting','porto','braga','guimarães','vitória','famalicão','boavista','moreirense','arouca','estoril','farense','casa pia','paços de ferreira','rio ave','santa clara','vizela','chaves','estrela','nacional','desportivo','sp. braga','sp. sporting','sl benfica','fc porto','sc braga','gil vicente','portimonense','salvaterra'],
+  'Premier League': ['arsenal','chelsea','liverpool','manchester','man city','man utd','tottenham','newcastle','west ham','aston villa','brighton','brentford','fulham','crystal palace','wolves','wolverhampton','everton','leicester','nottingham','bournemouth','ipswich','southampton','burnley','luton','sheffield','leeds'],
+  'La Liga': ['barcelona','real madrid','atletico','sevilla','betis','villarreal','valencia','athletic','real sociedad','osasuna','mallorca','celta','getafe','rayo','alaves','girona','las palmas','granada','almeria','cadiz','real valladolid','deportivo','leganes','espanol','espanyol'],
+  'Serie A': ['juventus','inter','milan','napoli','roma','lazio','atalanta','fiorentina','torino','bologna','udinese','sassuolo','salernitana','verona','lecce','monza','genoa','cagliari','empoli','frosinone','venezia','parma','como'],
+  'Bundesliga': ['bayern','dortmund','bvb','leverkusen','frankfurt','wolfsburg','leipzig','rb leipzig','freiburg','hoffenheim','mainz','köln','cologne','union berlin','hertha','augsburg','werder','bochum','heidenheim','darmstadt','schalke','stuttgart','hamburg'],
+  'Ligue 1': ['psg','paris','marseille','lyon','monaco','nice','lens','lille','rennes','strasbourg','nantes','montpellier','reims','lorient','toulouse','brest','metz','clermont','auxerre','angers','sainté','saint-etienne'],
+  'Eredivisie': ['ajax','psv','feyenoord','az','vitesse','utrecht','twente','heerenveen','groningen','sparta'],
+  'Scottish Premiership': ['celtic','rangers','hearts','hibernian','aberdeen','motherwell','dundee'],
+  'Champions League': [],
+  'Liga MX': ['america','chivas','guadalajara','cruz azul','pumas','tigres','monterrey','toluca','atlas','leon','pachuca','santos','necaxa','queretaro','mazatlan','juárez'],
+  'Brasileirão': ['flamengo','palmeiras','atletico mineiro','corinthians','são paulo','fluminense','botafogo','vasco','grêmio','internacional','cruzeiro','sport','ceará','bahia','fortaleza','coritiba','goiás','athletico','paranaense','bragantino'],
+  'J1 League': ['urawa','kashima','gamba','vissel','yokohama','nagoya','sagan','sanfrecce','shimizu','cerezo','kawasaki'],
+  'NFL': [],
+  'Seleções': ['portugal','brasil','argentina','espanha','france','alemanha','alemanya','england','itália','holanda','bélgica','croatia','dinamarca','senegal','marrocos','uruguai'],
+};
+
+function checkLigaClube(){
+  const liga = document.getElementById('pLiga').value;
+  const clube = document.getElementById('pClube').value.trim().toLowerCase();
+  const warn = document.getElementById('ligaWarn');
+  const msg = document.getElementById('ligaWarnMsg');
+  if(!liga || !clube || !CLUBES_POR_LIGA[liga]) { warn.style.display='none'; return; }
+  const lista = CLUBES_POR_LIGA[liga];
+  if(lista.length === 0) { warn.style.display='none'; return; }
+  const match = lista.some(c => clube.includes(c) || c.includes(clube));
+  if(!match){
+    // Find if club belongs to another league
+    let ligaSugerida = null;
+    for(const [l, clubes] of Object.entries(CLUBES_POR_LIGA)){
+      if(l === liga) continue;
+      if(clubes.some(c => clube.includes(c) || c.includes(clube))){
+        ligaSugerida = l; break;
+      }
+    }
+    msg.textContent = ligaSugerida
+      ? `"${document.getElementById('pClube').value}" parece pertencer à ${ligaSugerida}, não à ${liga}. Confirma a liga selecionada.`
+      : `"${document.getElementById('pClube').value}" não é reconhecido na ${liga}. Confirma se a liga está correta.`;
+    warn.style.display='flex';
+  } else {
+    warn.style.display='none';
+  }
+}
+
+document.getElementById('pLiga').addEventListener('change', checkLigaClube);
+document.getElementById('pClube').addEventListener('input', checkLigaClube);
+
 document.getElementById('chkPerso').addEventListener('change',function(){document.getElementById('camposPersonalizacao').style.display=this.checked?'grid':'none';});
 document.getElementById('chkPatch').addEventListener('change',function(){document.getElementById('camposPatch').style.display=this.checked?'grid':'none';});
 
@@ -1496,6 +2492,625 @@ function renderClientes(){
     tb.appendChild(tr);
   });
 }
+
+
+// ══════════════════════════════════════════════
+//  NBA SECTION JS
+// ══════════════════════════════════════════════
+const NBA_DATA = {
+  Este: {
+    label:'Conferência Este', cls:'conf-este',
+    divisions:{
+      'Atlantic Division':[
+        {id:'bos',name:'Celtics',city:'Boston',c1:'#007A33',c2:'#BA9653',abbr:'BOS'},
+        {id:'bkn',name:'Nets',city:'Brooklyn',c1:'#000000',c2:'#ffffff',abbr:'BKN'},
+        {id:'nyk',name:'Knicks',city:'New York',c1:'#006BB6',c2:'#F58426',abbr:'NYK'},
+        {id:'phi',name:'76ers',city:'Philadelphia',c1:'#006BB6',c2:'#ED174C',abbr:'PHI'},
+        {id:'tor',name:'Raptors',city:'Toronto',c1:'#CE1141',c2:'#000000',abbr:'TOR'},
+      ],
+      'Central Division':[
+        {id:'chi',name:'Bulls',city:'Chicago',c1:'#CE1141',c2:'#000000',abbr:'CHI'},
+        {id:'cle',name:'Cavaliers',city:'Cleveland',c1:'#860038',c2:'#FDBB30',abbr:'CLE'},
+        {id:'det',name:'Pistons',city:'Detroit',c1:'#C8102E',c2:'#1D428A',abbr:'DET'},
+        {id:'ind',name:'Pacers',city:'Indiana',c1:'#002D62',c2:'#FDBB30',abbr:'IND'},
+        {id:'mil',name:'Bucks',city:'Milwaukee',c1:'#00471B',c2:'#EEE1C6',abbr:'MIL'},
+      ],
+      'Southeast Division':[
+        {id:'atl',name:'Hawks',city:'Atlanta',c1:'#E03A3E',c2:'#C1D32F',abbr:'ATL'},
+        {id:'cha',name:'Hornets',city:'Charlotte',c1:'#1D1160',c2:'#00788C',abbr:'CHA'},
+        {id:'mia',name:'Heat',city:'Miami',c1:'#98002E',c2:'#F9A01B',abbr:'MIA'},
+        {id:'orl',name:'Magic',city:'Orlando',c1:'#0077C0',c2:'#C4CED4',abbr:'ORL'},
+        {id:'was',name:'Wizards',city:'Washington',c1:'#002B5C',c2:'#E31837',abbr:'WAS'},
+      ]
+    }
+  },
+  Oeste: {
+    label:'Conferência Oeste', cls:'conf-oeste',
+    divisions:{
+      'Northwest Division':[
+        {id:'den',name:'Nuggets',city:'Denver',c1:'#0E2240',c2:'#FEC524',abbr:'DEN'},
+        {id:'min',name:'Timberwolves',city:'Minnesota',c1:'#0C2340',c2:'#236192',abbr:'MIN'},
+        {id:'okc',name:'Thunder',city:'Oklahoma City',c1:'#007AC1',c2:'#EF3B24',abbr:'OKC'},
+        {id:'por',name:'Trail Blazers',city:'Portland',c1:'#E03A3E',c2:'#000000',abbr:'POR'},
+        {id:'uta',name:'Jazz',city:'Utah',c1:'#002B5C',c2:'#00471B',abbr:'UTA'},
+      ],
+      'Pacific Division':[
+        {id:'gsw',name:'Warriors',city:'Golden State',c1:'#1D428A',c2:'#FFC72C',abbr:'GSW'},
+        {id:'lac',name:'Clippers',city:'Los Angeles',c1:'#C8102E',c2:'#1D428A',abbr:'LAC'},
+        {id:'lal',name:'Lakers',city:'Los Angeles',c1:'#552583',c2:'#FDB927',abbr:'LAL'},
+        {id:'phx',name:'Suns',city:'Phoenix',c1:'#1D1160',c2:'#E56020',abbr:'PHX'},
+        {id:'sac',name:'Kings',city:'Sacramento',c1:'#5A2D81',c2:'#63727A',abbr:'SAC'},
+      ],
+      'Southwest Division':[
+        {id:'dal',name:'Mavericks',city:'Dallas',c1:'#00538C',c2:'#002B5E',abbr:'DAL'},
+        {id:'hou',name:'Rockets',city:'Houston',c1:'#CE1141',c2:'#000000',abbr:'HOU'},
+        {id:'mem',name:'Grizzlies',city:'Memphis',c1:'#5D76A9',c2:'#12173F',abbr:'MEM'},
+        {id:'nop',name:'Pelicans',city:'New Orleans',c1:'#0C2340',c2:'#C8102E',abbr:'NOP'},
+        {id:'sas',name:'Spurs',city:'San Antonio',c1:'#C4CED4',c2:'#000000',abbr:'SAS'},
+      ]
+    }
+  }
+};
+
+const NBA_CATS = ['NBA Jerseys','NBA Retro Jerseys','NBA Shorts','NBA Tracksuits','NBA Sleeveless Jerseys','NBA Kids Kits','NBA Training Wear'];
+let nbaConfFilter = 'all';
+let nbaCatFilter = 'all';
+let nbaSearchQ = '';
+let nbaFavs = new Set(JSON.parse(localStorage.getItem('nba_favs')||'[]'));
+
+function saveNbaFavs(){ try{localStorage.setItem('nba_favs',JSON.stringify([...nbaFavs]));}catch(e){} }
+
+function getNbaStock(teamName){
+  return produtos.filter(p=>
+    p.liga==='NBA' &&
+    p.clube&&p.clube.toLowerCase().includes(teamName.toLowerCase()) &&
+    p.estado!=='Vendido'
+  );
+}
+function getNbaStockCount(teamName){
+  return getNbaStock(teamName).reduce((s,p)=>s+p.qtd,0);
+}
+function getNbaCats(teamName){
+  const cats=new Set();
+  produtos.filter(p=>p.liga==='NBA'&&p.clube&&p.clube.toLowerCase().includes(teamName.toLowerCase()))
+    .forEach(p=>{ if(NBA_CATS.includes(p.tipo)) cats.add(p.tipo); });
+  return [...cats];
+}
+
+function teamMatchesCat(teamName, cat){
+  if(cat==='all') return true;
+  return produtos.some(p=>p.liga==='NBA'&&p.clube&&p.clube.toLowerCase().includes(teamName.toLowerCase())&&p.tipo===cat);
+}
+
+function renderNBA(){
+  updateNbaStats();
+  const area = document.getElementById('nbaCardsArea');
+  const q = nbaSearchQ.toLowerCase();
+  area.innerHTML = '';
+
+  let anyVisible = false;
+
+  for(const [confKey, conf] of Object.entries(NBA_DATA)){
+    if(nbaConfFilter!=='all' && nbaConfFilter!==confKey) continue;
+
+    const confEl = document.createElement('div');
+    confEl.className='nba-conf';
+
+    let confTeamCount = 0;
+    let divHtml = '';
+
+    for(const [divName, teams] of Object.entries(conf.divisions)){
+      const filtered = teams.filter(t=>{
+        const matchQ = !q || t.name.toLowerCase().includes(q) || t.city.toLowerCase().includes(q) || t.abbr.toLowerCase().includes(q);
+        const matchCat = teamMatchesCat(t.name, nbaCatFilter);
+        return matchQ && matchCat;
+      });
+      if(!filtered.length) continue;
+      confTeamCount += filtered.length;
+      anyVisible = true;
+
+      divHtml += `<div class="nba-div-label">${divName}<span style="color:var(--t4);font-weight:500;text-transform:none;letter-spacing:0;font-size:.72rem">${filtered.length} equipa${filtered.length!==1?'s':''}</span></div>`;
+      divHtml += '<div class="nba-grid">';
+      filtered.forEach((t,i)=>{
+        const stock = getNbaStockCount(t.name);
+        const cats = getNbaCats(t.name);
+        const isFav = nbaFavs.has(t.id);
+        const stockCls = stock===0?'stock-zero':stock<=3?'stock-low':'stock-ok';
+        const stockLbl = stock===0?'Sem stock':stock===1?'1 un.':stock+' un.';
+        const catsHtml = cats.slice(0,2).map(c=>`<span class="nba-cat-chip">${c.replace('NBA ','')}</span>`).join('');
+        const moreHtml = cats.length>2?`<span class="nba-cat-chip">+${cats.length-2}</span>`:'';
+        divHtml += `
+        <div class="nba-card ${stock>0?'has-stock':''}" style="animation-delay:${i*0.04}s" data-team="${t.id}" onclick="openNbaTeam('${t.name}','${confKey}','${divName}')">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between">
+            <div class="nba-card-logo" style="background:linear-gradient(135deg,${t.c1},${t.c2});--nba-c1:${t.c1};--nba-c2:${t.c2}">
+              <span style="color:#fff;font-size:.85rem;position:relative;z-index:1">${t.abbr}</span>
+            </div>
+            <button class="nba-fav-btn ${isFav?'active':''}" onclick="toggleFav(event,'${t.id}')" title="${isFav?'Remover favorito':'Adicionar favorito'}">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </button>
+          </div>
+          <div>
+            <div class="nba-card-name">${t.city}</div>
+            <div class="nba-card-name" style="color:var(--acc3);font-size:.9rem">${t.name}</div>
+          </div>
+          ${cats.length?`<div class="nba-cats">${catsHtml}${moreHtml}</div>`:'<div class="nba-cats"><span style="font-size:.62rem;color:var(--t4)">Sem produtos</span></div>'}
+          <div class="nba-card-footer">
+            <span class="nba-stock-badge ${stockCls}">${stockLbl}</span>
+            <span style="font-size:.62rem;color:var(--t3)">${divName.replace(' Division','')}</span>
+          </div>
+          <button class="nba-card-add" onclick="openNbaAdd(event,'${t.name}')">+ Adicionar Produto</button>
+        </div>`;
+      });
+      divHtml += '</div>';
+    }
+
+    if(!confTeamCount) continue;
+
+    confEl.innerHTML = `
+      <div class="nba-conf-header">
+        <span class="nba-conf-badge ${conf.cls}">${conf.cls==='conf-este'?'🔴':'🔵'} ${conf.label}</span>
+        <div class="nba-conf-title">${conf.label.toUpperCase()}</div>
+        <div class="nba-conf-count">${confTeamCount} equipa${confTeamCount!==1?'s':''}</div>
+      </div>
+      ${divHtml}
+      <div class="nba-section-sep"></div>
+    `;
+    area.appendChild(confEl);
+  }
+
+  if(!anyVisible){
+    area.innerHTML = `<div class="nba-empty"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Nenhuma equipa encontrada para "<strong>${esc(nbaSearchQ)}</strong>"</div>`;
+  }
+
+  renderNbaTable();
+}
+
+function updateNbaStats(){
+  const allNba = produtos.filter(p=>p.liga==='NBA');
+  const teamSet = new Set(allNba.map(p=>p.clube));
+  const disp = allNba.filter(p=>p.estado!=='Vendido').reduce((s,p)=>s+p.qtd,0);
+  const lucro = allNba.filter(p=>p.estado==='Vendido').reduce((s,p)=>s+p.lucro,0);
+  document.getElementById('nbaStat2').textContent = teamSet.size;
+  document.getElementById('nbaStat3').textContent = disp;
+  document.getElementById('nbaStat4').textContent = '€'+lucro.toFixed(0);
+  document.getElementById('nbaStat5').textContent = nbaFavs.size;
+}
+
+function renderNbaTable(){
+  const nbaProds = produtos.filter(p=>p.liga==='NBA');
+  const wrap = document.getElementById('nbaTableWrap');
+  const body = document.getElementById('nbaStockBody');
+  if(!nbaProds.length){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  const editIco=`<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+  const trashIco=`<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
+  body.innerHTML = nbaProds.map(p=>{
+    const estCls={'Disponível':'sd','Reservado':'sr','Vendido':'sv'}[p.estado]||'';
+    return `<tr>
+      <td class="cb">${esc(p.clube||'—')}</td>
+      <td><span class="nba-cat-chip">${esc(p.tipo||'—')}</span></td>
+      <td style="color:var(--t2)">${esc(p.epoca||'—')}</td>
+      <td style="color:var(--t2)">${esc(p.tam||'—')}</td>
+      <td style="color:var(--t2)">${p.qtd}</td>
+      <td style="color:var(--t1);font-weight:600">€${p.venda.toFixed(2)}</td>
+      <td class="${p.lucro>=0?'lp':'ln'}">€${p.lucro.toFixed(2)}</td>
+      <td><span class="st ${estCls}">${esc(p.estado)}</span></td>
+      <td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')">${editIco}</button><button class="tb del" onclick="delProd('${esc(p.id)}')">${trashIco}</button></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleFav(e,teamId){
+  e.stopPropagation();
+  if(nbaFavs.has(teamId)) nbaFavs.delete(teamId); else nbaFavs.add(teamId);
+  saveNbaFavs();
+  renderNBA();
+}
+
+function openNbaTeam(name,conf,div){
+  // Pre-fill stock filter and go to stock page
+  navBtns.forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-page="stock"]')?.classList.add('active');
+  document.getElementById('fLiga').value='NBA';
+  document.getElementById('fClube').value=name;
+  renderStock();
+  showPage('stock');
+}
+
+function openNbaAdd(e,name){
+  e.stopPropagation();
+  openProdModal(null);
+  setTimeout(()=>{
+    document.getElementById('pTipo').value='NBA Jerseys';
+    switchTipo('NBA Jerseys');
+    document.getElementById('pLiga').value='NBA';
+    document.getElementById('pClube').value=name;
+    checkLigaClube();
+  },80);
+}
+
+// Conf pills
+document.querySelectorAll('#nbaConfPills .nba-pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('#nbaConfPills .nba-pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    nbaConfFilter=p.dataset.conf;
+    renderNBA();
+  });
+});
+
+// Cat pills
+document.querySelectorAll('#nbaCatPills .nba-cat-pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('#nbaCatPills .nba-cat-pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    nbaCatFilter=p.dataset.cat;
+    renderNBA();
+  });
+});
+
+// NBA Search
+document.getElementById('nbaSrch').addEventListener('input',function(){
+  nbaSearchQ=this.value;
+  renderNBA();
+});
+
+
+// ══════════════════════════════════════════════
+//  NFL SECTION JS — PREMIUM v2
+// ══════════════════════════════════════════════
+const NFL_DATA = {
+  AFC: {
+    label:'American Football Conference', cls:'nfl-afc', confCls:'afc-header', logoCls:'afc-conf-logo',
+    divisions:{
+      'AFC East':[
+        {id:'buf',name:'Bills',city:'Buffalo',c1:'#00338D',c2:'#C60C30',abbr:'BUF'},
+        {id:'mia',name:'Dolphins',city:'Miami',c1:'#008E97',c2:'#FC4C02',abbr:'MIA'},
+        {id:'ne', name:'Patriots',city:'New England',c1:'#002244',c2:'#C60C30',abbr:'NE'},
+        {id:'nyj',name:'Jets',city:'New York',c1:'#125740',c2:'#ffffff',abbr:'NYJ'},
+      ],
+      'AFC North':[
+        {id:'bal',name:'Ravens',city:'Baltimore',c1:'#241773',c2:'#9E7C0C',abbr:'BAL'},
+        {id:'cin',name:'Bengals',city:'Cincinnati',c1:'#FB4F14',c2:'#000000',abbr:'CIN'},
+        {id:'cle',name:'Browns',city:'Cleveland',c1:'#311D00',c2:'#FF3C00',abbr:'CLE'},
+        {id:'pit',name:'Steelers',city:'Pittsburgh',c1:'#101820',c2:'#FFB612',abbr:'PIT'},
+      ],
+      'AFC South':[
+        {id:'hou',name:'Texans',city:'Houston',c1:'#03202F',c2:'#A71930',abbr:'HOU'},
+        {id:'ind',name:'Colts',city:'Indianapolis',c1:'#002C5F',c2:'#A2AAAD',abbr:'IND'},
+        {id:'jax',name:'Jaguars',city:'Jacksonville',c1:'#006778',c2:'#9F792C',abbr:'JAX'},
+        {id:'ten',name:'Titans',city:'Tennessee',c1:'#0C2340',c2:'#4B92DB',abbr:'TEN'},
+      ],
+      'AFC West':[
+        {id:'den',name:'Broncos',city:'Denver',c1:'#FB4F14',c2:'#002244',abbr:'DEN'},
+        {id:'kc', name:'Chiefs',city:'Kansas City',c1:'#E31837',c2:'#FFB81C',abbr:'KC'},
+        {id:'lv', name:'Raiders',city:'Las Vegas',c1:'#333333',c2:'#A5ACAF',abbr:'LV'},
+        {id:'lac',name:'Chargers',city:'Los Angeles',c1:'#0080C6',c2:'#FFC20E',abbr:'LAC'},
+      ]
+    }
+  },
+  NFC: {
+    label:'National Football Conference', cls:'nfl-nfc', confCls:'nfc-header', logoCls:'nfc-conf-logo',
+    divisions:{
+      'NFC East':[
+        {id:'dal',name:'Cowboys',city:'Dallas',c1:'#003594',c2:'#869397',abbr:'DAL'},
+        {id:'nyg',name:'Giants',city:'New York',c1:'#0B2265',c2:'#A71930',abbr:'NYG'},
+        {id:'phi',name:'Eagles',city:'Philadelphia',c1:'#004C54',c2:'#A5ACAF',abbr:'PHI'},
+        {id:'was',name:'Commanders',city:'Washington',c1:'#5A1414',c2:'#FFB612',abbr:'WAS'},
+      ],
+      'NFC North':[
+        {id:'chi',name:'Bears',city:'Chicago',c1:'#0B162A',c2:'#C83803',abbr:'CHI'},
+        {id:'det',name:'Lions',city:'Detroit',c1:'#0076B6',c2:'#B0B7BC',abbr:'DET'},
+        {id:'gb', name:'Packers',city:'Green Bay',c1:'#203731',c2:'#FFB612',abbr:'GB'},
+        {id:'min',name:'Vikings',city:'Minnesota',c1:'#4F2683',c2:'#FFC62F',abbr:'MIN'},
+      ],
+      'NFC South':[
+        {id:'atl',name:'Falcons',city:'Atlanta',c1:'#A71930',c2:'#000000',abbr:'ATL'},
+        {id:'car',name:'Panthers',city:'Carolina',c1:'#0085CA',c2:'#101820',abbr:'CAR'},
+        {id:'no', name:'Saints',city:'New Orleans',c1:'#9F8958',c2:'#101820',abbr:'NO'},
+        {id:'tb', name:'Buccaneers',city:'Tampa Bay',c1:'#D50A0A',c2:'#FF7900',abbr:'TB'},
+      ],
+      'NFC West':[
+        {id:'ari',name:'Cardinals',city:'Arizona',c1:'#97233F',c2:'#000000',abbr:'ARI'},
+        {id:'lar',name:'Rams',city:'Los Angeles',c1:'#003594',c2:'#FFA300',abbr:'LAR'},
+        {id:'sf', name:'49ers',city:'San Francisco',c1:'#AA0000',c2:'#B3995D',abbr:'SF'},
+        {id:'sea',name:'Seahawks',city:'Seattle',c1:'#002244',c2:'#69BE28',abbr:'SEA'},
+      ]
+    }
+  }
+};
+
+// Build a quick lookup: teamName -> conf key
+const NFL_TEAM_CONF = {};
+for(const [ck,conf] of Object.entries(NFL_DATA)){
+  for(const teams of Object.values(conf.divisions)){
+    teams.forEach(t=>{ NFL_TEAM_CONF[t.name]=ck; NFL_TEAM_CONF[t.name.toLowerCase()]=ck; });
+  }
+}
+
+// Build a quick lookup: teamName -> {c1,c2,abbr}
+const NFL_TEAM_INFO = {};
+for(const conf of Object.values(NFL_DATA)){
+  for(const teams of Object.values(conf.divisions)){
+    teams.forEach(t=>{ NFL_TEAM_INFO[t.name]=t; NFL_TEAM_INFO[t.name.toLowerCase()]=t; });
+  }
+}
+
+const NFL_CATS = ['NFL Jerseys','NFL Retro Jerseys','NFL Shorts','NFL Tracksuits','NFL Hoodies','NFL Kids Kits','NFL Training Wear','NFL Caps'];
+const NFL_CAT_CLASSES = {
+  'NFL Jerseys':'cat-jersey','NFL Retro Jerseys':'cat-retro',
+  'NFL Shorts':'cat-shorts','NFL Tracksuits':'',
+  'NFL Hoodies':'cat-hoodie','NFL Kids Kits':'',
+  'NFL Training Wear':'','NFL Caps':''
+};
+
+let nflConfFilter = 'all';
+let nflCatFilter = 'all';
+let nflSearchQ = '';
+let nflFavs = new Set(JSON.parse(localStorage.getItem('nfl_favs')||'[]'));
+
+function saveNflFavs(){ try{localStorage.setItem('nfl_favs',JSON.stringify([...nflFavs]));}catch(e){} }
+
+function getNflStock(teamName){
+  return produtos.filter(p=>
+    p.liga==='NFL' &&
+    p.clube&&p.clube.toLowerCase().includes(teamName.toLowerCase()) &&
+    p.estado!=='Vendido'
+  );
+}
+function getNflStockCount(teamName){ return getNflStock(teamName).reduce((s,p)=>s+p.qtd,0); }
+function getNflCats(teamName){
+  const cats=new Set();
+  produtos.filter(p=>p.liga==='NFL'&&p.clube&&p.clube.toLowerCase().includes(teamName.toLowerCase()))
+    .forEach(p=>{ if(NFL_CATS.includes(p.tipo)) cats.add(p.tipo); });
+  return [...cats];
+}
+function nflTeamMatchesCat(teamName,cat){
+  if(cat==='all') return true;
+  return produtos.some(p=>p.liga==='NFL'&&p.clube&&p.clube.toLowerCase().includes(teamName.toLowerCase())&&p.tipo===cat);
+}
+
+function renderNFL(){
+  updateNflStats();
+  const area = document.getElementById('nflCardsArea');
+  const q = nflSearchQ.toLowerCase();
+  area.innerHTML = '';
+  let anyVisible = false;
+
+  for(const [confKey, conf] of Object.entries(NFL_DATA)){
+    if(nflConfFilter!=='all' && nflConfFilter!==confKey) continue;
+
+    const confEl = document.createElement('div');
+    confEl.className = 'nfl-conf';
+
+    let confTeamCount = 0;
+    let confStockCount = 0;
+    let divSections = '';
+
+    for(const [divName, teams] of Object.entries(conf.divisions)){
+      const filtered = teams.filter(t=>{
+        const matchQ = !q || t.name.toLowerCase().includes(q) || t.city.toLowerCase().includes(q) || t.abbr.toLowerCase().includes(q);
+        const matchCat = nflTeamMatchesCat(t.name, nflCatFilter);
+        return matchQ && matchCat;
+      });
+      if(!filtered.length) continue;
+      confTeamCount += filtered.length;
+      anyVisible = true;
+
+      const divCards = filtered.map((t,i)=>{
+        const stock = getNflStockCount(t.name);
+        const cats = getNflCats(t.name);
+        const isFav = nflFavs.has(t.id);
+        const stockCls = stock===0?'stock-zero':stock<=3?'stock-low':'stock-ok';
+        const stockLbl = stock===0?'Sem stock':stock<=1?'1 un.':stock+' un.';
+        confStockCount += stock;
+
+        const stockDotHtml = stock>0 ? `<div class="nfl-card-stock-dot"></div>` : '';
+
+        const catsHtml = cats.slice(0,3).map(c=>{
+          const cc = NFL_CAT_CLASSES[c]||'';
+          return `<span class="nfl-cat-chip ${cc}">${c.replace('NFL ','')}</span>`;
+        }).join('');
+        const moreHtml = cats.length>3 ? `<span class="nfl-cat-chip">+${cats.length-3}</span>` : '';
+        const noCatHtml = cats.length===0 ? `<span style="font-size:.6rem;color:var(--t4);font-style:italic">Sem categorias</span>` : '';
+
+        const favStarSvg = `<svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+        const addPlusSvg = `<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
+        const stockCircSvg = stock>0 ? `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>` : `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`;
+
+        return `
+        <div class="nfl-card ${stock>0?'has-stock':''}" style="animation-delay:${i*0.05}s;--nfl-c1:${t.c1};--nfl-c2:${t.c2}" onclick="openNflTeam('${t.name}','${confKey}','${divName}')">
+          <div class="nfl-card-body">
+            <div class="nfl-card-top">
+              <div class="nfl-card-logo">
+                <div class="nfl-card-logo-inner">
+                  <span class="nfl-card-logo-abbr">${t.abbr}</span>
+                </div>
+              </div>
+              <div class="nfl-card-actions">
+                <button class="nfl-fav-btn ${isFav?'active':''}" onclick="toggleNflFav(event,'${t.id}')" title="${isFav?'Remover dos favoritos':'Adicionar aos favoritos'}">
+                  ${favStarSvg}
+                </button>
+                ${stockDotHtml}
+              </div>
+            </div>
+            <div class="nfl-card-info">
+              <div class="nfl-card-city">${t.city}</div>
+              <div class="nfl-card-name">${t.name}</div>
+            </div>
+            <div class="nfl-cats">${catsHtml}${moreHtml}${noCatHtml}</div>
+          </div>
+          <div class="nfl-card-footer">
+            <span class="nfl-stock-badge ${stockCls}">${stockCircSvg}${stockLbl}</span>
+            <button class="nfl-card-add" onclick="openNflAdd(event,'${t.name}')">${addPlusSvg} Adicionar</button>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Division direction icon SVG
+      const compassSvg = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`;
+
+      divSections += `
+        <div class="nfl-division">
+          <div class="nfl-div-label">
+            <span class="nfl-div-label-text">${compassSvg}${divName}<span class="nfl-div-count">· ${filtered.length} equipas</span></span>
+          </div>
+          <div class="nfl-grid">${divCards}</div>
+        </div>`;
+    }
+
+    if(!confTeamCount) continue;
+
+    // Conference logo SVG
+    const confLogoSvg = confKey==='AFC'
+      ? `<svg viewBox="0 0 28 28" fill="none"><ellipse cx="14" cy="14" rx="11" ry="7" stroke="#fff" stroke-width="2"/><line x1="14" y1="7" x2="14" y2="21" stroke="#fff" stroke-width="2"/><path d="M10 11.5c2.7 1 5.3 1 8 0" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round"/><path d="M10 16.5c2.7-1 5.3-1 8 0" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round"/></svg>`
+      : `<svg viewBox="0 0 28 28" fill="none"><path d="M14 3L25 8.5V15c0 5-5 9-11 10C2 24 3 20 3 15V8.5L14 3Z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M9 14l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+    const badgeCls = confKey==='AFC' ? 'nfl-afc' : 'nfl-nfc';
+    const headerCls = confKey==='AFC' ? 'afc-header' : 'nfc-header';
+    const logoClsStr = confKey==='AFC' ? 'afc-conf-logo' : 'nfc-conf-logo';
+
+    confEl.innerHTML = `
+      <div class="nfl-conf-header ${headerCls}">
+        <div class="nfl-conf-logo ${logoClsStr}">${confLogoSvg}</div>
+        <div class="nfl-conf-info">
+          <div class="nfl-conf-badge ${badgeCls}">${confKey}</div>
+          <div class="nfl-conf-title">${conf.label}</div>
+        </div>
+        <div class="nfl-conf-meta">
+          <div class="nfl-conf-stat">
+            <div class="nfl-conf-stat-val">${confTeamCount}</div>
+            <div class="nfl-conf-stat-lbl">Equipas</div>
+          </div>
+          <div style="width:1px;height:36px;background:var(--border);margin:0 4px"></div>
+          <div class="nfl-conf-stat">
+            <div class="nfl-conf-stat-val" style="color:${confKey==='AFC'?'#ff5555':'#7aabff'}">${confStockCount}</div>
+            <div class="nfl-conf-stat-lbl">Em Stock</div>
+          </div>
+        </div>
+      </div>
+      ${divSections}
+      <div class="nfl-section-sep"></div>
+    `;
+    area.appendChild(confEl);
+  }
+
+  if(!anyVisible){
+    area.innerHTML = `
+      <div class="nfl-empty">
+        <div class="nfl-empty-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <div>Nenhuma equipa encontrada para <strong>"${esc(nflSearchQ)}"</strong></div>
+        <div style="font-size:.75rem">Tenta pesquisar pelo nome, cidade ou abreviatura</div>
+      </div>`;
+  }
+
+  renderNflTable();
+}
+
+function updateNflStats(){
+  const allNfl = produtos.filter(p=>p.liga==='NFL');
+  const teamSet = new Set(allNfl.filter(p=>p.estado!=='Vendido').map(p=>p.clube));
+  const disp = allNfl.filter(p=>p.estado!=='Vendido').reduce((s,p)=>s+p.qtd,0);
+  const lucro = allNfl.filter(p=>p.estado==='Vendido').reduce((s,p)=>s+p.lucro,0);
+  document.getElementById('nflStat2').textContent = teamSet.size;
+  document.getElementById('nflStat3').textContent = disp;
+  document.getElementById('nflStat4').textContent = '€'+lucro.toFixed(0);
+  document.getElementById('nflStat5').textContent = nflFavs.size;
+}
+
+function renderNflTable(){
+  const nflProds = produtos.filter(p=>p.liga==='NFL');
+  const wrap = document.getElementById('nflTableWrap');
+  const body = document.getElementById('nflStockBody');
+  const countBadge = document.getElementById('nflTableCount');
+  if(!nflProds.length){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  if(countBadge) countBadge.textContent=`${nflProds.length} produto${nflProds.length!==1?'s':''}`;
+
+  const editIco=`<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`;
+  const trashIco=`<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
+
+  body.innerHTML = nflProds.map(p=>{
+    const estCls={'Disponível':'sd','Reservado':'sr','Vendido':'sv'}[p.estado]||'';
+    const teamInfo = NFL_TEAM_INFO[p.clube] || NFL_TEAM_INFO[(p.clube||'').split(' ').pop()] || null;
+    const swatchStyle = teamInfo ? `style="--tc1:${teamInfo.c1};--tc2:${teamInfo.c2}"` : '';
+    const swatchAbbr = teamInfo ? teamInfo.abbr : (p.clube||'?').substring(0,3).toUpperCase();
+    const confKey = NFL_TEAM_CONF[p.clube] || NFL_TEAM_CONF[(p.clube||'').split(' ').pop()] || '—';
+    const confBadgeCls = confKey==='AFC'?'nfl-afc':confKey==='NFC'?'nfl-nfc':'';
+    const catCls = NFL_CAT_CLASSES[p.tipo]||'';
+    return `<tr>
+      <td>
+        <div class="nfl-team-cell">
+          <div class="nfl-team-swatch" ${swatchStyle}>${swatchAbbr}</div>
+          <span style="color:var(--t1);font-weight:600">${esc(p.clube||'—')}</span>
+        </div>
+      </td>
+      <td><span class="nfl-conf-badge ${confBadgeCls}" style="font-size:.58rem">${confKey}</span></td>
+      <td><span class="nfl-cat-chip ${catCls}">${esc(p.tipo||'—').replace('NFL ','')}</span></td>
+      <td style="color:var(--t2)">${esc(p.epoca||'—')}</td>
+      <td style="color:var(--t2)">${esc(p.tam||'—')}</td>
+      <td style="color:var(--t1);font-weight:700">${p.qtd}</td>
+      <td style="color:var(--t1);font-weight:600">€${p.venda.toFixed(2)}</td>
+      <td class="${p.lucro>=0?'lp':'ln'}">€${p.lucro.toFixed(2)}</td>
+      <td><span class="st ${estCls}">${esc(p.estado)}</span></td>
+      <td><div class="ta"><button class="tb" onclick="openProdModal('${esc(p.id)}')">${editIco}</button><button class="tb del" onclick="delProd('${esc(p.id)}')">${trashIco}</button></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleNflFav(e,teamId){
+  e.stopPropagation();
+  if(nflFavs.has(teamId)) nflFavs.delete(teamId); else nflFavs.add(teamId);
+  saveNflFavs();
+  renderNFL();
+}
+
+function openNflTeam(name,conf,div){
+  navBtns.forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-page="stock"]')?.classList.add('active');
+  document.getElementById('fLiga').value='NFL';
+  document.getElementById('fClube').value=name;
+  renderStock();
+  showPage('stock');
+}
+
+function openNflAdd(e,name){
+  e.stopPropagation();
+  openProdModal(null);
+  setTimeout(()=>{
+    document.getElementById('pTipo').value='NFL Jerseys';
+    switchTipo('NFL Jerseys');
+    document.getElementById('pLiga').value='NFL';
+    document.getElementById('pClube').value=name;
+    checkLigaClube();
+  },80);
+}
+
+document.querySelectorAll('#nflConfPills .nfl-pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('#nflConfPills .nfl-pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    nflConfFilter=p.dataset.conf;
+    renderNFL();
+  });
+});
+
+document.querySelectorAll('#nflCatPills .nfl-cat-pill').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('#nflCatPills .nfl-cat-pill').forEach(x=>x.classList.remove('active'));
+    p.classList.add('active');
+    nflCatFilter=p.dataset.cat;
+    renderNFL();
+  });
+});
+
+document.getElementById('nflSrch').addEventListener('input',function(){
+  nflSearchQ=this.value;
+  renderNFL();
+});
+
 
 window.delCliente=function(id){
   askConfirm('Eliminar este cliente?',()=>{
